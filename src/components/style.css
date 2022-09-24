@@ -1,0 +1,11 @@
+.main {
+  display: flex;
+  justify-content: space-around;
+}
+
+.one,
+.two {
+  flex-basis: 48%;
+  border: solid black 5px;
+  padding: 10px;
+}
