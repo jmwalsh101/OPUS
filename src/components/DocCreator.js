@@ -1,5 +1,11 @@
 import { useState } from "react";
 import "./style.css";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 function DocCreator(props) {
   const [visVars, setVisVars] = useState(null);
@@ -14,7 +20,12 @@ function DocCreator(props) {
 
   function handleAdd(e) {
     e.preventDefault();
-    setShowComponent((current) => [...current, e.target.value]);
+    const item = e.target.value.split(",");
+    console.log(item);
+    setShowComponent((current) => [
+      ...current,
+      { name: item[0], content: item[1] },
+    ]);
   }
 
   function handleSaveTitle(e) {
@@ -26,7 +37,6 @@ function DocCreator(props) {
     e.preventDefault();
     setDocument({ title: docTitle, content: showComponent });
   }
-  console.log(document);
 
   const showHideVars = visVars ? (
     <span>Hide Variables</span>
@@ -37,8 +47,10 @@ function DocCreator(props) {
   var docComponents = visVars ? (
     <div>
       {props.data.map(function (i, index) {
+        let data = [{ name: i.name, content: i.content }];
+        console.log("data " + data.name);
         return (
-          <button onClick={handleAdd} value={i.content} key={index}>
+          <button onClick={handleAdd} value={[i.name, i.content]} key={index}>
             {i.name}
           </button>
         );
@@ -46,22 +58,37 @@ function DocCreator(props) {
     </div>
   ) : null;
 
-  console.log(showComponent);
-
   return (
     <>
       <div>
         <button onClick={addContent}>{showHideVars}</button>
         {docComponents}
-        {showComponent.map(function (j, index) {
-          return (
-            <>
-              <div className="doc-component" id={index}>
-                <span key={index} dangerouslySetInnerHTML={{ __html: j }} />
-              </div>
-            </>
-          );
-        })}
+        <div className="show-component-container">
+          <div className="show-content">
+            {showComponent.map(function (j, index) {
+              return (
+                <>
+                  <div className="doc-component" id={index}>
+                    <span
+                      key={index}
+                      dangerouslySetInnerHTML={{ __html: j.content }}
+                    />
+                  </div>
+                </>
+              );
+            })}
+          </div>
+          <div className="show-name">
+            <h3>Document Components</h3>
+            {showComponent.map(function (l, index) {
+              return (
+                <>
+                  <div>{l.name}</div>
+                </>
+              );
+            })}
+          </div>
+        </div>
         <input type="submit" onClick={handleSubmit} />
         <input type="text" onChange={handleSaveTitle} />
         <div></div>

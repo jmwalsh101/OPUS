@@ -13,3 +13,18 @@
 .doc-component:hover {
   background-color: blanchedalmond;
 }
+
+.show-component-container {
+  display: flex;
+}
+
+.show-content {
+  flex-basis: 80%;
+}
+
+.show-name {
+  flex-basis: 20%;
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  padding: 5px;
+}
