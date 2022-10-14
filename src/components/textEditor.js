@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Child2 from "./Child2";
+import DocCreator from "./DocCreator";
 import _ from "lodash";
 
 import { Editor, EditorState, RichUtils } from "draft-js";
@@ -13,11 +13,8 @@ function TextEditor() {
   const [data, setData] = useState([]);
   const [name, setName] = useState("");
   const editor = React.useRef(null);
-  const [arr1, setArr1] = useState([]);
+  const [component, setComponent] = useState([]);
   //test
-
-  console.log(arr1[0]);
-  console.log("data: " + data[0]);
 
   function focusEditor() {
     editor.current.focus();
@@ -30,19 +27,11 @@ function TextEditor() {
 
   function handleSave() {
     const save = convertToHTML(editorState.getCurrentContent());
-    setArr1((current) => [...current, { name: name, content: save }]);
+    setComponent((current) => [...current, { name: name, content: save }]);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    /*
-    console.log("editorstate: " + editorState);
-    console.log("content state: " + editorState.getCurrentContent());
-    console.log(
-      "blocks: " + editorState.getCurrentContent().getBlocksAsArray()[0]
-    );
-    */
-    // setData(editorState.getCurrentContent().getBlocksAsArray());
     const html = convertToHTML(editorState.getCurrentContent());
     console.log(html);
     setData((current) => [...current, { name: name, content: html }]);
@@ -59,12 +48,6 @@ function TextEditor() {
     };
     return <button onMouseDown={onClickButton}>{props.label}</button>;
   };
-
-  const diff = _.difference(arr1, data);
-
-  if (diff.length) {
-    return <p>Unsaved changes</p>;
-  }
 
   const BLOCK_TYPES = [
     { label: "H1", style: "header-one" },
@@ -146,12 +129,11 @@ function TextEditor() {
           <input type="submit" onClick={handleSubmit} />
           <button onClick={handleSave}>Save</button>
         </div>
-        {diff.length ? <p>Unsaved changes</p> : null}
       </div>
 
       <div className="two">
         <h1>Document Creator</h1>
-        <Child2 data={data} />
+        <DocCreator data={data} />
       </div>
     </div>
   );

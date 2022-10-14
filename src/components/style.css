@@ -9,3 +9,7 @@
   border: solid black 5px;
   padding: 10px;
 }
+
+.doc-component:hover {
+  background-color: blanchedalmond;
+}
