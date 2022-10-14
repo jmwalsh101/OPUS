@@ -6,6 +6,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import SortableItem from "./SortableItem";
 
 function DocCreator(props) {
   const [visVars, setVisVars] = useState(null);
@@ -38,6 +39,11 @@ function DocCreator(props) {
     setDocument({ title: docTitle, content: showComponent });
   }
 
+  function handleDragEnd(event) {
+    const { active, over } = event;
+    setShowComponent(arrayMove(showComponent, active.id, over.id));
+  }
+
   const showHideVars = visVars ? (
     <span>Hide Variables</span>
   ) : (
@@ -47,8 +53,6 @@ function DocCreator(props) {
   var docComponents = visVars ? (
     <div>
       {props.data.map(function (i, index) {
-        let data = [{ name: i.name, content: i.content }];
-        console.log("data " + data.name);
         return (
           <button onClick={handleAdd} value={[i.name, i.content]} key={index}>
             {i.name}
@@ -63,32 +67,43 @@ function DocCreator(props) {
       <div>
         <button onClick={addContent}>{showHideVars}</button>
         {docComponents}
-        <div className="show-component-container">
-          <div className="show-content">
-            {showComponent.map(function (j, index) {
-              return (
-                <>
-                  <div className="doc-component" id={index}>
-                    <span
-                      key={index}
-                      dangerouslySetInnerHTML={{ __html: j.content }}
-                    />
-                  </div>
-                </>
-              );
-            })}
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <div className="show-component-container">
+            <div className="show-content">
+              {showComponent.map(function (j, index) {
+                return (
+                  <>
+                    <div id={index}>
+                      <span
+                        key={index}
+                        dangerouslySetInnerHTML={{ __html: j.content }}
+                      />
+                    </div>
+                  </>
+                );
+              })}
+            </div>
+            <div className="show-name">
+              <h3>Document Components</h3>
+
+              <SortableContext
+                strategy={verticalListSortingStrategy}
+                items={showComponent}
+              >
+                {showComponent.map(function (l, index) {
+                  return (
+                    <>
+                      <SortableItem name={l.name} key={index} id={index} />
+                    </>
+                  );
+                })}
+              </SortableContext>
+            </div>
           </div>
-          <div className="show-name">
-            <h3>Document Components</h3>
-            {showComponent.map(function (l, index) {
-              return (
-                <>
-                  <div>{l.name}</div>
-                </>
-              );
-            })}
-          </div>
-        </div>
+        </DndContext>
         <input type="submit" onClick={handleSubmit} />
         <input type="text" onChange={handleSaveTitle} />
         <div></div>
