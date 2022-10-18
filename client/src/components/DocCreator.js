@@ -15,15 +15,17 @@ function DocCreator(props) {
   const [docTitle, setDocTitle] = useState("");
   const [backendData, setBackendData] = useState([{}]);
 
-  console.log("backend" + backendData.serverInfo);
+  console.log(backendData);
+
   // backendData import
-  useEffect(() => {
+  function handleBackend(e) {
+    e.preventDefault();
     fetch("/api")
       .then((response) => response.json())
       .then((data) => {
         setBackendData(data);
       });
-  }, []);
+  }
 
   function addContent(e) {
     e.preventDefault();
@@ -33,7 +35,6 @@ function DocCreator(props) {
   function handleAdd(e) {
     e.preventDefault();
     const item = e.target.value.split(",");
-    console.log(item);
     setShowComponent((current) => [
       ...current,
       { name: item[0], content: item[1] },
@@ -63,7 +64,7 @@ function DocCreator(props) {
 
   var docComponents = visVars ? (
     <div>
-      {props.data.map(function (i, index) {
+      {backendData.map(function (i, index) {
         return (
           <button onClick={handleAdd} value={[i.name, i.content]} key={index}>
             {i.name}
@@ -118,7 +119,9 @@ function DocCreator(props) {
         <input type="submit" onClick={handleSubmit} />
         <input type="text" onChange={handleSaveTitle} />
         <div>
-          {backendData.serverInfo?.map(function (q, index) {
+          <p>Get from backend</p>
+          <input type="submit" onClick={handleBackend} />
+          {backendData.map(function (q, index) {
             return (
               <>
                 <div key={index}>

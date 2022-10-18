@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DocCreator from "./DocCreator";
-import _ from "lodash";
+import axios from "axios";
 
 import { Editor, EditorState, RichUtils } from "draft-js";
 import { convertToHTML } from "draft-convert";
@@ -33,8 +33,15 @@ function TextEditor() {
   function handleSubmit(e) {
     e.preventDefault();
     const html = convertToHTML(editorState.getCurrentContent());
-    console.log(html);
-    setData((current) => [...current, { name: name, content: html }]);
+    const tempData = [...data, { name: name, content: html }];
+
+    setData(tempData);
+
+    fetch("/api2", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ parcel: tempData }),
+    });
   }
 
   useEffect(() => {
@@ -133,7 +140,7 @@ function TextEditor() {
 
       <div className="two">
         <h1>Document Creator</h1>
-        <DocCreator data={data} />
+        <DocCreator />
       </div>
     </div>
   );
