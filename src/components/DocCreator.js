@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./style.css";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import {
@@ -13,6 +13,17 @@ function DocCreator(props) {
   const [showComponent, setShowComponent] = useState([]);
   const [document, setDocument] = useState([]);
   const [docTitle, setDocTitle] = useState("");
+  const [backendData, setBackendData] = useState([{}]);
+
+  console.log("backend" + backendData.serverInfo);
+  // backendData import
+  useEffect(() => {
+    fetch("/api")
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendData(data);
+      });
+  }, []);
 
   function addContent(e) {
     e.preventDefault();
@@ -106,7 +117,18 @@ function DocCreator(props) {
         </DndContext>
         <input type="submit" onClick={handleSubmit} />
         <input type="text" onChange={handleSaveTitle} />
-        <div></div>
+        <div>
+          {backendData.serverInfo?.map(function (q, index) {
+            return (
+              <>
+                <div key={index}>
+                  <p>{q.name}</p>
+                  <span dangerouslySetInnerHTML={{ __html: q.content }} />
+                </div>
+              </>
+            );
+          })}
+        </div>
       </div>
     </>
   );
