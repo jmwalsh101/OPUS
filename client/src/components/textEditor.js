@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import DocCreator from "./DocCreator";
-import axios from "axios";
 
 import { Editor, EditorState, RichUtils } from "draft-js";
 import { convertToHTML } from "draft-convert";

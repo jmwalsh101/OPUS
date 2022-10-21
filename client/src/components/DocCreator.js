@@ -15,8 +15,6 @@ function DocCreator(props) {
   const [docTitle, setDocTitle] = useState("");
   const [backendData, setBackendData] = useState([{}]);
 
-  console.log(backendData);
-
   // backendData import
   function handleBackend(e) {
     e.preventDefault();
@@ -118,6 +116,8 @@ function DocCreator(props) {
         </DndContext>
         <input type="submit" onClick={handleSubmit} />
         <input type="text" onChange={handleSaveTitle} />
+
+        {/* This is for testing APIS */}
         <div>
           <p>Get from backend</p>
           <input type="submit" onClick={handleBackend} />
