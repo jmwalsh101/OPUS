@@ -9,7 +9,7 @@ function ComponenetSidebar() {
       .then((data) => {
         setBackendData(data);
       });
-  }, []);
+  }, [backendData]);
 
   return (
     <>

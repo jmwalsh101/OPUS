@@ -1,9 +1,9 @@
 import React from "react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import DocCreator from "./DocCreator";
 import Home from "./Home";
 import Index from "./textEditor/Index";
+import DCIndex from "./docCreator/DCIndex";
 import Pricing from "./Pricing";
 
 import "./style.css";
@@ -29,7 +29,7 @@ function Navigation() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/text-editor" element={<Index />} />
-          <Route path="/doc-creator" element={<DocCreator />} />
+          <Route path="/doc-creator" element={<DCIndex />} />
           <Route path="/pricing" element={<Pricing />} />
         </Routes>
       </BrowserRouter>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./style.css";
+import "../style.css";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -74,6 +74,7 @@ function DocCreator(props) {
 
   return (
     <>
+      <h1>Document Manager</h1>
       <div>
         <button onClick={addContent}>{showHideVars}</button>
         {docComponents}

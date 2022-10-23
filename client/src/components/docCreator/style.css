@@ -1,0 +1,13 @@
+.main-container {
+  display: flex;
+}
+
+.sidebar {
+  flex-basis: 12%;
+  background-color: blue;
+}
+
+.main-doc-creator {
+  flex-basis: 88%;
+  padding: 2%;
+}
