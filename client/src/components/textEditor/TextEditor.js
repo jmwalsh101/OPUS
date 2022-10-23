@@ -110,12 +110,14 @@ function TextEditor() {
     return (
       <div>
         {INLINE_STYLES.map((type) => (
-          <StyleButton
-            key={type.label}
-            label={type.label}
-            onToggle={props.onToggle}
-            style={type.style}
-          />
+          <>
+            <StyleButton
+              key={type.label}
+              label={type.label}
+              onToggle={props.onToggle}
+              style={type.style}
+            />
+          </>
         ))}
       </div>
     );
@@ -144,12 +146,19 @@ function TextEditor() {
           <input type="text" onChange={handleSaveName} value={name} />
         </span>
         <span>
+          <p>Category</p>
+          <input type="text" />
+        </span>
+        <span>
           <p>ID</p>
           <input
             type="text"
             readonly="readonly"
             value={backendData.length + 1}
           />
+        </span>
+        <span>
+          <input type="submit" value="Delete" />
         </span>
         <span>
           <input type="submit" onClick={handleSubmit} />
