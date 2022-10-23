@@ -11,6 +11,7 @@ app.post("/api2", (req, res) => {
     return res.status(400).sendStatus({ status: "failed" });
   }
   res.status(200).send({ status: "received" });
+  // replace existing array with new array
   data = data.splice(0, data.length, ...parcel);
   console.log(data);
 });

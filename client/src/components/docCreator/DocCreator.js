@@ -15,6 +15,24 @@ function DocCreator(props) {
   const [docTitle, setDocTitle] = useState("");
   const [backendData, setBackendData] = useState([{}]);
 
+  // try out side bar
+
+  function showSelected() {
+    setVisVars(true);
+  }
+
+  function selectComponents() {
+    setVisVars(false);
+  }
+
+  useEffect(() => {
+    fetch("/api")
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendData(data);
+      });
+  }, [backendData]);
+
   // backendData import
   function handleBackend(e) {
     e.preventDefault();
@@ -70,18 +88,26 @@ function DocCreator(props) {
         );
       })}
     </div>
-  ) : null;
+  ) : (
+    <SortableContext
+      strategy={verticalListSortingStrategy}
+      items={showComponent}
+    >
+      {showComponent.map(function (l, index) {
+        return (
+          <>
+            <SortableItem name={l.name} key={index} id={index} />
+          </>
+        );
+      })}
+    </SortableContext>
+  );
 
   return (
     <>
-      <h1>Document Manager</h1>
-      <div>
-        <button onClick={addContent}>{showHideVars}</button>
-        {docComponents}
-        <DndContext
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-        >
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <h1>Document Manager</h1>
+        <div>
           <div className="show-component-container">
             <div className="show-content">
               {showComponent.map(function (j, index) {
@@ -99,41 +125,31 @@ function DocCreator(props) {
             </div>
             <div className="show-name">
               <h3>Document Components</h3>
-
-              <SortableContext
-                strategy={verticalListSortingStrategy}
-                items={showComponent}
-              >
-                {showComponent.map(function (l, index) {
-                  return (
-                    <>
-                      <SortableItem name={l.name} key={index} id={index} />
-                    </>
-                  );
-                })}
-              </SortableContext>
+              <button onClick={showSelected}>Select Components</button>
+              <button onClick={selectComponents}>Order Components</button>
+              {docComponents}
             </div>
           </div>
-        </DndContext>
-        <input type="submit" onClick={handleSubmit} />
-        <input type="text" onChange={handleSaveTitle} />
+          <input type="submit" onClick={handleSubmit} />
+          <input type="text" onChange={handleSaveTitle} />
 
-        {/* This is for testing APIS */}
-        <div>
-          <p>Get from backend</p>
-          <input type="submit" onClick={handleBackend} />
-          {backendData.map(function (q, index) {
-            return (
-              <>
-                <div key={index}>
-                  <p>{q.name}</p>
-                  <span dangerouslySetInnerHTML={{ __html: q.content }} />
-                </div>
-              </>
-            );
-          })}
+          {/* This is for testing APIS */}
+          <div>
+            <p>Get from backend</p>
+            <input type="submit" onClick={handleBackend} />
+            {backendData.map(function (q, index) {
+              return (
+                <>
+                  <div key={index}>
+                    <p>{q.name}</p>
+                    <span dangerouslySetInnerHTML={{ __html: q.content }} />
+                  </div>
+                </>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      </DndContext>
     </>
   );
 }
