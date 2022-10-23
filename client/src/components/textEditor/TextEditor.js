@@ -11,6 +11,15 @@ function TextEditor() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [name, setName] = useState("");
   const editor = React.useRef(null);
+  const [backendData, setBackendData] = useState([]);
+
+  useEffect(() => {
+    fetch("/api")
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendData(data);
+      });
+  }, [backendData]);
 
   function focusEditor() {
     editor.current.focus();
@@ -25,8 +34,6 @@ function TextEditor() {
     e.preventDefault();
     const html = convertToHTML(editorState.getCurrentContent());
     const newComponent = [{ name: name, content: html }];
-    setName("");
-    setEditorState(clearEditorContent.EditorState);
 
     fetch("/api2", {
       method: "POST",
@@ -131,8 +138,23 @@ function TextEditor() {
         Create a new component for your documents. Add new components to
         documents in the Document Creator.
       </p>
-      <h3>Name</h3>
-      <input type="text" onChange={handleSaveName} value={name} />
+      <div className="component-actions">
+        <span>
+          <p>Name</p>
+          <input type="text" onChange={handleSaveName} value={name} />
+        </span>
+        <span>
+          <p>ID</p>
+          <input
+            type="text"
+            readonly="readonly"
+            value={backendData.length + 1}
+          />
+        </span>
+        <span>
+          <input type="submit" onClick={handleSubmit} />
+        </span>
+      </div>
       <div onClick={focusEditor}>
         <h3>Content</h3>
         <div className="controls">
@@ -154,7 +176,6 @@ function TextEditor() {
             onChange={(editorState) => setEditorState(editorState)}
           />
         </div>
-        <input type="submit" onClick={handleSubmit} />
       </div>
     </div>
   );

@@ -11,3 +11,8 @@
   flex-basis: 88%;
   padding: 2%;
 }
+
+.component-actions {
+  display: flex;
+  justify-content: space-between;
+}
