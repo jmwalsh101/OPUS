@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
 app.use(express.json());
-const data = [];
 
-app.get("/api", (req, res) => res.json(data));
+const components = [];
+
+app.get("/api", (req, res) s=> res.json(components));
 
 app.post("/api2", (req, res) => {
   const { parcel } = req.body;
@@ -11,8 +12,7 @@ app.post("/api2", (req, res) => {
     return res.status(400).sendStatus({ status: "failed" });
   }
   res.status(200).send({ status: "received" });
-  data.push(...parcel);
-  console.log(data);
+  components.push(...parcel);
 });
 
 app.listen(5000, () => {
