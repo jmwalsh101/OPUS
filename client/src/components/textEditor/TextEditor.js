@@ -9,7 +9,6 @@ import "../style.css";
 
 function TextEditor() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [data, setData] = useState([]);
   const [name, setName] = useState("");
   const editor = React.useRef(null);
 
@@ -25,16 +24,14 @@ function TextEditor() {
   function handleSubmit(e) {
     e.preventDefault();
     const html = convertToHTML(editorState.getCurrentContent());
-    const tempData = [{ name: name, content: html }];
+    const newComponent = [{ name: name, content: html }];
     setName("");
     setEditorState(clearEditorContent.EditorState);
-
-    setData(tempData);
 
     fetch("/api2", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ parcel: tempData }),
+      body: JSON.stringify({ parcel: newComponent }),
     });
   }
 

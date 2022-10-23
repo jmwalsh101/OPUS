@@ -15,8 +15,6 @@ function DocCreator(props) {
   const [docTitle, setDocTitle] = useState("");
   const [backendData, setBackendData] = useState([{}]);
 
-  // try out side bar
-
   function showSelected() {
     setVisVars(true);
   }
@@ -32,21 +30,6 @@ function DocCreator(props) {
         setBackendData(data);
       });
   }, [backendData]);
-
-  // backendData import
-  function handleBackend(e) {
-    e.preventDefault();
-    fetch("/api")
-      .then((response) => response.json())
-      .then((data) => {
-        setBackendData(data);
-      });
-  }
-
-  function addContent(e) {
-    e.preventDefault();
-    visVars ? setVisVars(false) : setVisVars(true);
-  }
 
   function handleAdd(e) {
     e.preventDefault();

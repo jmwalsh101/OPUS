@@ -4,7 +4,7 @@ app.use(express.json());
 
 const components = [];
 
-app.get("/api", (req, res) s=> res.json(components));
+app.get("/api", (req, res) => res.json(components));
 
 app.post("/api2", (req, res) => {
   const { parcel } = req.body;
