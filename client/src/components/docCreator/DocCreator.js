@@ -72,12 +72,6 @@ function DocCreator(props) {
     setShowComponent(arrayMove(showComponent, active.id, over.id));
   }
 
-  const showHideVars = visVars ? (
-    <span>Hide Variables</span>
-  ) : (
-    <span>Show Variables</span>
-  );
-
   var docComponents = visVars ? (
     <div>
       {backendData.map(function (i, index) {

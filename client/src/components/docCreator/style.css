@@ -22,6 +22,7 @@
   padding-top: 2%;
   padding-left: 5%;
   padding-right: 5%;
+  margin-bottom: 2%;
 }
 
 .doc-actions {
@@ -41,7 +42,7 @@
 }
 
 .document-container {
-  background-color: grey;
+  background-color: lightgray;
 }
 .component-manager {
   flex-basis: 20%;

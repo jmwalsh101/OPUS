@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { Editor, EditorState, RichUtils } from "draft-js";
+import { clearEditorContent } from "draftjs-utils";
 import { convertToHTML } from "draft-convert";
 import "draft-js/dist/Draft.css";
 import "./draft.css";
@@ -24,7 +25,9 @@ function TextEditor() {
   function handleSubmit(e) {
     e.preventDefault();
     const html = convertToHTML(editorState.getCurrentContent());
-    const tempData = [...data, { name: name, content: html }];
+    const tempData = [{ name: name, content: html }];
+    setName("");
+    setEditorState(clearEditorContent.EditorState);
 
     setData(tempData);
 
