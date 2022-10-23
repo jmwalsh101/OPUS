@@ -1,13 +1,7 @@
 .main {
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
-}
-
-.one,
-.two {
-  flex-basis: 48%;
-  border: solid black 5px;
-  padding: 10px;
 }
 
 .doc-component:hover {
@@ -27,4 +21,55 @@
   border-left: 2px solid black;
   border-top: 2px solid black;
   padding: 5px;
+}
+
+/* Navigation */
+
+.navbar-container {
+  display: flex;
+  padding: 5px;
+  background-color: blue;
+  color: white;
+}
+
+.nav-link {
+  color: white;
+  padding: 5px;
+}
+
+/* Home Header */
+
+.home-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  border-bottom: 2px solid black;
+}
+
+.home-header2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  border-bottom: 2px solid black;
+}
+
+.home-header3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  border-bottom: 2px solid black;
+}
+.home-header4 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  border-bottom: 2px solid black;
 }

@@ -76,10 +76,27 @@
   color: #5890ff;
 }
 
-.App {
+.controls {
+  display: flex;
   font-family: sans-serif;
-  max-width: 33rem;
   margin: 1rem auto;
   padding: 0.5rem;
   border: 1px solid #999;
+}
+
+.control-set {
+  padding-left: 1%;
+}
+
+.text-box {
+  font-family: sans-serif;
+  margin: 1rem auto;
+  padding: 0.5rem;
+  border: 1px solid #999;
+  height: 400px;
+}
+
+.main {
+  max-width: 75%;
+  margin-left: 10%;
 }

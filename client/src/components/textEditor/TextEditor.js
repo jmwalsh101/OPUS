@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
-import DocCreator from "./DocCreator";
 
 import { Editor, EditorState, RichUtils } from "draft-js";
 import { convertToHTML } from "draft-convert";
 import "draft-js/dist/Draft.css";
 import "./draft.css";
-import "./style.css";
+import "../style.css";
 
 function TextEditor() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [data, setData] = useState([]);
   const [name, setName] = useState("");
   const editor = React.useRef(null);
-  const [component, setComponent] = useState([]);
-  //test
 
   function focusEditor() {
     editor.current.focus();
@@ -22,11 +19,6 @@ function TextEditor() {
   function handleSaveName(e) {
     e.preventDefault();
     setName(e.target.value);
-  }
-
-  function handleSave() {
-    const save = convertToHTML(editorState.getCurrentContent());
-    setComponent((current) => [...current, { name: name, content: save }]);
   }
 
   function handleSubmit(e) {
@@ -55,23 +47,40 @@ function TextEditor() {
     return <button onMouseDown={onClickButton}>{props.label}</button>;
   };
 
-  const BLOCK_TYPES = [
+  const HEADER_TYPES = [
     { label: "H1", style: "header-one" },
     { label: "H2", style: "header-two" },
     { label: "H3", style: "header-three" },
     { label: "H4", style: "header-four" },
     { label: "H5", style: "header-five" },
     { label: "H6", style: "header-six" },
-    { label: "Blockquote", style: "blockquote" },
-    { label: "UL", style: "unordered-list-item" },
-    { label: "OL", style: "ordered-list-item" },
-    { label: "Code Block", style: "code-block" },
   ];
 
-  const BlockStyleControls = (props) => {
+  const HeaderStyleControls = (props) => {
     return (
       <div>
-        {BLOCK_TYPES.map((type) => (
+        {HEADER_TYPES.map((type) => (
+          <StyleButton
+            key={type.label}
+            label={type.label}
+            onToggle={props.onToggle}
+            style={type.style}
+          />
+        ))}
+      </div>
+    );
+  };
+
+  const LIST_TYPES = [
+    { label: "Blockquote", style: "blockquote" },
+    { label: "Code Block", style: "code-block" },
+    { label: "Monospace", style: "CODE" },
+  ];
+
+  const ListStyleControls = (props) => {
+    return (
+      <div>
+        {LIST_TYPES.map((type) => (
           <StyleButton
             key={type.label}
             label={type.label}
@@ -87,7 +96,8 @@ function TextEditor() {
     { label: "Bold", style: "BOLD" },
     { label: "Italic", style: "ITALIC" },
     { label: "Underline", style: "UNDERLINE" },
-    { label: "Monospace", style: "CODE" },
+    { label: "UL", style: "unordered-list-item" },
+    { label: "OL", style: "ordered-list-item" },
   ];
   const InlineStyleControls = (props) => {
     return (
@@ -116,30 +126,35 @@ function TextEditor() {
 
   return (
     <div className="main">
-      <div className="one">
-        <h1>Editor</h1>
-        <input type="text" onChange={handleSaveName} value={name} />
-        <div onClick={focusEditor}>
-          <div className="App">
-            <BlockStyleControls onToggle={onBlockClick} />
+      <h1>Editor</h1>
+      <p>
+        Create a new component for your documents. Add new components to
+        documents in the Document Creator.
+      </p>
+      <h3>Name</h3>
+      <input type="text" onChange={handleSaveName} value={name} />
+      <div onClick={focusEditor}>
+        <h3>Content</h3>
+        <div className="controls">
+          <span className="control-set">
+            <HeaderStyleControls onToggle={onBlockClick} />
+          </span>
+          <span className="control-set">
             <InlineStyleControls onToggle={onInlineClick} />
-          </div>
-
-          <div className="App">
-            <Editor
-              ref={editor}
-              editorState={editorState}
-              onChange={(editorState) => setEditorState(editorState)}
-            />
-          </div>
-          <input type="submit" onClick={handleSubmit} />
-          <button onClick={handleSave}>Save</button>
+          </span>
+          <span className="control-set">
+            <ListStyleControls onToggle={onInlineClick} />
+          </span>
         </div>
-      </div>
 
-      <div className="two">
-        <h1>Document Creator</h1>
-        <DocCreator />
+        <div className="text-box">
+          <Editor
+            ref={editor}
+            editorState={editorState}
+            onChange={(editorState) => setEditorState(editorState)}
+          />
+        </div>
+        <input type="submit" onClick={handleSubmit} />
       </div>
     </div>
   );
