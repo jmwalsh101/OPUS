@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "../style.css";
+import "./style.css";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -9,7 +9,7 @@ import {
 import SortableItem from "./SortableItem";
 
 function DocCreator(props) {
-  const [visVars, setVisVars] = useState(null);
+  const [visVars, setVisVars] = useState(true);
   const [showComponent, setShowComponent] = useState([]);
   const [document, setDocument] = useState([]);
   const [docTitle, setDocTitle] = useState("");
@@ -96,7 +96,12 @@ function DocCreator(props) {
       {showComponent.map(function (l, index) {
         return (
           <>
-            <SortableItem name={l.name} key={index} id={index} />
+            <SortableItem
+              name={l.name}
+              key={index}
+              id={index}
+              number={index + 1}
+            />
           </>
         );
       })}
@@ -106,47 +111,38 @@ function DocCreator(props) {
   return (
     <>
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <h1>Document Manager</h1>
+        <h1>Document Editor</h1>
+        <p>Create, Edit, and Manage your documents.</p>
         <div>
-          <div className="show-component-container">
-            <div className="show-content">
-              {showComponent.map(function (j, index) {
-                return (
-                  <>
-                    <div id={index}>
-                      <span
-                        key={index}
-                        dangerouslySetInnerHTML={{ __html: j.content }}
-                      />
-                    </div>
-                  </>
-                );
-              })}
+          <div className="doc-container-overview">
+            <div className="doc-creator-container">
+              <div className="doc-actions">
+                Name
+                <input type="text" onChange={handleSaveTitle} />
+                <input type="submit" value="Save" onClick={handleSubmit} />
+              </div>
+              <div className="document-container">
+                <div className="document">
+                  {showComponent.map(function (j, index) {
+                    return (
+                      <>
+                        <div id={index}>
+                          <span
+                            key={index}
+                            dangerouslySetInnerHTML={{ __html: j.content }}
+                          />
+                        </div>
+                      </>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-            <div className="show-name">
-              <h3>Document Components</h3>
+            <div className="component-manager">
               <button onClick={showSelected}>Select Components</button>
               <button onClick={selectComponents}>Order Components</button>
               {docComponents}
             </div>
-          </div>
-          <input type="submit" onClick={handleSubmit} />
-          <input type="text" onChange={handleSaveTitle} />
-
-          {/* This is for testing APIS */}
-          <div>
-            <p>Get from backend</p>
-            <input type="submit" onClick={handleBackend} />
-            {backendData.map(function (q, index) {
-              return (
-                <>
-                  <div key={index}>
-                    <p>{q.name}</p>
-                    <span dangerouslySetInnerHTML={{ __html: q.content }} />
-                  </div>
-                </>
-              );
-            })}
           </div>
         </div>
       </DndContext>

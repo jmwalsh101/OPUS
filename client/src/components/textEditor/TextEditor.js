@@ -126,7 +126,7 @@ function TextEditor() {
 
   return (
     <div className="main">
-      <h1>Editor</h1>
+      <h1>Component Editor</h1>
       <p>
         Create a new component for your documents. Add new components to
         documents in the Document Creator.

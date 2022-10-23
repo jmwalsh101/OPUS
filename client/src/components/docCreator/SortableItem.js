@@ -15,6 +15,7 @@ function SortableItem(props) {
       {...attributes}
       {...listeners}
     >
+      {props.number}&nbsp;
       {props.name}
     </div>
   );
