@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Editor, EditorState, RichUtils, ContentState } from "draft-js";
+import { Editor, EditorState, RichUtils } from "draft-js";
 import { clearEditorContent } from "draftjs-utils";
 import { convertToHTML } from "draft-convert";
 import "draft-js/dist/Draft.css";
@@ -34,7 +34,8 @@ function TextEditor() {
     e.preventDefault();
     const html = convertToHTML(editorState.getCurrentContent());
     const newComponent = [{ name: name, content: html }];
-    setEditorState(null);
+    setName("");
+    setEditorState(clearEditorContent(editorState));
 
     fetch("/api2", {
       method: "POST",
