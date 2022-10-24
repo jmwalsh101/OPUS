@@ -14,7 +14,7 @@ const customStyles = {
   },
 };
 
-function ErrorModal() {
+function ErrorModal(props) {
   let subtitle;
   const [modalIsOpen, setIsOpen] = useState(true);
 

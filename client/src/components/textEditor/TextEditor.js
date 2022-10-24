@@ -7,7 +7,8 @@ import "draft-js/dist/Draft.css";
 import "./draft.css";
 import "../style.css";
 
-import ErrorModal from "./ErrorModal";
+import MyVerticallyCenteredModal from "./MyVerticallyCenteredModal";
+import Button from "react-bootstrap/Button";
 
 function TextEditor() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -15,9 +16,10 @@ function TextEditor() {
   const editor = React.useRef(null);
   const [componentId, setComponentId] = useState();
 
-  const [errorModal, setErrorModal] = useState(false);
+  console.log(editorState);
 
-  const showModal = errorModal ? <ErrorModal /> : null;
+  const [modalShow, setModalShow] = useState(false);
+  const handleClose = () => setModalShow(false);
 
   useEffect(() => {
     fetch("/component-id")
@@ -40,7 +42,7 @@ function TextEditor() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (name !== "" && editorState !== null) {
+    if (name !== "" && editorState.getCurrentContent().hasText()) {
       const html = convertToHTML(editorState.getCurrentContent());
       const newComponent = [{ id: componentId, name: name, content: html }];
       setName("");
@@ -52,10 +54,18 @@ function TextEditor() {
         body: JSON.stringify({ parcel: newComponent }),
       });
     } else {
-      setErrorModal(true);
+      setModalShow(true);
     }
   }
-
+  /*
+  const showModal = modalShow ? (
+    <>
+      <MyVerticallyCenteredModal show={modalShow} />
+    </>
+  ) : (
+    <>No modal</>
+  );
+*/
   useEffect(() => {
     focusEditor();
   }, []);
@@ -155,56 +165,60 @@ function TextEditor() {
   };
 
   return (
-    <div className="main">
-      <h1>Component Editor</h1>
-      {showModal}
-      <p>
-        Create a new component for your documents. Add new components to
-        documents in the Document Creator.
-      </p>
-      <div className="component-actions">
-        <span>
-          <p>Name</p>
-          <input type="text" onChange={handleSaveName} value={name} />
-        </span>
-        <span>
-          <p>Category</p>
-          <input type="text" />
-        </span>
-        <span>
-          <p>ID</p>
-          <input type="text" readonly="readonly" value={componentId} />
-        </span>
-        <span>
-          <input type="submit" value="Delete" />
-        </span>
-        <span>
-          <input type="submit" onClick={handleSubmit} />
-        </span>
-      </div>
-      <div onClick={focusEditor}>
-        <h3>Content</h3>
-        <div className="controls">
-          <span className="control-set">
-            <HeaderStyleControls onToggle={onBlockClick} />
+    <>
+      <div className="main">
+        <h1>Component Editor</h1>
+        <p>
+          Create a new component for your documents. Add new components to
+          documents in the Document Creator.
+        </p>
+        <div className="component-actions">
+          <span>
+            <p>Name</p>
+            <input type="text" onChange={handleSaveName} value={name} />
           </span>
-          <span className="control-set">
-            <InlineStyleControls onToggle={onInlineClick} />
+          <span>
+            <p>Category</p>
+            <input type="text" />
           </span>
-          <span className="control-set">
-            <ListStyleControls onToggle={onInlineClick} />
+          <span>
+            <p>ID</p>
+            <input type="text" readonly="readonly" value={componentId} />
+          </span>
+          <span>
+            <input type="submit" value="Delete" />
+          </span>
+          <span>
+            <input type="submit" onClick={handleSubmit} />
           </span>
         </div>
+        <div onClick={focusEditor}>
+          <h3>Content</h3>
+          <div className="controls">
+            <span className="control-set">
+              <HeaderStyleControls onToggle={onBlockClick} />
+            </span>
+            <span className="control-set">
+              <InlineStyleControls onToggle={onInlineClick} />
+            </span>
+            <span className="control-set">
+              <ListStyleControls onToggle={onInlineClick} />
+            </span>
+          </div>
 
-        <div className="text-box">
-          <Editor
-            ref={editor}
-            editorState={editorState}
-            onChange={(editorState) => setEditorState(editorState)}
-          />
+          <div className="text-box">
+            <Editor
+              ref={editor}
+              editorState={editorState}
+              onChange={(editorState) => setEditorState(editorState)}
+            />
+          </div>
         </div>
+        {modalShow ? (
+          <MyVerticallyCenteredModal show={modalShow} onClose={handleClose} />
+        ) : null}
       </div>
-    </div>
+    </>
   );
 }
 
