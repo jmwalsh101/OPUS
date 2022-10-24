@@ -15,6 +15,14 @@ function DocCreator(props) {
   const [docTitle, setDocTitle] = useState("");
   const [backendData, setBackendData] = useState([{}]);
 
+  // deletion
+
+  function handleDelete(e) {
+    e.preventDefault();
+    showComponent.splice(e.target.value, 1);
+    setShowComponent(showComponent);
+  }
+
   function showSelected() {
     setVisVars(true);
   }
@@ -79,6 +87,9 @@ function DocCreator(props) {
               id={index}
               number={index + 1}
             />
+            <button onClick={handleDelete} value={index}>
+              Delete
+            </button>
           </>
         );
       })}
