@@ -7,11 +7,17 @@ import "draft-js/dist/Draft.css";
 import "./draft.css";
 import "../style.css";
 
+import ErrorModal from "./ErrorModal";
+
 function TextEditor() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [name, setName] = useState("");
   const editor = React.useRef(null);
   const [componentId, setComponentId] = useState();
+
+  const [errorModal, setErrorModal] = useState(false);
+
+  const showModal = errorModal ? <ErrorModal /> : null;
 
   useEffect(() => {
     fetch("/component-id")
@@ -34,16 +40,20 @@ function TextEditor() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const html = convertToHTML(editorState.getCurrentContent());
-    const newComponent = [{ id: componentId, name: name, content: html }];
-    setName("");
-    setEditorState(clearEditorContent(editorState));
+    if (name !== "" && editorState !== null) {
+      const html = convertToHTML(editorState.getCurrentContent());
+      const newComponent = [{ id: componentId, name: name, content: html }];
+      setName("");
+      setEditorState(clearEditorContent(editorState));
 
-    fetch("/component-update", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ parcel: newComponent }),
-    });
+      fetch("/component-update", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ parcel: newComponent }),
+      });
+    } else {
+      setErrorModal(true);
+    }
   }
 
   useEffect(() => {
@@ -147,6 +157,7 @@ function TextEditor() {
   return (
     <div className="main">
       <h1>Component Editor</h1>
+      {showModal}
       <p>
         Create a new component for your documents. Add new components to
         documents in the Document Creator.
