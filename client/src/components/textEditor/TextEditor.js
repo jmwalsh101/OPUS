@@ -12,6 +12,32 @@ function TextEditor() {
   const [name, setName] = useState("");
   const editor = React.useRef(null);
   const [backendData, setBackendData] = useState([]);
+  const [componentId, setComponentId] = useState();
+
+  useEffect(() => {
+    fetch("/component-id")
+      .then(function (response) {
+        // The response is a Response instance.
+        // You parse the data into a useable format using `.json()`
+        return response.json();
+      })
+      .then(function (data) {
+        // `data` is the parsed version of the JSON returned from the above endpoint.
+        console.log(data); // { "userId": 1, "id": 1, "title": "...", "body": "..." }
+        setComponentId(parseInt(data) + 1);
+      });
+  }, [editorState]);
+
+  console.log(componentId);
+  /*
+  useEffect(() => {
+    fetch("/component-id").then((data) => {
+      setComponentId(data);
+      console.log(data);
+    });
+  }, []);
+
+  */
 
   useEffect(() => {
     fetch("/api")
@@ -33,7 +59,7 @@ function TextEditor() {
   function handleSubmit(e) {
     e.preventDefault();
     const html = convertToHTML(editorState.getCurrentContent());
-    const newComponent = [{ name: name, content: html }];
+    const newComponent = [{ id: componentId, name: name, content: html }];
     setName("");
     setEditorState(clearEditorContent(editorState));
 
@@ -53,7 +79,14 @@ function TextEditor() {
       e.preventDefault();
       props.onToggle(props.style);
     };
-    return <button onMouseDown={onClickButton}>{props.label}</button>;
+    return (
+      <button
+        className="RichEditor-controls RichEditor-styleButton RichEditor-activeButton"
+        onMouseDown={onClickButton}
+      >
+        {props.label}
+      </button>
+    );
   };
 
   const HEADER_TYPES = [
@@ -153,11 +186,7 @@ function TextEditor() {
         </span>
         <span>
           <p>ID</p>
-          <input
-            type="text"
-            readonly="readonly"
-            value={backendData.length + 1}
-          />
+          <input type="text" readonly="readonly" value={componentId} />
         </span>
         <span>
           <input type="submit" value="Delete" />

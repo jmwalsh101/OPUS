@@ -4,7 +4,13 @@ app.use(express.json());
 
 const components = [];
 
+let componentId = 0;
+
 app.get("/api", (req, res) => res.json(components));
+
+app.get("/component-id", (req, res) => {
+  res.json(componentId);
+});
 
 app.post("/api2", (req, res) => {
   const { parcel } = req.body;
@@ -13,6 +19,9 @@ app.post("/api2", (req, res) => {
   }
   res.status(200).send({ status: "received" });
   components.push(...parcel);
+  componentId = componentId + 1;
+  console.log(components);
+  console.log(componentId);
 });
 
 app.listen(5000, () => {
