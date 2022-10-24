@@ -23,8 +23,6 @@ function TextEditor() {
       });
   }, [editorState]);
 
-  console.log(componentId);
-
   function focusEditor() {
     editor.current.focus();
   }
@@ -41,7 +39,7 @@ function TextEditor() {
     setName("");
     setEditorState(clearEditorContent(editorState));
 
-    fetch("/api2", {
+    fetch("/component-update", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ parcel: newComponent }),

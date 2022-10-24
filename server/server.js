@@ -7,7 +7,7 @@ const components = [];
 
 let componentId = 0;
 
-app.get("/api", (req, res) => res.json(components));
+app.get("/component-load", (req, res) => res.json(components));
 
 app.get("/component-id", (req, res) => {
   res.json(componentId);
@@ -20,13 +20,13 @@ app.post("/component-delete", (req, res) => {
     return res.status(400).sendStatus({ status: "failed" });
   }
   res.status(200).send({ status: "received" });
-  const componentIndex = _.findIndex(components, function (o) {
-    return o.id == receivedID;
+  const componentIndex = _.findIndex(components, function (component) {
+    return component.id == receivedID;
   });
   components.splice(componentIndex, 1);
 });
 
-app.post("/api2", (req, res) => {
+app.post("/component-update", (req, res) => {
   const { parcel } = req.body;
   if (!parcel) {
     return res.status(400).sendStatus({ status: "failed" });

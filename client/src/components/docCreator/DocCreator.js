@@ -15,8 +15,6 @@ function DocCreator(props) {
   const [docTitle, setDocTitle] = useState("");
   const [backendData, setBackendData] = useState([{}]);
 
-  // deletion
-
   function handleDelete(e) {
     e.preventDefault();
     showComponent.splice(e.target.value, 1);
@@ -32,7 +30,7 @@ function DocCreator(props) {
   }
 
   useEffect(() => {
-    fetch("/api")
+    fetch("/component-load")
       .then((response) => response.json())
       .then((data) => {
         setBackendData(data);

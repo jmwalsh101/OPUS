@@ -13,7 +13,7 @@ function ComponenetSidebar() {
   }
 
   useEffect(() => {
-    fetch("/api")
+    fetch("/component-load")
       .then((response) => response.json())
       .then((data) => {
         setBackendData(data);
