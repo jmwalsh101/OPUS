@@ -11,41 +11,19 @@ function TextEditor() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [name, setName] = useState("");
   const editor = React.useRef(null);
-  const [backendData, setBackendData] = useState([]);
   const [componentId, setComponentId] = useState();
 
   useEffect(() => {
     fetch("/component-id")
       .then(function (response) {
-        // The response is a Response instance.
-        // You parse the data into a useable format using `.json()`
         return response.json();
       })
       .then(function (data) {
-        // `data` is the parsed version of the JSON returned from the above endpoint.
-        console.log(data); // { "userId": 1, "id": 1, "title": "...", "body": "..." }
         setComponentId(parseInt(data) + 1);
       });
   }, [editorState]);
 
   console.log(componentId);
-  /*
-  useEffect(() => {
-    fetch("/component-id").then((data) => {
-      setComponentId(data);
-      console.log(data);
-    });
-  }, []);
-
-  */
-
-  useEffect(() => {
-    fetch("/api")
-      .then((response) => response.json())
-      .then((data) => {
-        setBackendData(data);
-      });
-  }, [backendData]);
 
   function focusEditor() {
     editor.current.focus();
