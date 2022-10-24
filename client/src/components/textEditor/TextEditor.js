@@ -21,7 +21,7 @@ function TextEditor() {
       .then(function (data) {
         setComponentId(parseInt(data) + 1);
       });
-  }, [editorState]);
+  }, [name]);
 
   function focusEditor() {
     editor.current.focus();
