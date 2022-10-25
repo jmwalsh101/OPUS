@@ -14,16 +14,20 @@ app.get("/component-id", (req, res) => {
 });
 
 app.post("/component-delete", (req, res) => {
+  console.log(components);
   const { parcel } = req.body;
-  const receivedID = Object.values({ ...parcel });
+
   if (!parcel) {
     return res.status(400).sendStatus({ status: "failed" });
   }
   res.status(200).send({ status: "received" });
+  const spread = Object.values({ ...parcel });
+  const receivedID = spread.join("");
   const componentIndex = _.findIndex(components, function (component) {
     return component.id == receivedID;
   });
   components.splice(componentIndex, 1);
+  console.log(components);
 });
 
 app.post("/component-update", (req, res) => {

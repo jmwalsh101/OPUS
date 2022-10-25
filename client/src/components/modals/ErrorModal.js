@@ -1,16 +1,16 @@
 import "./modal.css";
 
-const MyVerticallyCenteredModal = (props) => {
+const ErrorModal = (props) => {
   const { show, onClose } = props;
 
   return (
     <div className="modal-screen">
       <div className="modal">
         <div className="modal-content">
-          <div className="modal-header">Hello</div>
-          <div className="modal-message">Message</div>
+          <div className="modal-header">Error</div>
+          <div className="modal-message">{props.message}</div>
           <div className="modal-footer">
-            <button onClick={onClose}>Close</button>
+            <button onClick={onClose}>OK</button>
           </div>
         </div>
       </div>
@@ -18,4 +18,4 @@ const MyVerticallyCenteredModal = (props) => {
   );
 };
 
-export default MyVerticallyCenteredModal;
+export default ErrorModal;

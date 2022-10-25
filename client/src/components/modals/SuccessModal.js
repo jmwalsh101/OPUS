@@ -1,14 +1,14 @@
 import "./modal.css";
 
-const MyVerticallyCenteredModal = (props) => {
+const SuccessModal = (props) => {
   const { show, onClose } = props;
 
   return (
     <div className="modal-screen">
       <div className="modal">
         <div className="modal-content">
-          <div className="modal-header">Loading</div>
-          <div className="modal-message">Loading...</div>
+          <div className="modal-header">Success</div>
+          <div className="modal-message">{props.message}</div>
           <div className="modal-footer">
             <button onClick={onClose}>Close</button>
           </div>
@@ -18,4 +18,4 @@ const MyVerticallyCenteredModal = (props) => {
   );
 };
 
-export default MyVerticallyCenteredModal;
+export default SuccessModal;

@@ -7,8 +7,8 @@ import "draft-js/dist/Draft.css";
 import "./draft.css";
 import "../style.css";
 
-import MyVerticallyCenteredModal from "./MyVerticallyCenteredModal";
-import LoadingModal from "./LoadingModal";
+import ErrorModal from "../modals/ErrorModal";
+import LoadingModal from "../modals/LoadingModal";
 import SuccessModal from "./SuccessModal";
 import _ from "lodash";
 
@@ -17,8 +17,6 @@ function TextEditor() {
   const [name, setName] = useState("");
   const editor = React.useRef(null);
   const [componentId, setComponentId] = useState();
-
-  console.log(editorState);
 
   const [modalShow, setModalShow] = useState(false);
   const handleClose = () => setModalShow(false);
@@ -94,15 +92,7 @@ function TextEditor() {
       setModalShow(true);
     }
   }
-  /*
-  const showModal = modalShow ? (
-    <>
-      <MyVerticallyCenteredModal show={modalShow} />
-    </>
-  ) : (
-    <>No modal</>
-  );
-*/
+
   useEffect(() => {
     focusEditor();
   }, []);
@@ -252,7 +242,11 @@ function TextEditor() {
           </div>
         </div>
         {modalShow ? (
-          <MyVerticallyCenteredModal show={modalShow} onClose={handleClose} />
+          <ErrorModal
+            show={modalShow}
+            onClose={handleClose}
+            message="You must enter a name and a text."
+          />
         ) : null}
         {loadingModal ? (
           <>
@@ -260,7 +254,11 @@ function TextEditor() {
           </>
         ) : null}
         {successModal ? (
-          <SuccessModal show={successModal} onClose={handleSuccessModalClose} />
+          <SuccessModal
+            show={successModal}
+            onClose={handleSuccessModalClose}
+            message="Component created!"
+          />
         ) : null}
       </div>
     </>
