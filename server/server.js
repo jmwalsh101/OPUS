@@ -19,6 +19,7 @@ app.post("/component-delete", (req, res) => {
 
   if (!parcel) {
     return res.status(400).sendStatus({ status: "failed" });
+    res.json(false);
   }
   res.status(200).send({ status: "received" });
   const spread = Object.values({ ...parcel });
@@ -28,6 +29,7 @@ app.post("/component-delete", (req, res) => {
   });
   components.splice(componentIndex, 1);
   console.log(components);
+  res.json(true);
 });
 
 app.post("/component-update", (req, res) => {

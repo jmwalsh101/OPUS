@@ -1,12 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import _ from "lodash";
 
 import LoadingModal from "../modals/LoadingModal";
 import ConfirmModal from "../modals/ConfirmModal";
 import SuccessModal from "../modals/SuccessModal";
 
+import { backendComponentsContext } from "../../constants/componentContext";
+
 function ComponenetSidebar() {
-  const [backendData, setBackendData] = useState([]);
+  const { componentsFromBackend, setComponentsFromBackend } = useContext(
+    backendComponentsContext
+  );
+
   const [loadingModal, setShowLoading] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
   const [successModal, showSuccessModal] = useState(false);
@@ -18,26 +23,23 @@ function ComponenetSidebar() {
   const handleClose = () => setShowLoading(false);
 
   function handleConfirmModalClose() {
-    const oldBackendData = backendData;
+    const oldBackendData = componentsFromBackend;
     fetch("/component-delete", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ parcel: deleteItem }),
+
+      // I need to somehow include the response here.
     });
 
-    if (_.difference(oldBackendData, backendData) === []) {
+    if (_.difference(oldBackendData, componentsFromBackend) === []) {
       setShowLoading(true);
     }
     setConfirmModal(false);
 
-    // addition to try and show success modal
-    fetch("/component-load")
-      .then((response) => response.json())
-      .then((data) => {
-        setBackendData(data);
-      });
+    // addition to try and show success modal -- a response from backend is required
 
-    if (_.difference(oldBackendData, backendData) !== []) {
+    if (_.difference(oldBackendData, componentsFromBackend) !== []) {
       showSuccessModal(true);
       setTimeout(() => showSuccessModal(false), 1000);
     }
@@ -56,17 +58,9 @@ function ComponenetSidebar() {
     console.log(e.target.content);
   }
 
-  useEffect(() => {
-    fetch("/component-load")
-      .then((response) => response.json())
-      .then((data) => {
-        setBackendData(data);
-      });
-  }, [backendData]);
-
   return (
     <>
-      {backendData.map(function (q, index) {
+      {componentsFromBackend.map(function (q, index) {
         return (
           <>
             <div key={index}>
