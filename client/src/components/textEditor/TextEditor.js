@@ -9,8 +9,18 @@ import "../style.css";
 
 import ErrorModal from "../modals/ErrorModal";
 import LoadingModal from "../modals/LoadingModal";
-import SuccessModal from "./SuccessModal";
+import SuccessModal from "../modals/SuccessModal";
 import _ from "lodash";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faB } from "@fortawesome/free-solid-svg-icons";
+import { faItalic } from "@fortawesome/free-solid-svg-icons";
+import { faUnderline } from "@fortawesome/free-solid-svg-icons";
+import { faListUl } from "@fortawesome/free-solid-svg-icons";
+import { faListOl } from "@fortawesome/free-solid-svg-icons";
+import { faCode } from "@fortawesome/free-solid-svg-icons";
+import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
+import { faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 
 function TextEditor() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -20,11 +30,7 @@ function TextEditor() {
 
   const [modalShow, setModalShow] = useState(false);
   const handleClose = () => setModalShow(false);
-
   const [successModal, showSuccessModal] = useState(false);
-  const handleSuccessModalClose = () => showSuccessModal(false);
-
-  // test for loading modal
 
   const [backendData, setBackendData] = useState([]);
   const [loadingModal, setShowLoading] = useState(false);
@@ -80,13 +86,13 @@ function TextEditor() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ parcel: newComponent }),
       });
-
-      while (_.difference(oldBackendData, backendData) === []) {
-        setShowLoading(true);
-      }
+      // while (_.difference(oldBackendData, backendData) === []) {
+      //  setShowLoading(true);
+      // }
 
       if (_.difference(oldBackendData, backendData) !== []) {
         showSuccessModal(true);
+        setTimeout(() => showSuccessModal(false), 1000);
       }
     } else {
       setModalShow(true);
@@ -138,8 +144,16 @@ function TextEditor() {
 
   const LIST_TYPES = [
     { label: "Blockquote", style: "blockquote" },
-    { label: "Code Block", style: "code-block" },
-    { label: "Monospace", style: "CODE" },
+    { label: <FontAwesomeIcon icon={faCode} />, style: "code-block" },
+    {
+      label: (
+        <>
+          <FontAwesomeIcon icon={faQuoteLeft} />{" "}
+          <FontAwesomeIcon icon={faQuoteRight} />
+        </>
+      ),
+      style: "CODE",
+    },
   ];
 
   const ListStyleControls = (props) => {
@@ -158,11 +172,14 @@ function TextEditor() {
   };
 
   const INLINE_STYLES = [
-    { label: "Bold", style: "BOLD" },
-    { label: "Italic", style: "ITALIC" },
-    { label: "Underline", style: "UNDERLINE" },
-    { label: "UL", style: "unordered-list-item" },
-    { label: "OL", style: "ordered-list-item" },
+    { label: <FontAwesomeIcon icon={faB} />, style: "BOLD" },
+    { label: <FontAwesomeIcon icon={faItalic} />, style: "ITALIC" },
+    { label: <FontAwesomeIcon icon={faUnderline} />, style: "UNDERLINE" },
+    {
+      label: <FontAwesomeIcon icon={faListUl} />,
+      style: "unordered-list-item",
+    },
+    { label: <FontAwesomeIcon icon={faListOl} />, style: "ordered-list-item" },
   ];
   const InlineStyleControls = (props) => {
     return (
@@ -253,13 +270,7 @@ function TextEditor() {
             <LoadingModal show={loadingModal} onClose={handleLoadingClose} />
           </>
         ) : null}
-        {successModal ? (
-          <SuccessModal
-            show={successModal}
-            onClose={handleSuccessModalClose}
-            message="Component created!"
-          />
-        ) : null}
+        {successModal ? <SuccessModal message="Component created!" /> : null}
       </div>
     </>
   );

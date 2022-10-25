@@ -1,17 +1,21 @@
-import "./modal.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
+
+import "./master.css";
 
 const SuccessModal = (props) => {
-  const { show, onClose } = props;
-
   return (
     <div className="modal-screen">
       <div className="modal">
-        <div className="modal-content">
+        <div className="modal-content-success">
           <div className="modal-header">Success</div>
-          <div className="modal-message">{props.message}</div>
-          <div className="modal-footer">
-            <button onClick={onClose}>Close</button>
+          <div className="modal-message">
+            <div>
+              <FontAwesomeIcon icon={faCircleCheck} className="fontawesome" />
+            </div>
+            <div>{props.message}</div>
           </div>
+          <div className="modal-footer"></div>
         </div>
       </div>
     </div>

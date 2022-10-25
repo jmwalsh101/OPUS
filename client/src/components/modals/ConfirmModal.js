@@ -1,4 +1,4 @@
-import "./modal.css";
+import "./master.css";
 
 const SuccessModal = (props) => {
   const { show, onClose } = props;
@@ -6,7 +6,7 @@ const SuccessModal = (props) => {
   return (
     <div className="modal-screen">
       <div className="modal">
-        <div className="modal-content">
+        <div className="modal-content-confirm">
           <div className="modal-header">Confirm</div>
           <div className="modal-message">
             {props.name}

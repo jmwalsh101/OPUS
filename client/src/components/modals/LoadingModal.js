@@ -1,4 +1,4 @@
-import "./modal.css";
+import "./master.css";
 
 const LoadingModal = (props) => {
   const { show, onClose } = props;
@@ -6,7 +6,7 @@ const LoadingModal = (props) => {
   return (
     <div className="modal-screen">
       <div className="modal">
-        <div className="modal-content">
+        <div className="modal-content-loading">
           <div className="modal-header">Loading</div>
           <div className="modal-message">Loading...</div>
           <div className="modal-footer">

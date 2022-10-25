@@ -3,11 +3,13 @@ import _ from "lodash";
 
 import LoadingModal from "../modals/LoadingModal";
 import ConfirmModal from "../modals/ConfirmModal";
+import SuccessModal from "../modals/SuccessModal";
 
 function ComponenetSidebar() {
   const [backendData, setBackendData] = useState([]);
   const [loadingModal, setShowLoading] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
+  const [successModal, showSuccessModal] = useState(false);
 
   const [deleteItem, setDeleteItem] = useState();
   const [deleteName, setDeleteName] = useState("");
@@ -27,6 +29,18 @@ function ComponenetSidebar() {
       setShowLoading(true);
     }
     setConfirmModal(false);
+
+    // addition to try and show success modal
+    fetch("/component-load")
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendData(data);
+      });
+
+    if (_.difference(oldBackendData, backendData) !== []) {
+      showSuccessModal(true);
+      setTimeout(() => showSuccessModal(false), 1000);
+    }
   }
 
   function handleCancel() {
@@ -80,6 +94,9 @@ function ComponenetSidebar() {
                     cancel={handleCancel}
                   />
                 </>
+              ) : null}
+              {successModal ? (
+                <SuccessModal message="Component deleted!" />
               ) : null}
             </div>
           </>
