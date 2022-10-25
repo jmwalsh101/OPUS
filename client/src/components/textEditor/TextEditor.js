@@ -8,7 +8,9 @@ import "./draft.css";
 import "../style.css";
 
 import MyVerticallyCenteredModal from "./MyVerticallyCenteredModal";
-import Button from "react-bootstrap/Button";
+import LoadingModal from "./LoadingModal";
+import SuccessModal from "./SuccessModal";
+import _ from "lodash";
 
 function TextEditor() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -20,6 +22,25 @@ function TextEditor() {
 
   const [modalShow, setModalShow] = useState(false);
   const handleClose = () => setModalShow(false);
+
+  const [successModal, showSuccessModal] = useState(false);
+  const handleSuccessModalClose = () => showSuccessModal(false);
+
+  // test for loading modal
+
+  const [backendData, setBackendData] = useState([]);
+  const [loadingModal, setShowLoading] = useState(false);
+  const handleLoadingClose = () => setShowLoading(false);
+
+  useEffect(() => {
+    fetch("/component-load")
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendData(data);
+      });
+  }, [backendData]);
+
+  //
 
   useEffect(() => {
     fetch("/component-id")
@@ -35,6 +56,12 @@ function TextEditor() {
     editor.current.focus();
   }
 
+  function handleClear(e) {
+    e.preventDefault();
+    setName("");
+    setEditorState(clearEditorContent(editorState));
+  }
+
   function handleSaveName(e) {
     e.preventDefault();
     setName(e.target.value);
@@ -42,6 +69,8 @@ function TextEditor() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    const oldBackendData = backendData;
+
     if (name !== "" && editorState.getCurrentContent().hasText()) {
       const html = convertToHTML(editorState.getCurrentContent());
       const newComponent = [{ id: componentId, name: name, content: html }];
@@ -53,6 +82,14 @@ function TextEditor() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ parcel: newComponent }),
       });
+
+      while (_.difference(oldBackendData, backendData) === []) {
+        setShowLoading(true);
+      }
+
+      if (_.difference(oldBackendData, backendData) !== []) {
+        showSuccessModal(true);
+      }
     } else {
       setModalShow(true);
     }
@@ -186,7 +223,7 @@ function TextEditor() {
             <input type="text" readonly="readonly" value={componentId} />
           </span>
           <span>
-            <input type="submit" value="Delete" />
+            <input type="submit" value="Clear" onClick={handleClear} />
           </span>
           <span>
             <input type="submit" onClick={handleSubmit} />
@@ -216,6 +253,14 @@ function TextEditor() {
         </div>
         {modalShow ? (
           <MyVerticallyCenteredModal show={modalShow} onClose={handleClose} />
+        ) : null}
+        {loadingModal ? (
+          <>
+            <LoadingModal show={loadingModal} onClose={handleLoadingClose} />
+          </>
+        ) : null}
+        {successModal ? (
+          <SuccessModal show={successModal} onClose={handleSuccessModalClose} />
         ) : null}
       </div>
     </>
