@@ -39,7 +39,7 @@ function ComponenetSidebar() {
 
     // addition to try and show success modal -- a response from backend is required
 
-    if (_.difference(oldBackendData, componentsFromBackend) !== []) {
+    if (_.difference(componentsFromBackend, oldBackendData) !== []) {
       showSuccessModal(true);
       setTimeout(() => showSuccessModal(false), 1000);
     }

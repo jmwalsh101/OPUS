@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { Editor, EditorState, RichUtils } from "draft-js";
 import { clearEditorContent } from "draftjs-utils";
@@ -12,6 +12,8 @@ import LoadingModal from "../modals/LoadingModal";
 import SuccessModal from "../modals/SuccessModal";
 import _ from "lodash";
 
+import { backendComponentsContext } from "../../constants/componentContext";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faB } from "@fortawesome/free-solid-svg-icons";
 import { faItalic } from "@fortawesome/free-solid-svg-icons";
@@ -23,6 +25,10 @@ import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
 import { faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 
 function TextEditor() {
+  const { componentsFromBackend, setComponentsFromBackend } = useContext(
+    backendComponentsContext
+  );
+
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [name, setName] = useState("");
   const editor = React.useRef(null);
@@ -32,17 +38,8 @@ function TextEditor() {
   const handleClose = () => setModalShow(false);
   const [successModal, showSuccessModal] = useState(false);
 
-  const [backendData, setBackendData] = useState([]);
   const [loadingModal, setShowLoading] = useState(false);
   const handleLoadingClose = () => setShowLoading(false);
-
-  useEffect(() => {
-    fetch("/component-load")
-      .then((response) => response.json())
-      .then((data) => {
-        setBackendData(data);
-      });
-  }, [backendData]);
 
   //
 
@@ -73,7 +70,7 @@ function TextEditor() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const oldBackendData = backendData;
+    const oldBackendData = componentsFromBackend;
 
     if (name !== "" && editorState.getCurrentContent().hasText()) {
       const html = convertToHTML(editorState.getCurrentContent());
@@ -90,7 +87,7 @@ function TextEditor() {
       //  setShowLoading(true);
       // }
 
-      if (_.difference(oldBackendData, backendData) !== []) {
+      if (_.difference(oldBackendData, componentsFromBackend) !== []) {
         showSuccessModal(true);
         setTimeout(() => showSuccessModal(false), 1000);
       }
