@@ -3,6 +3,7 @@ import _ from "lodash";
 
 import {
   backendDocumentsContext,
+  documentTitleContext,
   usedComponentsContext,
 } from "../../contexts/documentContext";
 
@@ -15,10 +16,12 @@ function Sidebar() {
     usedComponentsContext
   );
 
+  const { docTitle, setDocTitle } = useContext(documentTitleContext);
   // console.log(_.map(documentsFromBackend, "content"));
 
   function handleSelect(e) {
     e.preventDefault();
+    const title = e.target.title;
     const componentIds = e.target.value.split(",");
 
     fetch("/component-load")
@@ -34,6 +37,7 @@ function Sidebar() {
         }
         console.log(component);
         setUsedComponents(component);
+        setDocTitle(title);
       })
 
       // fail error modal here
@@ -49,7 +53,7 @@ function Sidebar() {
           <>
             <div key={index}>
               <p>{q.title}</p>
-              <button onClick={handleSelect} value={q.content}>
+              <button onClick={handleSelect} value={q.content} title={q.title}>
                 Select
               </button>
             </div>

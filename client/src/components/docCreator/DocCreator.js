@@ -10,16 +10,20 @@ import _ from "lodash";
 
 import SortableItem from "./SortableItem";
 
-import { usedComponentsContext } from "../../contexts/documentContext";
+import {
+  usedComponentsContext,
+  documentTitleContext,
+} from "../../contexts/documentContext";
 
 function DocCreator() {
   const [visVars, setVisVars] = useState(true);
-  const [docTitle, setDocTitle] = useState("");
   const [backendData, setBackendData] = useState([]);
 
   const { usedComponents, setUsedComponents } = useContext(
     usedComponentsContext
   );
+
+  const { docTitle, setDocTitle } = useContext(documentTitleContext);
 
   function handleDelete(e) {
     e.preventDefault();
