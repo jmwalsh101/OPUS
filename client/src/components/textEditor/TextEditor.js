@@ -46,7 +46,6 @@ function TextEditor() {
   const [existingNameModal, setExistingNameModal] = useState(false);
 
   const [loadingModal, setShowLoading] = useState(false);
-  const handleLoadingClose = () => setShowLoading(false);
 
   useEffect(() => {
     if (backendComponentId) {
@@ -123,7 +122,7 @@ function TextEditor() {
       setName("");
       setEditorState(clearEditorContent(editorState));
 
-      fetch("/component-update", {
+      fetch("/component-new", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ parcel: newComponent }),
@@ -314,7 +313,7 @@ function TextEditor() {
         ) : null}
         {loadingModal ? (
           <>
-            <LoadingModal show={loadingModal} onClose={handleLoadingClose} />
+            <LoadingModal />
           </>
         ) : null}
         {successModal ? <SuccessModal message="Component created!" /> : null}

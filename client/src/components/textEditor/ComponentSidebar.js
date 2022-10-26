@@ -24,8 +24,6 @@ function ComponenetSidebar() {
   const [deleteName, setDeleteName] = useState("");
   const [deleteContent, setDeleteContent] = useState();
 
-  const handleClose = () => setShowLoading(false);
-
   function handleConfirmModalClose() {
     setConfirmModal(false);
     setShowLoading(true);
@@ -94,7 +92,7 @@ function ComponenetSidebar() {
       <div>
         {loadingModal ? (
           <>
-            <LoadingModal show={loadingModal} onClose={handleClose} />
+            <LoadingModal />
           </>
         ) : null}
         {confirmModal ? (

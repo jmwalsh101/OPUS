@@ -5,8 +5,6 @@ import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import "./master.css";
 
 const LoadingModal = (props) => {
-  const { show, onClose } = props;
-
   return (
     <div className="modal-screen">
       <div className="modal">
@@ -22,9 +20,7 @@ const LoadingModal = (props) => {
             </div>
             <div>Loading...</div>
           </div>
-          <div className="modal-footer">
-            <button onClick={onClose}>Close</button>
-          </div>
+          <div className="modal-footer"></div>
         </div>
       </div>
     </div>
