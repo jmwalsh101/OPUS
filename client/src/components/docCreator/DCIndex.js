@@ -4,10 +4,14 @@ import "../style.css";
 import Sidebar from "./Sidebar";
 import DocCreator from "./DocCreator";
 
-import { backendDocumentsContext } from "../../contexts/documentContext";
+import {
+  backendDocumentsContext,
+  usedComponentsContext,
+} from "../../contexts/documentContext";
 
 function DCIndex() {
   const [documentsFromBackend, setDocumentsFromBackend] = useState([]);
+  const [usedComponents, setUsedComponents] = useState([]);
 
   useEffect(() => {
     fetch("/documents-load")
@@ -20,20 +24,24 @@ function DCIndex() {
 
   return (
     <>
-      <backendDocumentsContext.Provider
-        value={{ documentsFromBackend, setDocumentsFromBackend }}
+      <usedComponentsContext.Provider
+        value={{ usedComponents, setUsedComponents }}
       >
-        <div className="main-container">
-          <div className="sidebar">
-            <Sidebar />
-          </div>
-          <div className="main-doc-creator">
-            <div className="doc-creator">
-              <DocCreator />
+        <backendDocumentsContext.Provider
+          value={{ documentsFromBackend, setDocumentsFromBackend }}
+        >
+          <div className="main-container">
+            <div className="sidebar">
+              <Sidebar />
+            </div>
+            <div className="main-doc-creator">
+              <div className="doc-creator">
+                <DocCreator />
+              </div>
             </div>
           </div>
-        </div>
-      </backendDocumentsContext.Provider>
+        </backendDocumentsContext.Provider>
+      </usedComponentsContext.Provider>
     </>
   );
 }

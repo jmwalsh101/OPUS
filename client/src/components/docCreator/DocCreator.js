@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./style.css";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import {
@@ -10,12 +10,16 @@ import _ from "lodash";
 
 import SortableItem from "./SortableItem";
 
-function DocCreator(props) {
+import { usedComponentsContext } from "../../contexts/documentContext";
+
+function DocCreator() {
   const [visVars, setVisVars] = useState(true);
-  const [usedComponents, setUsedComponents] = useState([]);
-  const [document, setDocument] = useState([]);
   const [docTitle, setDocTitle] = useState("");
   const [backendData, setBackendData] = useState([]);
+
+  const { usedComponents, setUsedComponents } = useContext(
+    usedComponentsContext
+  );
 
   function handleDelete(e) {
     e.preventDefault();
@@ -61,11 +65,6 @@ function DocCreator(props) {
       content: componentIds,
     };
 
-    setDocument({
-      title: docTitle,
-      content: componentIds,
-    });
-
     fetch("/document-new", {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -75,6 +74,8 @@ function DocCreator(props) {
         response.json();
 
         if (response.ok) {
+          setDocTitle("");
+          setUsedComponents([]);
         }
         //else for modal
       })
@@ -133,7 +134,11 @@ function DocCreator(props) {
             <div className="doc-creator-container">
               <div className="doc-actions">
                 Name
-                <input type="text" onChange={handleSaveTitle} />
+                <input
+                  type="text"
+                  onChange={handleSaveTitle}
+                  value={docTitle}
+                />
                 <input type="submit" value="Save" onClick={handleSubmit} />
               </div>
               <div className="document-container">
