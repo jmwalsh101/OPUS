@@ -69,14 +69,19 @@
   align-items: center;
   padding: 2%;
 }
-.modal-screen .modal .modal-content-confirm {
+.modal-screen .modal .modal-content-loading .modal-message .fontawesome {
+  color: lightskyblue;
+  height: 80px;
+  width: 80px;
+}
+.modal-screen .modal .modal-content-loading .modal-content-confirm {
   padding: 2%;
 }
-.modal-screen .modal .modal-content-confirm .modal-header {
+.modal-screen .modal .modal-content-loading .modal-content-confirm .modal-header {
   font-size: large;
   font-weight: 900;
 }
-.modal-screen .modal .modal-content-confirm .modal-header .modal-message {
+.modal-screen .modal .modal-content-loading .modal-content-confirm .modal-header .modal-message {
   display: flex;
   flex-direction: column;
   justify-content: center;

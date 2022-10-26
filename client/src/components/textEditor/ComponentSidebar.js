@@ -5,12 +5,16 @@ import LoadingModal from "../modals/LoadingModal";
 import ConfirmModal from "../modals/ConfirmModal";
 import SuccessModal from "../modals/SuccessModal";
 
-import { backendComponentsContext } from "../../constants/componentContext";
+import { backendComponentsContext } from "../../contexts/componentContext";
+import { componentIdContext } from "../../contexts/componentContext";
 
 function ComponenetSidebar() {
   const { componentsFromBackend, setComponentsFromBackend } = useContext(
     backendComponentsContext
   );
+
+  const { backendComponentId, setBackendComponentId } =
+    useContext(componentIdContext);
 
   const [loadingModal, setShowLoading] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
@@ -23,26 +27,26 @@ function ComponenetSidebar() {
   const handleClose = () => setShowLoading(false);
 
   function handleConfirmModalClose() {
-    const oldBackendData = componentsFromBackend;
+    setConfirmModal(false);
+    setShowLoading(true);
+
     fetch("/component-delete", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ parcel: deleteItem }),
+    })
+      .then((response) => {
+        response.json();
+        setShowLoading(false);
+        if (response.ok) {
+          showSuccessModal(true);
+          setTimeout(() => showSuccessModal(false), 1000);
+        }
+        //else for modal
+      })
 
-      // I need to somehow include the response here.
-    });
-
-    if (_.difference(oldBackendData, componentsFromBackend) === []) {
-      setShowLoading(true);
-    }
-    setConfirmModal(false);
-
-    // addition to try and show success modal -- a response from backend is required
-
-    if (_.difference(componentsFromBackend, oldBackendData) !== []) {
-      showSuccessModal(true);
-      setTimeout(() => showSuccessModal(false), 1000);
-    }
+      // fail error modal here
+      .catch((error) => console.log("ERROR"));
   }
 
   function handleCancel() {
@@ -58,44 +62,54 @@ function ComponenetSidebar() {
     console.log(e.target.content);
   }
 
+  function handleSelect(e) {
+    e.preventDefault();
+    setBackendComponentId(e.target.value);
+  }
+
   return (
     <>
-      {componentsFromBackend.map(function (q, index) {
-        return (
+      <div>
+        {componentsFromBackend.map(function (q, index) {
+          return (
+            <>
+              <div key={index}>
+                <p>{q.name}</p>
+                <button
+                  onClick={handleDelete}
+                  value={q.id}
+                  name={q.name}
+                  content={q.content}
+                >
+                  Delete
+                </button>
+                <button onClick={handleSelect} value={q.id}>
+                  Select
+                </button>
+              </div>
+            </>
+          );
+        })}
+      </div>
+      <div>
+        {loadingModal ? (
           <>
-            <div key={index}>
-              <p>{q.name}</p>
-              <button
-                onClick={handleDelete}
-                value={q.id}
-                name={q.name}
-                content={q.content}
-              >
-                Delete
-              </button>
-              {loadingModal ? (
-                <>
-                  <LoadingModal show={loadingModal} onClose={handleClose} />
-                </>
-              ) : null}
-              {confirmModal ? (
-                <>
-                  <ConfirmModal
-                    show={confirmModal}
-                    onClose={handleConfirmModalClose}
-                    name={deleteName}
-                    content={deleteContent}
-                    cancel={handleCancel}
-                  />
-                </>
-              ) : null}
-              {successModal ? (
-                <SuccessModal message="Component deleted!" />
-              ) : null}
-            </div>
+            <LoadingModal show={loadingModal} onClose={handleClose} />
           </>
-        );
-      })}
+        ) : null}
+        {confirmModal ? (
+          <>
+            <ConfirmModal
+              show={confirmModal}
+              onClose={handleConfirmModalClose}
+              name={deleteName}
+              content={deleteContent}
+              cancel={handleCancel}
+            />
+          </>
+        ) : null}
+        {successModal ? <SuccessModal message="Component deleted!" /> : null}
+      </div>
     </>
   );
 }

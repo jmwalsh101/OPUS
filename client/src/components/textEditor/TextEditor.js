@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 
 import { Editor, EditorState, RichUtils } from "draft-js";
 import { clearEditorContent } from "draftjs-utils";
-import { convertToHTML } from "draft-convert";
+import { convertToHTML, convertFromHTML } from "draft-convert";
 import "draft-js/dist/Draft.css";
 import "./draft.css";
 import "../style.css";
@@ -12,7 +12,8 @@ import LoadingModal from "../modals/LoadingModal";
 import SuccessModal from "../modals/SuccessModal";
 import _ from "lodash";
 
-import { backendComponentsContext } from "../../constants/componentContext";
+import { backendComponentsContext } from "../../contexts/componentContext";
+import { componentIdContext } from "../../contexts/componentContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faB } from "@fortawesome/free-solid-svg-icons";
@@ -29,19 +30,46 @@ function TextEditor() {
     backendComponentsContext
   );
 
+  const { backendComponentId, setBackendComponentId } =
+    useContext(componentIdContext);
+
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [name, setName] = useState("");
   const editor = React.useRef(null);
   const [componentId, setComponentId] = useState();
+  const [componentSelected, setComponentSelected] = useState(false);
 
   const [modalShow, setModalShow] = useState(false);
   const handleClose = () => setModalShow(false);
+  const handleExistingName = () => setExistingNameModal(false);
   const [successModal, showSuccessModal] = useState(false);
+  const [existingNameModal, setExistingNameModal] = useState(false);
 
   const [loadingModal, setShowLoading] = useState(false);
   const handleLoadingClose = () => setShowLoading(false);
 
-  //
+  useEffect(() => {
+    if (backendComponentId) {
+      const convertedId = parseInt(backendComponentId);
+      const selectedComponent = _.find(componentsFromBackend, {
+        id: convertedId,
+      });
+
+      const selectedName = selectedComponent.name;
+      const selectedContent = convertFromHTML(selectedComponent.content);
+
+      /*}
+      const contentState = ContentState.createFromBlockArray(
+        selectedContent.contentBlocks,
+        selectedContent.entityMap
+      );
+      */
+      setComponentSelected(true);
+      setComponentId(convertedId);
+      setName(selectedName);
+      setEditorState(EditorState.createWithContent(selectedContent));
+    }
+  }, [backendComponentId]);
 
   useEffect(() => {
     fetch("/component-id")
@@ -49,8 +77,11 @@ function TextEditor() {
         return response.json();
       })
       .then(function (data) {
-        setComponentId(parseInt(data) + 1);
-      });
+        if (componentSelected === false) {
+          setComponentId(parseInt(data) + 1);
+        }
+      }) // fail error modal here
+      .catch((error) => console.log("ERROR"));
   }, [name]);
 
   function focusEditor() {
@@ -61,6 +92,7 @@ function TextEditor() {
     e.preventDefault();
     setName("");
     setEditorState(clearEditorContent(editorState));
+    setComponentSelected(false);
   }
 
   function handleSaveName(e) {
@@ -70,11 +102,24 @@ function TextEditor() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const oldBackendData = componentsFromBackend;
+    const existingName = _.find(componentsFromBackend, { name: name });
 
-    if (name !== "" && editorState.getCurrentContent().hasText()) {
+    if (name === "" || !editorState.getCurrentContent().hasText()) {
+      setModalShow(true);
+    } else if (componentSelected === true) {
+      const html = convertToHTML(editorState.getCurrentContent());
+      const updateComponent = [{ id: componentId, name: name, content: html }];
+      setShowLoading(true);
+      setName("");
+      setEditorState(clearEditorContent(editorState));
+
+      // fetch needed to update backend
+    } else if (existingName) {
+      setExistingNameModal(true);
+    } else {
       const html = convertToHTML(editorState.getCurrentContent());
       const newComponent = [{ id: componentId, name: name, content: html }];
+      setShowLoading(true);
       setName("");
       setEditorState(clearEditorContent(editorState));
 
@@ -82,17 +127,17 @@ function TextEditor() {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ parcel: newComponent }),
-      });
-      // while (_.difference(oldBackendData, backendData) === []) {
-      //  setShowLoading(true);
-      // }
-
-      if (_.difference(oldBackendData, componentsFromBackend) !== []) {
-        showSuccessModal(true);
-        setTimeout(() => showSuccessModal(false), 1000);
-      }
-    } else {
-      setModalShow(true);
+      })
+        .then((response) => {
+          response.json();
+          setShowLoading(false);
+          if (response.ok) {
+            showSuccessModal(true);
+            setTimeout(() => showSuccessModal(false), 1000);
+          }
+          //else for modal
+        })
+        .catch((error) => console.log("ERROR"));
     }
   }
 
@@ -129,7 +174,6 @@ function TextEditor() {
       <div>
         {HEADER_TYPES.map((type) => (
           <StyleButton
-            key={type.label}
             label={type.label}
             onToggle={props.onToggle}
             style={type.style}
@@ -158,7 +202,6 @@ function TextEditor() {
       <div>
         {LIST_TYPES.map((type) => (
           <StyleButton
-            key={type.label}
             label={type.label}
             onToggle={props.onToggle}
             style={type.style}
@@ -184,7 +227,7 @@ function TextEditor() {
         {INLINE_STYLES.map((type) => (
           <>
             <StyleButton
-              key={type.label}
+              // key={type.label}
               label={type.label}
               onToggle={props.onToggle}
               style={type.style}
@@ -224,7 +267,7 @@ function TextEditor() {
           </span>
           <span>
             <p>ID</p>
-            <input type="text" readonly="readonly" value={componentId} />
+            <input type="text" readOnly="readonly" value={componentId} />
           </span>
           <span>
             <input type="submit" value="Clear" onClick={handleClear} />
@@ -260,6 +303,13 @@ function TextEditor() {
             show={modalShow}
             onClose={handleClose}
             message="You must enter a name and a text."
+          />
+        ) : null}
+        {existingNameModal ? (
+          <ErrorModal
+            show={modalShow}
+            onClose={handleExistingName}
+            message="A name already exists."
           />
         ) : null}
         {loadingModal ? (

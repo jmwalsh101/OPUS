@@ -1,3 +1,7 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+
 import "./master.css";
 
 const LoadingModal = (props) => {
@@ -8,7 +12,16 @@ const LoadingModal = (props) => {
       <div className="modal">
         <div className="modal-content-loading">
           <div className="modal-header">Loading</div>
-          <div className="modal-message">Loading...</div>
+          <div className="modal-message">
+            <div>
+              <FontAwesomeIcon
+                icon={faCircleNotch}
+                className="fontawesome"
+                spin
+              />
+            </div>
+            <div>Loading...</div>
+          </div>
           <div className="modal-footer">
             <button onClick={onClose}>Close</button>
           </div>

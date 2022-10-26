@@ -1,36 +1,43 @@
 import "./style.css";
 import ComponenetSidebar from "./ComponentSidebar";
 import TextEditor from "./TextEditor";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-import { backendComponentsContext } from "../../constants/componentContext";
+import { backendComponentsContext } from "../../contexts/componentContext";
+import { componentIdContext } from "../../contexts/componentContext";
 
 function Index() {
   const [componentsFromBackend, setComponentsFromBackend] = useState([]);
+  const [backendComponentId, setBackendComponentId] = useState();
 
   useEffect(() => {
     fetch("/component-load")
       .then((response) => response.json())
       .then((data) => {
         setComponentsFromBackend(data);
-      });
+      }) // fail error modal here
+      .catch((error) => console.log("ERROR"));
   }, [componentsFromBackend]);
 
   return (
-    <backendComponentsContext.Provider
-      value={{ componentsFromBackend, setComponentsFromBackend }}
+    <componentIdContext.Provider
+      value={{ backendComponentId, setBackendComponentId }}
     >
-      <div className="main-container">
-        <div className="sidebar">
-          <ComponenetSidebar />
-        </div>
-        <div className="main-text-editor">
-          <div className="text-editor">
-            <TextEditor />
+      <backendComponentsContext.Provider
+        value={{ componentsFromBackend, setComponentsFromBackend }}
+      >
+        <div className="main-container">
+          <div className="sidebar">
+            <ComponenetSidebar />
+          </div>
+          <div className="main-text-editor">
+            <div className="text-editor">
+              <TextEditor />
+            </div>
           </div>
         </div>
-      </div>
-    </backendComponentsContext.Provider>
+      </backendComponentsContext.Provider>
+    </componentIdContext.Provider>
   );
 }
 
