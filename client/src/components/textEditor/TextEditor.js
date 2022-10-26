@@ -109,10 +109,22 @@ function TextEditor() {
       const html = convertToHTML(editorState.getCurrentContent());
       const updateComponent = [{ id: componentId, name: name, content: html }];
       setShowLoading(true);
-      setName("");
-      setEditorState(clearEditorContent(editorState));
 
-      // fetch needed to update backend
+      fetch("/component-update", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ parcel: updateComponent }),
+      })
+        .then((response) => {
+          response.json();
+          setShowLoading(false);
+          if (response.ok) {
+            showSuccessModal(true);
+            setTimeout(() => showSuccessModal(false), 1000);
+          }
+          //else for modal
+        })
+        .catch((error) => console.log("ERROR"));
     } else if (existingName) {
       setExistingNameModal(true);
     } else {

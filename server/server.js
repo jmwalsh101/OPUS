@@ -19,7 +19,6 @@ app.post("/component-delete", (req, res) => {
 
   if (!parcel) {
     return res.status(400).sendStatus({ status: "failed" });
-    res.json(false);
   }
   res.status(200).send({ status: "received" });
   const spread = Object.values({ ...parcel });
@@ -29,10 +28,9 @@ app.post("/component-delete", (req, res) => {
   });
   components.splice(componentIndex, 1);
   console.log(components);
-  res.json(true);
 });
 
-app.post("/component-update", (req, res) => {
+app.post("/component-new", (req, res) => {
   const { parcel } = req.body;
   if (!parcel) {
     return res.status(400).sendStatus({ status: "failed" });
@@ -40,6 +38,23 @@ app.post("/component-update", (req, res) => {
   res.status(200).send({ status: "received" });
   components.push(...parcel);
   componentId = componentId + 1;
+});
+
+app.post("/component-update", (req, res) => {
+  console.log(components);
+  const { parcel } = req.body;
+  if (!parcel) {
+    return res.status(400).sendStatus({ status: "failed" });
+  }
+  res.status(200).send({ status: "received" });
+  const spread = Object.values({ ...parcel });
+  console.log(spread[0].id);
+  const componentIndex = _.findIndex(components, function (component) {
+    return component.id == spread[0].id;
+  });
+  console.log(componentIndex);
+  components.splice(componentIndex, 1, spread[0]);
+  console.log(components);
 });
 
 app.listen(5000, () => {

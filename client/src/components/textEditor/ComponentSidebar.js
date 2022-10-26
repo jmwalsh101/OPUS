@@ -57,7 +57,6 @@ function ComponenetSidebar() {
     setConfirmModal(true);
     setDeleteContent(e.target.content);
     setDeleteName(e.target.name);
-    console.log(e.target.content);
   }
 
   function handleSelect(e) {
