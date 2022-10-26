@@ -4,8 +4,13 @@ app.use(express.json());
 const _ = require("lodash");
 
 const components = [];
-
 let componentId = 0;
+
+app.listen(5000, () => {
+  console.log("Server started on port 5000");
+});
+
+// COMPONENTS
 
 app.get("/component-load", (req, res) => res.json(components));
 
@@ -57,6 +62,4 @@ app.post("/component-update", (req, res) => {
   console.log(components);
 });
 
-app.listen(5000, () => {
-  console.log("Server started on port 5000");
-});
+// DOCUMENTS

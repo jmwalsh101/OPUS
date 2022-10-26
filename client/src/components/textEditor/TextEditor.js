@@ -121,6 +121,10 @@ function TextEditor() {
           if (response.ok) {
             showSuccessModal(true);
             setTimeout(() => showSuccessModal(false), 1000);
+            setComponentSelected(false);
+            setBackendComponentId();
+            setName("");
+            setEditorState(clearEditorContent(editorState));
           }
           //else for modal
         })
