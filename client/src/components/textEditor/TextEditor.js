@@ -110,6 +110,8 @@ function TextEditor() {
       const updateComponent = [{ id: componentId, name: name, content: html }];
       setShowLoading(true);
 
+      // need something to prevent submit if no changes
+
       fetch("/component-update", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -135,8 +137,6 @@ function TextEditor() {
       const html = convertToHTML(editorState.getCurrentContent());
       const newComponent = [{ id: componentId, name: name, content: html }];
       setShowLoading(true);
-      setName("");
-      setEditorState(clearEditorContent(editorState));
 
       fetch("/component-new", {
         method: "POST",
@@ -149,6 +149,8 @@ function TextEditor() {
           if (response.ok) {
             showSuccessModal(true);
             setTimeout(() => showSuccessModal(false), 1000);
+            setName("");
+            setEditorState(clearEditorContent(editorState));
           }
           //else for modal
         })

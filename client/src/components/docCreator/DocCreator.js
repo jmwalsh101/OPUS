@@ -6,19 +6,21 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import _ from "lodash";
+
 import SortableItem from "./SortableItem";
 
 function DocCreator(props) {
   const [visVars, setVisVars] = useState(true);
-  const [showComponent, setShowComponent] = useState([]);
+  const [usedComponents, setUsedComponents] = useState([]);
   const [document, setDocument] = useState([]);
   const [docTitle, setDocTitle] = useState("");
-  const [backendData, setBackendData] = useState([{}]);
+  const [backendData, setBackendData] = useState([]);
 
   function handleDelete(e) {
     e.preventDefault();
-    showComponent.splice(e.target.value, 1);
-    setShowComponent(showComponent);
+    usedComponents.splice(e.target.value, 1);
+    setUsedComponents(usedComponents);
   }
 
   function showSelected() {
@@ -40,9 +42,9 @@ function DocCreator(props) {
   function handleAdd(e) {
     e.preventDefault();
     const item = e.target.value.split(",");
-    setShowComponent((current) => [
+    setUsedComponents((current) => [
       ...current,
-      { name: item[0], content: item[1] },
+      { id: item[0], name: item[1], content: item[2] },
     ]);
   }
 
@@ -53,19 +55,46 @@ function DocCreator(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setDocument({ title: docTitle, content: showComponent });
+    const componentIds = _.map(usedComponents, "id");
+    const newDocument = {
+      title: docTitle,
+      content: componentIds,
+    };
+
+    setDocument({
+      title: docTitle,
+      content: componentIds,
+    });
+
+    fetch("/document-new", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ parcel: newDocument }),
+    })
+      .then((response) => {
+        response.json();
+
+        if (response.ok) {
+        }
+        //else for modal
+      })
+      .catch((error) => console.log("ERROR"));
   }
 
   function handleDragEnd(event) {
     const { active, over } = event;
-    setShowComponent(arrayMove(showComponent, active.id, over.id));
+    setUsedComponents(arrayMove(usedComponents, active.id, over.id));
   }
 
   var docComponents = visVars ? (
     <div>
       {backendData.map(function (i, index) {
         return (
-          <button onClick={handleAdd} value={[i.name, i.content]} key={index}>
+          <button
+            onClick={handleAdd}
+            value={[i.id, i.name, i.content]}
+            key={index}
+          >
             {i.name}
           </button>
         );
@@ -74,9 +103,9 @@ function DocCreator(props) {
   ) : (
     <SortableContext
       strategy={verticalListSortingStrategy}
-      items={showComponent}
+      items={usedComponents}
     >
-      {showComponent.map(function (l, index) {
+      {usedComponents.map(function (l, index) {
         return (
           <>
             <SortableItem
@@ -109,10 +138,10 @@ function DocCreator(props) {
               </div>
               <div className="document-container">
                 <div className="document">
-                  {showComponent.map(function (j, index) {
+                  {usedComponents.map(function (j, index) {
                     return (
                       <>
-                        <div id={index}>
+                        <div id={j.id}>
                           <span
                             key={index}
                             dangerouslySetInnerHTML={{ __html: j.content }}

@@ -6,6 +6,9 @@ const _ = require("lodash");
 const components = [];
 let componentId = 0;
 
+const documents = [];
+let documentId = 0;
+
 app.listen(5000, () => {
   console.log("Server started on port 5000");
 });
@@ -63,3 +66,18 @@ app.post("/component-update", (req, res) => {
 });
 
 // DOCUMENTS
+
+app.post("/document-new", (req, res) => {
+  const { parcel } = req.body;
+  if (!parcel) {
+    return res.status(400).sendStatus({ status: "failed" });
+  }
+  res.status(200).send({ status: "received" });
+  documents.push(parcel);
+  documentId = documentId + 1;
+});
+
+app.get("/documents-load", (req, res) => {
+  res.json(documents);
+  console.log(documents);
+});
