@@ -10,10 +10,12 @@ import "../style.css";
 import ErrorModal from "../modals/ErrorModal";
 import LoadingModal from "../modals/LoadingModal";
 import SuccessModal from "../modals/SuccessModal";
+import BackendErrorModal from "../modals/BackendErrorModal";
+
 import _ from "lodash";
 
-import { backendComponentsContext } from "../../contexts/componentContext";
-import { componentIdContext } from "../../contexts/componentContext";
+import { backendComponentsContext } from "../../contexts/ComponentContext";
+import { componentIdContext } from "../../contexts/ComponentContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faB } from "@fortawesome/free-solid-svg-icons";
@@ -36,14 +38,15 @@ function TextEditor() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [name, setName] = useState("");
   const editor = React.useRef(null);
-  const [componentId, setComponentId] = useState();
+  const [componentId, setComponentId] = useState(0);
   const [componentSelected, setComponentSelected] = useState(false);
 
-  const [modalShow, setModalShow] = useState(false);
-  const handleClose = () => setModalShow(false);
+  const [errorModal, setErrorModal] = useState(false);
+  const handleClose = () => setErrorModal(false);
   const handleExistingName = () => setExistingNameModal(false);
   const [successModal, showSuccessModal] = useState(false);
   const [existingNameModal, setExistingNameModal] = useState(false);
+  const [backendErrorModal, setBackendErrorModal] = useState(false);
 
   const [loadingModal, setShowLoading] = useState(false);
 
@@ -79,8 +82,10 @@ function TextEditor() {
         if (componentSelected === false) {
           setComponentId(parseInt(data) + 1);
         }
-      }) // fail error modal here
-      .catch((error) => console.log("ERROR"));
+      })
+      .catch((error) => {
+        setTimeout(() => setBackendErrorModal(true), 3000);
+      });
   }, [name]);
 
   function focusEditor() {
@@ -102,13 +107,18 @@ function TextEditor() {
   function handleSubmit(e) {
     e.preventDefault();
     const existingName = _.find(componentsFromBackend, { name: name });
+    setShowLoading(true);
 
     if (name === "" || !editorState.getCurrentContent().hasText()) {
-      setModalShow(true);
+      setShowLoading(false);
+      setErrorModal(true);
     } else if (componentSelected === true) {
+      setShowLoading(false);
+
+      // CONFIRM MODAL REQUIRED
+
       const html = convertToHTML(editorState.getCurrentContent());
       const updateComponent = [{ id: componentId, name: name, content: html }];
-      setShowLoading(true);
 
       // need something to prevent submit if no changes
 
@@ -130,14 +140,16 @@ function TextEditor() {
           }
           //else for modal
         })
-        .catch((error) => console.log("ERROR"));
+        .catch((error) => {
+          setShowLoading(false);
+          setTimeout(() => setBackendErrorModal(true), 3000);
+        });
     } else if (existingName) {
+      setShowLoading(false);
       setExistingNameModal(true);
     } else {
       const html = convertToHTML(editorState.getCurrentContent());
       const newComponent = [{ id: componentId, name: name, content: html }];
-      setShowLoading(true);
-
       fetch("/component-new", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -151,10 +163,15 @@ function TextEditor() {
             setTimeout(() => showSuccessModal(false), 1000);
             setName("");
             setEditorState(clearEditorContent(editorState));
+          } else {
+            setShowLoading(false);
           }
           //else for modal
         })
-        .catch((error) => console.log("ERROR"));
+        .catch((error) => {
+          setShowLoading(false);
+          setTimeout(() => setBackendErrorModal(true), 3000);
+        });
     }
   }
 
@@ -315,16 +332,16 @@ function TextEditor() {
             />
           </div>
         </div>
-        {modalShow ? (
+        {errorModal ? (
           <ErrorModal
-            show={modalShow}
+            show={errorModal}
             onClose={handleClose}
             message="You must enter a name and a text."
           />
         ) : null}
         {existingNameModal ? (
           <ErrorModal
-            show={modalShow}
+            show={errorModal}
             onClose={handleExistingName}
             message="A name already exists."
           />
@@ -335,6 +352,7 @@ function TextEditor() {
           </>
         ) : null}
         {successModal ? <SuccessModal message="Component created!" /> : null}
+        {backendErrorModal ? <BackendErrorModal /> : null}
       </div>
     </>
   );

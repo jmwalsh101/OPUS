@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import _ from "lodash";
 
 import {
   backendDocumentsContext,
   documentTitleContext,
   usedComponentsContext,
-} from "../../contexts/documentContext";
+} from "../../contexts/DocumentContext";
 
 function Sidebar() {
   const { documentsFromBackend, setDocumentsFromBackend } = useContext(
@@ -17,7 +17,6 @@ function Sidebar() {
   );
 
   const { docTitle, setDocTitle } = useContext(documentTitleContext);
-  // console.log(_.map(documentsFromBackend, "content"));
 
   function handleSelect(e) {
     e.preventDefault();
@@ -35,15 +34,12 @@ function Sidebar() {
           const item = _.find(fetchedComponents, { id: id });
           component.push(item);
         }
-        console.log(component);
         setUsedComponents(component);
         setDocTitle(title);
       })
 
       // fail error modal here
       .catch((error) => console.log("ERROR"));
-
-    //console.log(component);
   }
 
   return (

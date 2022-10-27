@@ -5,8 +5,8 @@ import LoadingModal from "../modals/LoadingModal";
 import ConfirmModal from "../modals/ConfirmModal";
 import SuccessModal from "../modals/SuccessModal";
 
-import { backendComponentsContext } from "../../contexts/componentContext";
-import { componentIdContext } from "../../contexts/componentContext";
+import { backendComponentsContext } from "../../contexts/ComponentContext";
+import { componentIdContext } from "../../contexts/ComponentContext";
 
 function ComponenetSidebar() {
   const { componentsFromBackend, setComponentsFromBackend } = useContext(

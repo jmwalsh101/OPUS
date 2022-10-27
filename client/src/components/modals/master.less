@@ -101,5 +101,48 @@
         }
       }
     }
+    .modal-content-error-loading {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      .modal-header {
+        font-size: large;
+        font-weight: 900;
+        background-color: red;
+        color: white;
+        padding: 2%;
+      }
+      .modal-message {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2%;
+        height: 100%;
+
+        .fontawesome {
+          color: red;
+          height: 80px;
+          width: 80px;
+        }
+      }
+      .modal-content-confirm {
+        padding: 2%;
+
+        .modal-header {
+          font-size: large;
+          font-weight: 900;
+
+          .modal-message {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2%;
+          }
+        }
+      }
+    }
   }
 }

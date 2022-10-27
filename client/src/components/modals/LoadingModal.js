@@ -1,10 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
 import "./master.css";
 
-const LoadingModal = (props) => {
+const LoadingModal = () => {
   return (
     <div className="modal-screen">
       <div className="modal">

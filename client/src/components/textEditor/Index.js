@@ -3,8 +3,8 @@ import ComponenetSidebar from "./ComponentSidebar";
 import TextEditor from "./TextEditor";
 import { useState, useEffect } from "react";
 
-import { backendComponentsContext } from "../../contexts/componentContext";
-import { componentIdContext } from "../../contexts/componentContext";
+import { backendComponentsContext } from "../../contexts/ComponentContext";
+import { componentIdContext } from "../../contexts/ComponentContext";
 
 function Index() {
   const [componentsFromBackend, setComponentsFromBackend] = useState([]);

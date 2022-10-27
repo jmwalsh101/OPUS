@@ -10,20 +10,43 @@ import _ from "lodash";
 
 import SortableItem from "./SortableItem";
 
+import SuccessModal from "../modals/SuccessModal";
+import ErrorModal from "../modals/ErrorModal";
+import BackendErrorModal from "../modals/BackendErrorModal";
+
 import {
   usedComponentsContext,
   documentTitleContext,
-} from "../../contexts/documentContext";
+  backendDocumentsContext,
+} from "../../contexts/DocumentContext";
 
 function DocCreator() {
   const [visVars, setVisVars] = useState(true);
   const [backendData, setBackendData] = useState([]);
+
+  const [successModal, showSuccessModal] = useState(false);
+  const [errorModal, setErrorModal] = useState(false);
+  const handleClose = () => setErrorModal(false);
+  const [existingNameModal, setExistingNameModal] = useState(false);
+  const handleExistingName = () => setExistingNameModal(false);
+  const [backendErrorModal, setBackendErrorModal] = useState(false);
 
   const { usedComponents, setUsedComponents } = useContext(
     usedComponentsContext
   );
 
   const { docTitle, setDocTitle } = useContext(documentTitleContext);
+
+  const { documentsFromBackend, setDocumentsFromBackend } = useContext(
+    backendDocumentsContext
+  );
+
+  function handleClear(e) {
+    e.preventDefault();
+    setUsedComponents([]);
+    setDocTitle("");
+    //confirm modal with conditions
+  }
 
   function handleDelete(e) {
     e.preventDefault();
@@ -63,27 +86,40 @@ function DocCreator() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const componentIds = _.map(usedComponents, "id");
-    const newDocument = {
-      title: docTitle,
-      content: componentIds,
-    };
+    const existingTitle = _.find(documentsFromBackend, { title: docTitle });
 
-    fetch("/document-new", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ parcel: newDocument }),
-    })
-      .then((response) => {
-        response.json();
+    if (docTitle === "" || usedComponents === []) {
+      console.log("null");
+      setErrorModal(true);
+    } else if (existingTitle) {
+      setExistingNameModal(true);
+    } else {
+      const componentIds = _.map(usedComponents, "id");
+      const newDocument = {
+        title: docTitle,
+        content: componentIds,
+      };
 
-        if (response.ok) {
-          setDocTitle("");
-          setUsedComponents([]);
-        }
-        //else for modal
+      fetch("/document-new", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ parcel: newDocument }),
       })
-      .catch((error) => console.log("ERROR"));
+        .then((response) => {
+          response.json();
+
+          if (response.ok) {
+            setDocTitle("");
+            setUsedComponents([]);
+            showSuccessModal(true);
+            setTimeout(() => showSuccessModal(false), 1000);
+          }
+          //else for modal
+        })
+        .catch((error) => {
+          setTimeout(() => setBackendErrorModal(true), 3000);
+        });
+    }
   }
 
   function handleDragEnd(event) {
@@ -144,6 +180,7 @@ function DocCreator() {
                   value={docTitle}
                 />
                 <input type="submit" value="Save" onClick={handleSubmit} />
+                <input type="submit" value="Clear" onClick={handleClear} />
               </div>
               <div className="document-container">
                 <div className="document">
@@ -168,6 +205,22 @@ function DocCreator() {
               {docComponents}
             </div>
           </div>
+          {successModal ? <SuccessModal message="Document created!" /> : null}
+          {errorModal ? (
+            <ErrorModal
+              show={errorModal}
+              onClose={handleClose}
+              message="You must enter a title and select components."
+            />
+          ) : null}
+          {existingNameModal ? (
+            <ErrorModal
+              show={errorModal}
+              onClose={handleExistingName}
+              message="A title already exists."
+            />
+          ) : null}
+          {backendErrorModal ? <BackendErrorModal /> : null}
         </div>
       </DndContext>
     </>
