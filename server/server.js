@@ -25,7 +25,6 @@ app.post("/account-register", (req, res) => {
   }
   res.status(200).send({ status: "received" });
   accounts.push(...parcel);
-  console.log(accounts);
 });
 
 app.get("/account-login", (req, res) => {
@@ -34,7 +33,9 @@ app.get("/account-login", (req, res) => {
 
 // COMPONENTS
 
-app.get("/component-load", (req, res) => res.json(components));
+app.get("/component-load", (req, res) => {
+  res.json(components);
+});
 
 app.get("/component-id", (req, res) => {
   res.json(componentId);
@@ -47,10 +48,10 @@ app.post("/component-delete", (req, res) => {
     return res.status(400).sendStatus({ status: "failed" });
   }
   res.status(200).send({ status: "received" });
-  const spread = Object.values({ ...parcel });
-  const receivedID = spread.join("");
+  //const spread = Object.values({ ...parcel });
+  //const receivedID = spread.join("");
   const componentIndex = _.findIndex(components, function (component) {
-    return component.id == receivedID;
+    return component.id == parcel;
   });
   components.splice(componentIndex, 1);
 });
@@ -92,4 +93,20 @@ app.post("/document-new", (req, res) => {
 
 app.get("/documents-load", (req, res) => {
   res.json(documents);
+});
+
+app.post("/document-delete", (req, res) => {
+  console.log(documents);
+  const { parcel } = req.body;
+
+  if (!parcel) {
+    return res.status(400).sendStatus({ status: "failed" });
+  }
+  res.status(200).send({ status: "received" });
+  const documentIndex = _.findIndex(documents, {
+    title: parcel,
+  });
+  documents.splice(documentIndex, 1);
+
+  console.log(documents);
 });

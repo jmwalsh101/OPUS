@@ -41,6 +41,30 @@ function DocCreator() {
     backendDocumentsContext
   );
 
+  function handleDeleteDoc(e) {
+    e.preventDefault();
+
+    fetch("/document-delete", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ parcel: docTitle }),
+    })
+      .then((response) => {
+        response.json();
+
+        if (response.ok) {
+          setDocTitle("");
+          setUsedComponents([]);
+          showSuccessModal(true);
+          setTimeout(() => showSuccessModal(false), 1000);
+        }
+        //else for modal
+      })
+      .catch((error) => {
+        setTimeout(() => setBackendErrorModal(true), 3000);
+      });
+  }
+
   function handleClear(e) {
     e.preventDefault();
     setUsedComponents([]);
@@ -180,6 +204,7 @@ function DocCreator() {
                 />
                 <input type="submit" value="Save" onClick={handleSubmit} />
                 <input type="submit" value="Clear" onClick={handleClear} />
+                <input type="submit" value="Delete" onClick={handleDeleteDoc} />
               </div>
               <div className="document-container">
                 <div className="document">

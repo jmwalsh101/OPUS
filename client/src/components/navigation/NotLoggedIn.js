@@ -8,7 +8,7 @@ function NotLoggedIn() {
     <>
       <div className="navbar-container">
         <a className="nav-link" href="http://localhost:3000/">
-          Home
+          OPUS
         </a>
         <a className="nav-link" href="http://localhost:3000/pricing">
           Pricing

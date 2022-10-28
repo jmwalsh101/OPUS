@@ -14,6 +14,7 @@ function Register() {
     const registerPassword = password.current.value;
 
     const hashedPassword = bcrypt.hashSync(registerPassword, 10);
+    console.log(hashedPassword);
 
     const accountDetails = [
       {

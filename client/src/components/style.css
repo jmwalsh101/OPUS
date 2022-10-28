@@ -27,14 +27,33 @@
 
 .navbar-container {
   display: flex;
-  padding: 5px;
-  background-color: blue;
+  padding: 9px;
+  background-color: #1d2731;
   color: white;
 }
 
 .nav-link {
   color: white;
-  padding: 5px;
+  padding: 9px;
+  font-weight: 900;
+  font-size: medium;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logo {
+  padding: 4px;
+  color: #bc92b3;
+  font-weight: 900;
+  font-size: x-large;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  text-decoration: none;
+  letter-spacing: 4px;
+  width: 9%;
+  margin-left: 3%;
 }
 
 /* Home Header */

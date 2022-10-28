@@ -4,7 +4,8 @@
 
 .sidebar {
   flex-basis: 12%;
-  background-color: blue;
+  background-color: #bc92b3;
+  border-right: solid 5px #936f8b;
 }
 
 .main-doc-creator {
@@ -26,7 +27,7 @@
 }
 
 .doc-actions {
-  background-color: aqua;
+  background-color: #abdae7;
   min-height: 30px;
   padding-top: 1%;
   padding-bottom: 1%;
@@ -50,4 +51,16 @@
 
 .doc-container-overview {
   display: flex;
+}
+
+.document-item {
+  display: flex;
+  justify-content: space-between;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  margin: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  align-items: center;
+  background-color: #abdae7;
 }

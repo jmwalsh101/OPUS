@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../Home";
@@ -6,7 +6,6 @@ import Index from "../textEditor/Index";
 import DCIndex from "../docCreator/DCIndex";
 import Pricing from "../Pricing";
 import LogIn from "../login/Login";
-import LogOut from "../login/LogOut";
 
 import LoggedIn from "./LoggedIn";
 
@@ -15,6 +14,7 @@ import "../style.css";
 import { loginContext } from "../../contexts/LoginContext";
 import NotLoggedIn from "./NotLoggedIn";
 import Register from "../login/Register";
+import Account from "../account/Account";
 
 function Navigation() {
   const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem("username"));
@@ -29,8 +29,8 @@ function Navigation() {
           <Route path="/doc-creator" element={<DCIndex />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/login" element={<LogIn />} />
-          <Route path="/logout" element={<LogOut />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/account" element={<Account />} />
         </Routes>
       </BrowserRouter>
     </loginContext.Provider>

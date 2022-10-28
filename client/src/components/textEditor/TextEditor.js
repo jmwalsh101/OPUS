@@ -11,6 +11,7 @@ import ErrorModal from "../modals/ErrorModal";
 import LoadingModal from "../modals/LoadingModal";
 import SuccessModal from "../modals/SuccessModal";
 import BackendErrorModal from "../modals/BackendErrorModal";
+import ConfirmModal from "../modals/ConfirmModal";
 
 import _ from "lodash";
 
@@ -49,6 +50,49 @@ function TextEditor() {
   const [backendErrorModal, setBackendErrorModal] = useState(false);
 
   const [loadingModal, setShowLoading] = useState(false);
+
+  //
+  const [confirmModal, setConfirmModal] = useState(false);
+
+  function handleConfirmModalClose() {
+    setConfirmModal(false);
+    setShowLoading(true);
+
+    fetch("/component-delete", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ parcel: componentId }),
+    })
+      .then((response) => {
+        response.json();
+        setShowLoading(false);
+        if (response.ok) {
+          showSuccessModal(true);
+          setTimeout(() => showSuccessModal(false), 1000);
+          setName("");
+          setEditorState(clearEditorContent(editorState));
+        }
+        //else for modal
+      })
+
+      // fail error modal here
+      .catch((error) => console.log("ERROR"));
+  }
+
+  function handleCancel() {
+    setConfirmModal(false);
+  }
+
+  function handleDelete(e) {
+    e.preventDefault();
+    if (editorState.getCurrentContent().hasText()) {
+      setConfirmModal(true);
+    } else {
+      // error modal or disabled button
+    }
+  }
+
+  //
 
   useEffect(() => {
     if (backendComponentId) {
@@ -309,6 +353,9 @@ function TextEditor() {
           <span>
             <input type="submit" onClick={handleSubmit} />
           </span>
+          <span>
+            <input type="submit" value="Delete" onClick={handleDelete} />
+          </span>
         </div>
         <div onClick={focusEditor}>
           <h3>Content</h3>
@@ -353,6 +400,16 @@ function TextEditor() {
         ) : null}
         {successModal ? <SuccessModal message="Component created!" /> : null}
         {backendErrorModal ? <BackendErrorModal /> : null}
+        {confirmModal ? (
+          <>
+            <ConfirmModal
+              show={confirmModal}
+              onClose={handleConfirmModalClose}
+              name={name}
+              cancel={handleCancel}
+            />
+          </>
+        ) : null}
       </div>
     </>
   );

@@ -1,5 +1,8 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import _ from "lodash";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 
 import {
   backendDocumentsContext,
@@ -21,7 +24,7 @@ function Sidebar() {
   function handleSelect(e) {
     e.preventDefault();
     const title = e.target.title;
-    const componentIds = e.target.value.split(",");
+    const componentIds = e.currentTarget.value.split(",");
 
     fetch("/component-load")
       .then((response) => response.json())
@@ -44,15 +47,23 @@ function Sidebar() {
 
   return (
     <>
+      <h3>Documents</h3>
       {documentsFromBackend.map(function (q, index) {
         return (
           <>
-            <div key={index}>
+            <div key={index} className="document-item">
               <p>{q.title}</p>
-              <button onClick={handleSelect} value={q.content} title={q.title}>
-                Select
-              </button>
+              <span>
+                <button
+                  onClick={handleSelect}
+                  title={q.title}
+                  value={q.content}
+                >
+                  S<FontAwesomeIcon icon={faArrowRightToBracket} />
+                </button>
+              </span>
             </div>
+            <div></div>
           </>
         );
       })}
