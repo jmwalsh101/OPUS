@@ -88,8 +88,7 @@ function DocCreator() {
     e.preventDefault();
     const existingTitle = _.find(documentsFromBackend, { title: docTitle });
 
-    if (docTitle === "" || usedComponents === []) {
-      console.log("null");
+    if (docTitle === "" || usedComponents.length === 0) {
       setErrorModal(true);
     } else if (existingTitle) {
       setExistingNameModal(true);
