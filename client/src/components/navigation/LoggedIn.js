@@ -4,6 +4,8 @@ import { useContext } from "react";
 function LoggedIn() {
   const { loggedIn, setLoggedIn } = useContext(loginContext);
 
+  const activeAccount = JSON.parse(sessionStorage.getItem("username"));
+  console.log(activeAccount.registerUsername);
   return (
     <>
       <div className="navbar-container">
@@ -19,6 +21,7 @@ function LoggedIn() {
         <a className="nav-link" href="http://localhost:3000/logout">
           Log Out{" "}
         </a>
+        <a className="nav-link">{activeAccount.registerUsername}</a>
       </div>
     </>
   );

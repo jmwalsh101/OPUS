@@ -38,7 +38,10 @@ function Login() {
               console.log("password does not match");
             } else {
               setLoggedIn(true);
-              sessionStorage.setItem("username", { registerUsername });
+              sessionStorage.setItem(
+                "username",
+                JSON.stringify({ registerUsername })
+              );
             }
           }
         );
