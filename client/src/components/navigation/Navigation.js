@@ -17,8 +17,9 @@ import NotLoggedIn from "./NotLoggedIn";
 import Register from "../login/Register";
 
 function Navigation() {
-  const [loggedIn, setLoggedIn] = useState();
+  const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem("username"));
 
+  /*
   useEffect(() => {
     fetch("/account-status")
       .then((response) => response.json())
@@ -31,7 +32,9 @@ function Navigation() {
         }
       }) // fail error modal here
       .catch((error) => console.log("ERROR"));
-  });
+  }, []);
+
+  */
 
   return (
     <loginContext.Provider value={{ loggedIn, setLoggedIn }}>

@@ -6,6 +6,7 @@ function LogOut() {
 
   function logout() {
     setLoggedIn(false);
+    sessionStorage.clear();
     fetch("/account-logout", {
       method: "POST",
       headers: { "content-type": "application/json" },
