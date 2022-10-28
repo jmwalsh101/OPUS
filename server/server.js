@@ -48,8 +48,6 @@ app.post("/component-delete", (req, res) => {
     return res.status(400).sendStatus({ status: "failed" });
   }
   res.status(200).send({ status: "received" });
-  //const spread = Object.values({ ...parcel });
-  //const receivedID = spread.join("");
   const componentIndex = _.findIndex(components, function (component) {
     return component.id == parcel;
   });

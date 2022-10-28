@@ -47,7 +47,7 @@ function Sidebar() {
 
   return (
     <>
-      <h3>Documents</h3>
+      <h3>Quick Access</h3>
       {documentsFromBackend.map(function (q, index) {
         return (
           <>

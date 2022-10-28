@@ -4,7 +4,7 @@
 
 .sidebar {
   flex-basis: 12%;
-  background-color: #bc92b3;
+  background-color: #cfb3c9;
   border-right: solid 5px #936f8b;
 }
 
@@ -19,21 +19,23 @@
   margin-top: 2%;
   min-height: 500px;
   background-color: white;
-  border: 1px solid darkgrey;
+  border: 2px solid #1d2731;
   padding-top: 2%;
   padding-left: 5%;
   padding-right: 5%;
   margin-bottom: 2%;
+  border-radius: 5px;
 }
 
 .doc-actions {
-  background-color: #abdae7;
+  background-color: #acd7e6;
   min-height: 30px;
   padding-top: 1%;
   padding-bottom: 1%;
   padding-left: 5%;
   padding-right: 5%;
-  border-top: 2px solid black;
+  border-top: 2px solid #1d2731;
+  border-bottom: 2px solid #1d2731;
 }
 
 .doc-creator-container {
@@ -43,10 +45,11 @@
 }
 
 .document-container {
-  background-color: lightgray;
+  background-color: #8e959d;
 }
 .component-manager {
   flex-basis: 20%;
+  border-left: solid 2px #1d2731;
 }
 
 .doc-container-overview {
@@ -62,5 +65,7 @@
   padding-left: 4px;
   padding-right: 4px;
   align-items: center;
-  background-color: #abdae7;
+  background-color: #acd7e6;
+  border-radius: 5px;
+  border: 2px solid #1d2731;
 }

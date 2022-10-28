@@ -9,7 +9,7 @@
 
 .main-text-editor {
   flex-basis: 88%;
-  padding: 2%;
+  margin: 0;
 }
 
 .component-actions {

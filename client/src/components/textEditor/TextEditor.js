@@ -348,6 +348,28 @@ function TextEditor() {
             <input type="text" readOnly="readonly" value={componentId} />
           </span>
           <span>
+            <p>Created By</p>
+            <input
+              type="text"
+              readOnly="readonly"
+              value={
+                JSON.parse(sessionStorage.getItem("username")).registerUsername
+              }
+            />
+          </span>
+          <span>
+            <p>Created On</p>
+            <input type="text" readOnly="readonly" />
+          </span>
+          <span>
+            <p>Last Updated By</p>
+            <input type="text" readOnly="readonly" />
+          </span>
+          <span>
+            <p>Updated On</p>
+            <input type="text" readOnly="readonly" />
+          </span>
+          <span>
             <input type="submit" value="Clear" onClick={handleClear} />
           </span>
           <span>

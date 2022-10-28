@@ -92,3 +92,24 @@
   height: 400px;
   border-bottom: 2px solid black;
 }
+
+button,
+input {
+  border-radius: 5px;
+}
+
+h1,
+h2,
+h3,
+p,
+div,
+input,
+button,
+span {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.text-box {
+  font-family: "Times New Roman", Times, serif;
+}
