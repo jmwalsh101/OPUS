@@ -19,23 +19,6 @@ import Register from "../login/Register";
 function Navigation() {
   const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem("username"));
 
-  /*
-  useEffect(() => {
-    fetch("/account-status")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data) {
-          setLoggedIn(true);
-        } else {
-          setLoggedIn(false);
-        }
-      }) // fail error modal here
-      .catch((error) => console.log("ERROR"));
-  }, []);
-
-  */
-
   return (
     <loginContext.Provider value={{ loggedIn, setLoggedIn }}>
       {loggedIn ? <LoggedIn /> : <NotLoggedIn />}

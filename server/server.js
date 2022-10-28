@@ -4,7 +4,6 @@ app.use(express.json());
 const _ = require("lodash");
 
 const accounts = [];
-let accountStatus = 0;
 
 const components = [];
 let componentId = 0;
@@ -18,10 +17,6 @@ app.listen(5000, () => {
 
 // REGISTER & LOGIN
 
-app.get("/account-status", (req, res) => {
-  res.json(accountStatus);
-});
-
 app.post("/account-register", (req, res) => {
   const { parcel } = req.body;
 
@@ -34,25 +29,7 @@ app.post("/account-register", (req, res) => {
 });
 
 app.get("/account-login", (req, res) => {
-  console.log(accountStatus);
-  console.log(accounts);
   res.json(accounts);
-  accountStatus = 1;
-  console.log("logged in", accountStatus);
-});
-
-app.post("/account-logout", (req, res) => {
-  const { parcel } = req.body;
-  console.log("log out", parcel);
-
-  if (parcel === 0) {
-    res.status(200).send({ status: "received" });
-    accountStatus = 0;
-  } else {
-    console.log("fail");
-    //return res.status(400).sendStatus({ status: "failed" });
-  }
-  console.log(accountStatus);
 });
 
 // COMPONENTS
