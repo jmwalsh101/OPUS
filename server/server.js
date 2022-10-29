@@ -8,7 +8,7 @@ const accounts = [];
 const components = [];
 let componentId = 0;
 
-const documents = [];
+let documents = [];
 let documentId = 0;
 
 app.listen(5000, () => {
@@ -43,15 +43,23 @@ app.get("/component-id", (req, res) => {
 
 app.post("/component-delete", (req, res) => {
   const { parcel } = req.body;
-
+  console.log("parcel", parcel);
+  console.log("doc start", documents);
   if (!parcel) {
     return res.status(400).sendStatus({ status: "failed" });
   }
   res.status(200).send({ status: "received" });
+  documents = documents.map((obj) => {
+    return {
+      ...obj,
+      content: obj.content.filter((n) => Number(n) !== parcel),
+    };
+  });
   const componentIndex = _.findIndex(components, function (component) {
     return component.id == parcel;
   });
   components.splice(componentIndex, 1);
+  console.log("doc end", documents);
 });
 
 app.post("/component-new", (req, res) => {
@@ -94,7 +102,6 @@ app.get("/documents-load", (req, res) => {
 });
 
 app.post("/document-delete", (req, res) => {
-  console.log(documents);
   const { parcel } = req.body;
 
   if (!parcel) {
@@ -105,24 +112,16 @@ app.post("/document-delete", (req, res) => {
     title: parcel,
   });
   documents.splice(documentIndex, 1);
-
-  console.log(documents);
 });
 
 app.post("/document-update", (req, res) => {
-  console.log("docs start", documents);
   const { parcel } = req.body;
-  console.log("parcel", String(parcel.title));
   if (!parcel) {
     return res.status(400).sendStatus({ status: "failed" });
   }
   res.status(200).send({ status: "received" });
-  //const spread = Object.values({ ...parcel });
-  //console.log("spread", spread);
   const documentIndex = _.findIndex(documents, function (document) {
     return document.title == String(parcel.title);
   });
-  console.log(documentIndex);
   documents.splice(documentIndex, 1, parcel);
-  console.log("docs end", documents);
 });
