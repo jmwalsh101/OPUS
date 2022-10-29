@@ -53,6 +53,37 @@ function TextEditor() {
 
   //
   const [confirmModal, setConfirmModal] = useState(false);
+  const [confirmUpdateModal, setConfirmUpdateModal] = useState(false);
+
+  function handleConfirmUpdateModalClose() {
+    const html = convertToHTML(editorState.getCurrentContent());
+    const updateComponent = [{ id: componentId, name: name, content: html }];
+
+    // need something to prevent submit if no changes
+
+    fetch("/component-update", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ parcel: updateComponent }),
+    })
+      .then((response) => {
+        response.json();
+        setShowLoading(false);
+        if (response.ok) {
+          showSuccessModal(true);
+          setTimeout(() => showSuccessModal(false), 1000);
+          setComponentSelected(false);
+          setBackendComponentId();
+          setName("");
+          setEditorState(clearEditorContent(editorState));
+          setConfirmUpdateModal(false);
+        }
+        //else for modal
+      })
+      .catch((error) => {
+        setTimeout(() => setBackendErrorModal(true), 3000);
+      });
+  }
 
   function handleConfirmModalClose() {
     setConfirmModal(false);
@@ -81,6 +112,7 @@ function TextEditor() {
 
   function handleCancel() {
     setConfirmModal(false);
+    setConfirmUpdateModal(false);
   }
 
   function handleDelete(e) {
@@ -146,6 +178,7 @@ function TextEditor() {
   function handleSaveName(e) {
     e.preventDefault();
     setName(e.target.value);
+    setComponentSelected(false);
   }
 
   function handleSubmit(e) {
@@ -158,36 +191,9 @@ function TextEditor() {
       setErrorModal(true);
     } else if (componentSelected === true) {
       setShowLoading(false);
+      setConfirmUpdateModal(true);
 
       // CONFIRM MODAL REQUIRED
-
-      const html = convertToHTML(editorState.getCurrentContent());
-      const updateComponent = [{ id: componentId, name: name, content: html }];
-
-      // need something to prevent submit if no changes
-
-      fetch("/component-update", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ parcel: updateComponent }),
-      })
-        .then((response) => {
-          response.json();
-          setShowLoading(false);
-          if (response.ok) {
-            showSuccessModal(true);
-            setTimeout(() => showSuccessModal(false), 1000);
-            setComponentSelected(false);
-            setBackendComponentId();
-            setName("");
-            setEditorState(clearEditorContent(editorState));
-          }
-          //else for modal
-        })
-        .catch((error) => {
-          setShowLoading(false);
-          setTimeout(() => setBackendErrorModal(true), 3000);
-        });
     } else if (existingName) {
       setShowLoading(false);
       setExistingNameModal(true);
@@ -427,8 +433,42 @@ function TextEditor() {
             <ConfirmModal
               show={confirmModal}
               onClose={handleConfirmModalClose}
-              name={name}
               cancel={handleCancel}
+              confirmButton="Delete"
+              message={
+                <>
+                  <p>
+                    This action will delete <strong>{name}</strong> and cannot
+                    be reversed.
+                  </p>
+                  <p>
+                    Deleting a text will also delete it from any documents using
+                    it.
+                  </p>
+                </>
+              }
+            />
+          </>
+        ) : null}
+        {confirmUpdateModal ? (
+          <>
+            <ConfirmModal
+              show={confirmModal}
+              onClose={handleConfirmUpdateModalClose}
+              cancel={handleCancel}
+              confirmButton="Update"
+              message={
+                <>
+                  <p>
+                    A text named <strong>{name}</strong> already exists. You can
+                    update this text with your changes.
+                  </p>
+                  <p>
+                    Any updates you make will affect all documents with this
+                    text.
+                  </p>
+                </>
+              }
             />
           </>
         ) : null}

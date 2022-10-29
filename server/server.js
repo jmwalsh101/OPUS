@@ -108,3 +108,21 @@ app.post("/document-delete", (req, res) => {
 
   console.log(documents);
 });
+
+app.post("/document-update", (req, res) => {
+  console.log("docs start", documents);
+  const { parcel } = req.body;
+  console.log("parcel", String(parcel.title));
+  if (!parcel) {
+    return res.status(400).sendStatus({ status: "failed" });
+  }
+  res.status(200).send({ status: "received" });
+  //const spread = Object.values({ ...parcel });
+  //console.log("spread", spread);
+  const documentIndex = _.findIndex(documents, function (document) {
+    return document.title == String(parcel.title);
+  });
+  console.log(documentIndex);
+  documents.splice(documentIndex, 1, parcel);
+  console.log("docs end", documents);
+});

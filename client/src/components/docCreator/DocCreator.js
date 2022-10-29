@@ -13,6 +13,7 @@ import SortableItem from "./SortableItem";
 import SuccessModal from "../modals/SuccessModal";
 import ErrorModal from "../modals/ErrorModal";
 import BackendErrorModal from "../modals/BackendErrorModal";
+import ConfirmModal from "../modals/ConfirmModal";
 
 import {
   usedComponentsContext,
@@ -30,6 +31,7 @@ function DocCreator() {
   const [existingNameModal, setExistingNameModal] = useState(false);
   const handleExistingName = () => setExistingNameModal(false);
   const [backendErrorModal, setBackendErrorModal] = useState(false);
+  const [existingTitleModal, setExistingTitleModal] = useState(false);
 
   const { usedComponents, setUsedComponents } = useContext(
     usedComponentsContext
@@ -40,6 +42,42 @@ function DocCreator() {
   const { documentsFromBackend, setDocumentsFromBackend } = useContext(
     backendDocumentsContext
   );
+
+  function handleConfirmUpdateModalClose() {
+    setExistingTitleModal(false);
+    const componentIds = _.map(usedComponents, "id");
+
+    const newDocument = {
+      title: docTitle,
+      content: componentIds,
+    };
+    console.log(newDocument);
+
+    fetch("/document-update", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ parcel: newDocument }),
+    })
+      .then((response) => {
+        response.json();
+
+        if (response.ok) {
+          setDocTitle("");
+          setUsedComponents([]);
+          showSuccessModal(true);
+          setTimeout(() => showSuccessModal(false), 1000);
+        }
+        //else for modal
+      })
+      .catch((error) => {
+        setTimeout(() => setBackendErrorModal(true), 3000);
+      });
+  }
+
+  function handleCancel(e) {
+    e.preventDefault();
+    setExistingTitleModal(false);
+  }
 
   function handleDeleteDoc(e) {
     e.preventDefault();
@@ -115,7 +153,7 @@ function DocCreator() {
     if (docTitle === "" || usedComponents.length === 0) {
       setErrorModal(true);
     } else if (existingTitle) {
-      setExistingNameModal(true);
+      setExistingTitleModal(true);
     } else {
       const componentIds = _.map(usedComponents, "id");
       const newDocument = {
@@ -245,6 +283,23 @@ function DocCreator() {
             />
           ) : null}
           {backendErrorModal ? <BackendErrorModal /> : null}
+          {existingTitleModal ? (
+            <>
+              <ConfirmModal
+                onClose={handleConfirmUpdateModalClose}
+                cancel={handleCancel}
+                confirmButton="Update"
+                message={
+                  <>
+                    <p>
+                      A document named <strong>{docTitle}</strong> already
+                      exists. You can update this document with your changes.
+                    </p>
+                  </>
+                }
+              />
+            </>
+          ) : null}
         </div>
       </DndContext>
     </>

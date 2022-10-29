@@ -4,12 +4,13 @@
 
 .sidebar {
   flex-basis: 12%;
-  background-color: #cfb3c9;
+  background-color: #a5b4d4;
   border-right: solid 5px #936f8b;
 }
 
 .main-doc-creator {
   flex-basis: 88%;
+  border-left: solid 2px #1d2731;
 }
 
 .document {
@@ -67,5 +68,5 @@
   align-items: center;
   background-color: #acd7e6;
   border-radius: 5px;
-  border: 2px solid #1d2731;
+  border: 1px solid #1d2731;
 }
