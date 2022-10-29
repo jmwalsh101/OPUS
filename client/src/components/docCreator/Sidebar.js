@@ -40,10 +40,11 @@ function Sidebar() {
         console.log(component);
         if (component[0] !== undefined) {
           setUsedComponents(component);
+        } else {
+          setUsedComponents([]);
         }
         setDocTitle(title);
       })
-
       // fail error modal here
       .catch((error) => console.log("ERROR"));
   }
