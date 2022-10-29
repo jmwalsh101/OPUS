@@ -37,7 +37,10 @@ function Sidebar() {
           const item = _.find(fetchedComponents, { id: id });
           component.push(item);
         }
-        setUsedComponents(component);
+        console.log(component);
+        if (component[0] !== undefined) {
+          setUsedComponents(component);
+        }
         setDocTitle(title);
       })
 
