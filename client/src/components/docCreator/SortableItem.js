@@ -1,6 +1,5 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import "./style.css";
 
 function SortableItem(props) {
   const { attributes, listeners, setNodeRef, transform, transition } =

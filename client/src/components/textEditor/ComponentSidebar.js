@@ -28,7 +28,7 @@ function ComponenetSidebar() {
         {componentsFromBackend.map(function (q, index) {
           return (
             <>
-              <div key={index}>
+              <div key={index} className="sidebar-item">
                 <p>{q.name}</p>
                 <button onClick={handleSelect} value={q.id}>
                   Select

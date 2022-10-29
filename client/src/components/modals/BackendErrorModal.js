@@ -1,8 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDownUpAcrossLine } from "@fortawesome/free-solid-svg-icons";
 
-import "./master.css";
-
 const BackendErrorModal = () => {
   return (
     <div className="modal-screen">

@@ -1,0 +1,52 @@
+@import "./constants/colors.less";
+@import "./constants/spacing.less";
+@import "./constants/font.less";
+
+.doc-container-overview {
+  display: flex;
+
+  .doc-creator-container {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 80%;
+
+    .doc-actions {
+      background-color: @blue;
+      min-height: 30px;
+      padding-top: @paddingXS;
+      padding-bottom: @paddingXS;
+      padding-left: @paddingS;
+      padding-right: @paddingS;
+      border-top: @standardBlack;
+      border-bottom: @standardBlack;
+    }
+
+    .document-container {
+      background-color: @grey;
+
+      .document {
+        width: 80%;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-top: 2%;
+        min-height: 500px;
+        background-color: @white;
+        border: @heavyBlack;
+        padding-top: 2%;
+        padding-left: 5%;
+        padding-right: 5%;
+        margin-bottom: 2%;
+        border-radius: @standardRadius;
+      }
+    }
+  }
+
+  .component-manager {
+    flex-basis: 20%;
+    border-left: @standardBlack;
+
+    .doc-component:hover {
+      background-color: blanchedalmond;
+    }
+  }
+}

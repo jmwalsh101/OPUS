@@ -1,0 +1,35 @@
+@import "./constants/colors.less";
+@import "./constants/spacing.less";
+@import "./constants/font.less";
+
+.navbar-container {
+  display: flex;
+  padding: 9px;
+  background-color: @inkblack;
+  color: @white;
+
+  .nav-link {
+    color: @white;
+    padding: 9px;
+    font-weight: 900;
+    font-size: medium;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    text-decoration: @clean;
+    cursor: pointer;
+  }
+
+  .logo {
+    padding: 4px;
+    color: @purpleDark;
+    -webkit-text-stroke: 1px @purpleLight;
+    font-weight: 900;
+    font-size: x-large;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    text-decoration: @clean;
+    letter-spacing: 4px;
+    width: 9%;
+    margin-left: 3%;
+  }
+}

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import "./style.css";
-import "../style.css";
+
 import Sidebar from "./Sidebar";
 import DocCreator from "./DocCreator";
 
@@ -43,10 +42,8 @@ function DCIndex() {
               <div className="sidebar">
                 <Sidebar />
               </div>
-              <div className="main-doc-creator">
-                <div className="doc-creator">
-                  <DocCreator />
-                </div>
+              <div className="main-editor">
+                <DocCreator />
               </div>
               {backendErrorModal ? <BackendErrorModal /> : null}
             </div>

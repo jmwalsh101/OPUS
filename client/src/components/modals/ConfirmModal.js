@@ -1,5 +1,3 @@
-import "./master.css";
-
 const SuccessModal = (props) => {
   const { show, onClose } = props;
 

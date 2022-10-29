@@ -51,7 +51,7 @@ function Sidebar() {
       {documentsFromBackend.map(function (q, index) {
         return (
           <>
-            <div key={index} className="document-item">
+            <div key={index} className="sidebar-item">
               <p>{q.title}</p>
               <span>
                 <button

@@ -1,4 +1,3 @@
-import "./style.css";
 import ComponenetSidebar from "./ComponentSidebar";
 import TextEditor from "./TextEditor";
 import { useState, useEffect } from "react";
@@ -30,10 +29,8 @@ function Index() {
           <div className="sidebar">
             <ComponenetSidebar />
           </div>
-          <div className="main-text-editor">
-            <div className="text-editor">
-              <TextEditor />
-            </div>
+          <div className="main-editor">
+            <TextEditor />
           </div>
         </div>
       </backendComponentsContext.Provider>

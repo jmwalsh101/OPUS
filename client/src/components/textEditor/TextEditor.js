@@ -4,8 +4,6 @@ import { Editor, EditorState, RichUtils } from "draft-js";
 import { clearEditorContent } from "draftjs-utils";
 import { convertToHTML, convertFromHTML } from "draft-convert";
 import "draft-js/dist/Draft.css";
-import "./draft.css";
-import "../style.css";
 
 import ErrorModal from "../modals/ErrorModal";
 import LoadingModal from "../modals/LoadingModal";

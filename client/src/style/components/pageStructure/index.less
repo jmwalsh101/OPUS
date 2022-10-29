@@ -1,0 +1,30 @@
+.main-container {
+  display: flex;
+
+  .sidebar {
+    flex-basis: 12%;
+    background-color: @purpleLight;
+    border-right: @heavyPurpleBorder;
+
+    .sidebar-item {
+      display: flex;
+      justify-content: space-between;
+      overflow-wrap: break-word;
+      word-break: break-all;
+      margin: 4px;
+      padding-left: @paddingS;
+      padding-right: @paddingS;
+      align-items: center;
+      background-color: @blue;
+      border-radius: @standardRadius;
+      border: @standardBlack;
+    }
+  }
+  .main-editor {
+    flex-basis: 88%;
+    margin: 0;
+
+    @import "./docCreator.less";
+    @import "./textEditor.less";
+  }
+}

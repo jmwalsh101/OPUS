@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from "react";
-import "./style.css";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -45,8 +44,8 @@ function DocCreator() {
 
   function handleConfirmUpdateModalClose() {
     setExistingTitleModal(false);
+    // loading modal
     const componentIds = _.map(usedComponents, "id");
-
     const newDocument = {
       title: docTitle,
       content: componentIds,

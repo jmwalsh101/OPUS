@@ -25,11 +25,11 @@ function LoggedIn() {
         <a className="nav-link" href="http://localhost:3000/">
           Texts
         </a>
-        <a className="nav-link" href="http://localhost:3000/doc-creator">
-          Manager
-        </a>
         <a className="nav-link" href="http://localhost:3000/text-editor">
           Editor
+        </a>
+        <a className="nav-link" href="http://localhost:3000/doc-creator">
+          Manager
         </a>
         <a className="nav-link" onClick={logout}>
           Log Out

@@ -1,5 +1,3 @@
-import "./master.css";
-
 const ErrorModal = (props) => {
   const { show, onClose } = props;
 

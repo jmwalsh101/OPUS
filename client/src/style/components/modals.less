@@ -1,3 +1,7 @@
+@import "./constants/colors.less";
+@import "./constants/spacing.less";
+@import "./constants/borders.less";
+
 .modal-screen {
   display: flex;
   position: fixed;
@@ -11,10 +15,11 @@
   align-items: center;
 
   .modal {
-    background-color: white;
+    background-color: @white;
     height: 30%;
     width: 25%;
-    border: solid black 2px;
+    border: @heavyBlack;
+    border-radius: @standardRadius;
 
     .modal-content-success {
       display: flex;
@@ -24,20 +29,20 @@
       .modal-header {
         font-size: large;
         font-weight: 900;
-        background-color: green;
-        color: white;
-        padding: 2%;
+        background-color: @green;
+        color: @white;
+        padding: @paddingXS;
       }
       .modal-message {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 2%;
+        padding: @paddingXS;
         height: 100%;
 
         .fontawesome {
-          color: green;
+          color: @green;
           height: 80px;
           width: 80px;
         }
@@ -55,7 +60,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 2%;
+        padding: @paddingXS;
       }
     }
     .modal-content-loading {
@@ -66,26 +71,26 @@
       .modal-header {
         font-size: large;
         font-weight: 900;
-        background-color: lightskyblue;
-        color: white;
-        padding: 2%;
+        background-color: @blue;
+        color: @white;
+        padding: @paddingXS;
       }
       .modal-message {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 2%;
+        padding: @paddingXS;
         height: 100%;
 
         .fontawesome {
-          color: lightskyblue;
+          color: @blue;
           height: 80px;
           width: 80px;
         }
       }
       .modal-content-confirm {
-        padding: 2%;
+        padding: @paddingXS;
 
         .modal-header {
           font-size: large;
@@ -96,7 +101,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 2%;
+            padding: @paddingXS;
           }
         }
       }
@@ -109,26 +114,26 @@
       .modal-header {
         font-size: large;
         font-weight: 900;
-        background-color: red;
-        color: white;
-        padding: 2%;
+        background-color: @red;
+        color: @white;
+        padding: @paddingXS;
       }
       .modal-message {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 2%;
+        padding: @paddingXS;
         height: 100%;
 
         .fontawesome {
-          color: red;
+          color: @red;
           height: 80px;
           width: 80px;
         }
       }
       .modal-content-confirm {
-        padding: 2%;
+        padding: @paddingXS;
 
         .modal-header {
           font-size: large;
@@ -139,7 +144,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 2%;
+            padding: @paddingXS;
           }
         }
       }
