@@ -1,11 +1,13 @@
 import { useRef } from "react";
 import bcrypt from "bcryptjs";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const username = useRef();
   const email = useRef();
   const password = useRef();
   const confirmPassword = useRef();
+  const navigate = useNavigate();
 
   function register(e) {
     e.preventDefault();
@@ -29,6 +31,8 @@ function Register() {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ parcel: accountDetails }),
     });
+
+    navigate("/login");
   }
 
   return (

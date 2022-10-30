@@ -1,10 +1,13 @@
 import Navigation from "./components/navigation/Navigation";
 import "./style/master.css";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <Navigation />
+      <BrowserRouter>
+        <Navigation />
+      </BrowserRouter>
     </>
   );
 }

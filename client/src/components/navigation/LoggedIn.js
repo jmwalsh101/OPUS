@@ -4,13 +4,8 @@ import { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-function LoggedIn() {
+function LoggedIn(props) {
   const { loggedIn, setLoggedIn } = useContext(loginContext);
-
-  function logout() {
-    setLoggedIn(false);
-    sessionStorage.clear();
-  }
 
   const activeAccount = JSON.parse(sessionStorage.getItem("username"));
   return (
@@ -31,7 +26,7 @@ function LoggedIn() {
         <a className="nav-link" href="http://localhost:3000/doc-creator">
           Manager
         </a>
-        <a className="nav-link" onClick={logout}>
+        <a className="nav-link" onClick={props.logout}>
           Log Out
         </a>
         <a className="nav-link" href="http://localhost:3000/account">

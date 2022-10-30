@@ -1,6 +1,7 @@
 import { useRef, useContext } from "react";
 import bcrypt from "bcryptjs";
 import _ from "lodash";
+import { useNavigate } from "react-router-dom";
 
 import { loginContext } from "../../contexts/LoginContext";
 
@@ -10,6 +11,7 @@ function Login() {
   const username = useRef();
   const email = useRef();
   const password = useRef();
+  const navigate = useNavigate();
 
   //const [backendData, setBackendData] = useState([]);
 
@@ -42,6 +44,7 @@ function Login() {
                 "username",
                 JSON.stringify({ registerUsername })
               );
+              navigate("/");
             }
           }
         );
