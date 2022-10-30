@@ -26,6 +26,8 @@ import { faCode } from "@fortawesome/free-solid-svg-icons";
 import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
 import { faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 
+import { timestamp } from "../constants/TimeStamp";
+
 function TextEditor() {
   const { componentsFromBackend, setComponentsFromBackend } = useContext(
     backendComponentsContext
@@ -53,9 +55,29 @@ function TextEditor() {
   const [confirmModal, setConfirmModal] = useState(false);
   const [confirmUpdateModal, setConfirmUpdateModal] = useState(false);
 
+  const [author, setAuthor] = useState(
+    JSON.parse(sessionStorage.getItem("username")).registerUsername
+  );
+
+  const [createDate, setCreateDate] = useState(timestamp);
+
+  const [updater, setUpdater] = useState(null);
+  const [lastUpdated, setLastUpdated] = useState(null);
+
   function handleConfirmUpdateModalClose() {
     const html = convertToHTML(editorState.getCurrentContent());
-    const updateComponent = [{ id: componentId, name: name, content: html }];
+    const updateComponent = [
+      {
+        id: componentId,
+        name: name,
+        content: html,
+        author: author,
+        created: createDate,
+        updater: JSON.parse(sessionStorage.getItem("username"))
+          .registerUsername,
+        lastUpdated: timestamp,
+      },
+    ];
 
     // need something to prevent submit if no changes
 
@@ -75,6 +97,12 @@ function TextEditor() {
           setName("");
           setEditorState(clearEditorContent(editorState));
           setConfirmUpdateModal(false);
+          setCreateDate(timestamp);
+          setAuthor(
+            JSON.parse(sessionStorage.getItem("username")).registerUsername
+          );
+          setUpdater("");
+          setLastUpdated("");
         }
         //else for modal
       })
@@ -100,6 +128,10 @@ function TextEditor() {
           setTimeout(() => showSuccessModal(false), 1000);
           setName("");
           setEditorState(clearEditorContent(editorState));
+          setAuthor();
+          setCreateDate(timestamp);
+          setUpdater("");
+          setLastUpdated("");
         }
         //else for modal
       })
@@ -132,7 +164,11 @@ function TextEditor() {
       });
 
       const selectedName = selectedComponent.name;
+      const selectedAuthor = selectedComponent.author;
       const selectedContent = convertFromHTML(selectedComponent.content);
+      const selectedTimestamp = selectedComponent.created;
+      const selectedUpdater = selectedComponent.updater;
+      const selectedLastUpdate = selectedComponent.lastUpdated;
 
       /*}
       const contentState = ContentState.createFromBlockArray(
@@ -143,7 +179,11 @@ function TextEditor() {
       setComponentSelected(true);
       setComponentId(convertedId);
       setName(selectedName);
+      setAuthor(selectedAuthor);
+      setCreateDate(selectedTimestamp);
       setEditorState(EditorState.createWithContent(selectedContent));
+      setUpdater(selectedUpdater);
+      setLastUpdated(selectedLastUpdate);
     }
   }, [backendComponentId]);
 
@@ -171,6 +211,10 @@ function TextEditor() {
     setName("");
     setEditorState(clearEditorContent(editorState));
     setComponentSelected(false);
+    setAuthor(JSON.parse(sessionStorage.getItem("username")).registerUsername);
+    setCreateDate(timestamp);
+    setUpdater("");
+    setLastUpdated("");
   }
 
   function handleSaveName(e) {
@@ -197,7 +241,17 @@ function TextEditor() {
       setExistingNameModal(true);
     } else {
       const html = convertToHTML(editorState.getCurrentContent());
-      const newComponent = [{ id: componentId, name: name, content: html }];
+      const newComponent = [
+        {
+          id: componentId,
+          name: name,
+          content: html,
+          author: author,
+          created: createDate,
+          updater: null,
+          lastUpdated: null,
+        },
+      ];
       fetch("/component-new", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -211,6 +265,12 @@ function TextEditor() {
             setTimeout(() => showSuccessModal(false), 1000);
             setName("");
             setEditorState(clearEditorContent(editorState));
+            setAuthor(
+              JSON.parse(sessionStorage.getItem("username")).registerUsername
+            );
+            setCreateDate(timestamp);
+            setUpdater("");
+            setLastUpdated("");
           } else {
             setShowLoading(false);
           }
@@ -353,25 +413,19 @@ function TextEditor() {
           </span>
           <span>
             <p>Created By</p>
-            <input
-              type="text"
-              readOnly="readonly"
-              value={
-                JSON.parse(sessionStorage.getItem("username")).registerUsername
-              }
-            />
+            <input type="text" readOnly="readonly" value={author} />
           </span>
           <span>
             <p>Created On</p>
-            <input type="text" readOnly="readonly" />
+            <input type="text" readOnly="readonly" value={createDate} />
           </span>
           <span>
             <p>Last Updated By</p>
-            <input type="text" readOnly="readonly" />
+            <input type="text" readOnly="readonly" value={updater} />
           </span>
           <span>
             <p>Updated On</p>
-            <input type="text" readOnly="readonly" />
+            <input type="text" readOnly="readonly" value={lastUpdated} />
           </span>
           <span>
             <input type="submit" value="Clear" onClick={handleClear} />
