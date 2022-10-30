@@ -5,11 +5,14 @@ const SuccessModal = (props) => {
   return (
     <div className="modal-screen">
       <div className="modal">
-        <div className="modal-content-success">
-          <div className="modal-header">Success</div>
-          <div className="modal-message">
+        <div className="modal-content">
+          <div className="modal-header success">Success</div>
+          <div className="modal-message ">
             <div>
-              <FontAwesomeIcon icon={faCircleCheck} className="fontawesome" />
+              <FontAwesomeIcon
+                icon={faCircleCheck}
+                className="icon success-icon"
+              />
             </div>
             <div>{props.message}</div>
           </div>

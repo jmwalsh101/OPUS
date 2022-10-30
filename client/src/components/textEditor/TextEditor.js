@@ -27,6 +27,7 @@ import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
 import { faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 
 import { timestamp } from "../constants/TimeStamp";
+import MetaInfo from "./MetaInfo";
 
 function TextEditor() {
   const { componentsFromBackend, setComponentsFromBackend } = useContext(
@@ -60,6 +61,7 @@ function TextEditor() {
   );
 
   const [createDate, setCreateDate] = useState(timestamp);
+  console.log(createDate);
 
   const [updater, setUpdater] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
@@ -392,138 +394,133 @@ function TextEditor() {
 
   return (
     <>
-      <div className="main">
-        <h1>Component Editor</h1>
-        <p>
-          Create a new component for your documents. Add new components to
-          documents in the Document Creator.
-        </p>
-        <div className="component-actions">
-          <span>
-            <p>Name</p>
-            <input type="text" onChange={handleSaveName} value={name} />
-          </span>
-          <span>
-            <p>Category</p>
-            <input type="text" />
-          </span>
-          <span>
-            <p>ID</p>
-            <input type="text" readOnly="readonly" value={componentId} />
-          </span>
-          <span>
-            <p>Created By</p>
-            <input type="text" readOnly="readonly" value={author} />
-          </span>
-          <span>
-            <p>Created On</p>
-            <input type="text" readOnly="readonly" value={createDate} />
-          </span>
-          <span>
-            <p>Last Updated By</p>
-            <input type="text" readOnly="readonly" value={updater} />
-          </span>
-          <span>
-            <p>Updated On</p>
-            <input type="text" readOnly="readonly" value={lastUpdated} />
-          </span>
-          <span>
-            <input type="submit" value="Clear" onClick={handleClear} />
-          </span>
-          <span>
-            <input type="submit" onClick={handleSubmit} />
-          </span>
-          <span>
-            <input type="submit" value="Delete" onClick={handleDelete} />
-          </span>
-        </div>
-        <div onClick={focusEditor}>
-          <h3>Content</h3>
-          <div className="controls">
-            <span className="control-set">
-              <HeaderStyleControls onToggle={onBlockClick} />
+      <h1>Component Editor</h1>
+      <p>
+        Create a new component for your documents. Add new components to
+        documents in the Document Creator.
+      </p>
+      <div className="editor-container-overview">
+        <div className="editor-container">
+          <div className="component-actions">
+            <span>
+              <p>Name</p>
+              <input type="text" onChange={handleSaveName} value={name} />
             </span>
-            <span className="control-set">
-              <InlineStyleControls onToggle={onInlineClick} />
+            <span>
+              <p>Category</p>
+              <input type="text" />
             </span>
-            <span className="control-set">
-              <ListStyleControls onToggle={onInlineClick} />
+            <span>
+              <p>ID</p>
+              <input type="text" readOnly="readonly" value={componentId} />
+            </span>
+            <span>
+              <input type="submit" value="Clear" onClick={handleClear} />
+            </span>
+            <span>
+              <input type="submit" onClick={handleSubmit} />
+            </span>
+            <span>
+              <input type="submit" value="Delete" onClick={handleDelete} />
             </span>
           </div>
+          <div className="draft-editor">
+            <div onClick={focusEditor}>
+              <div className="controls">
+                <span className="control-set">
+                  <HeaderStyleControls onToggle={onBlockClick} />
+                </span>
+                <span className="control-set">
+                  <InlineStyleControls onToggle={onInlineClick} />
+                </span>
+                <span className="control-set">
+                  <ListStyleControls onToggle={onInlineClick} />
+                </span>
+              </div>
 
-          <div className="text-box">
-            <Editor
-              ref={editor}
-              editorState={editorState}
-              onChange={(editorState) => setEditorState(editorState)}
-            />
+              <div className="text-box">
+                <Editor
+                  ref={editor}
+                  editorState={editorState}
+                  onChange={(editorState) => setEditorState(editorState)}
+                />
+              </div>
+            </div>
           </div>
+          {errorModal ? (
+            <ErrorModal
+              show={errorModal}
+              onClose={handleClose}
+              message="You must enter a name and a text."
+            />
+          ) : null}
+          {existingNameModal ? (
+            <ErrorModal
+              show={errorModal}
+              onClose={handleExistingName}
+              message="A name already exists."
+            />
+          ) : null}
+          {loadingModal ? (
+            <>
+              <LoadingModal />
+            </>
+          ) : null}
+          {successModal ? <SuccessModal message="Component created!" /> : null}
+          {backendErrorModal ? <BackendErrorModal /> : null}
+          {confirmModal ? (
+            <>
+              <ConfirmModal
+                show={confirmModal}
+                onClose={handleConfirmModalClose}
+                cancel={handleCancel}
+                confirmButton="Delete"
+                message={
+                  <>
+                    <p>
+                      This action will delete <strong>{name}</strong> and cannot
+                      be reversed.
+                    </p>
+                    <p>
+                      Deleting a text will also delete it from any documents
+                      using it.
+                    </p>
+                  </>
+                }
+              />
+            </>
+          ) : null}
+          {confirmUpdateModal ? (
+            <>
+              <ConfirmModal
+                show={confirmModal}
+                onClose={handleConfirmUpdateModalClose}
+                cancel={handleCancel}
+                confirmButton="Update"
+                message={
+                  <>
+                    <p>
+                      A text named <strong>{name}</strong> already exists. You
+                      can update this text with your changes.
+                    </p>
+                    <p>
+                      Any updates you make will affect all documents with this
+                      text.
+                    </p>
+                  </>
+                }
+              />
+            </>
+          ) : null}
         </div>
-        {errorModal ? (
-          <ErrorModal
-            show={errorModal}
-            onClose={handleClose}
-            message="You must enter a name and a text."
+        <div className="component-manager">
+          <MetaInfo
+            author={author}
+            createDate={createDate}
+            updater={updater}
+            lastUpdated={lastUpdated}
           />
-        ) : null}
-        {existingNameModal ? (
-          <ErrorModal
-            show={errorModal}
-            onClose={handleExistingName}
-            message="A name already exists."
-          />
-        ) : null}
-        {loadingModal ? (
-          <>
-            <LoadingModal />
-          </>
-        ) : null}
-        {successModal ? <SuccessModal message="Component created!" /> : null}
-        {backendErrorModal ? <BackendErrorModal /> : null}
-        {confirmModal ? (
-          <>
-            <ConfirmModal
-              show={confirmModal}
-              onClose={handleConfirmModalClose}
-              cancel={handleCancel}
-              confirmButton="Delete"
-              message={
-                <>
-                  <p>
-                    This action will delete <strong>{name}</strong> and cannot
-                    be reversed.
-                  </p>
-                  <p>
-                    Deleting a text will also delete it from any documents using
-                    it.
-                  </p>
-                </>
-              }
-            />
-          </>
-        ) : null}
-        {confirmUpdateModal ? (
-          <>
-            <ConfirmModal
-              show={confirmModal}
-              onClose={handleConfirmUpdateModalClose}
-              cancel={handleCancel}
-              confirmButton="Update"
-              message={
-                <>
-                  <p>
-                    A text named <strong>{name}</strong> already exists. You can
-                    update this text with your changes.
-                  </p>
-                  <p>
-                    Any updates you make will affect all documents with this
-                    text.
-                  </p>
-                </>
-              }
-            />
-          </>
-        ) : null}
+        </div>
       </div>
     </>
   );

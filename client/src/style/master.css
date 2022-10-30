@@ -123,59 +123,71 @@
 .main-container .main-editor .doc-container-overview .component-manager .doc-component:hover {
   background-color: blanchedalmond;
 }
-.main-container .main-editor .main {
+.main-container .main-editor .editor-container-overview {
+  display: flex;
+}
+.main-container .main-editor .editor-container-overview .editor-container {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  max-width: 75%;
-  margin-left: 2%;
+  flex-basis: 80%;
 }
-.main-container .main-editor .main .component-actions {
+.main-container .main-editor .editor-container-overview .editor-container .component-actions {
   display: flex;
   justify-content: space-between;
+  background-color: #c2dfeb;
+  padding: 2%;
+  border-top: 1px solid #1d2731;
+  border-bottom: 1px solid #1d2731;
 }
-.main-container .main-editor .main .controls {
+.main-container .main-editor .editor-container-overview .editor-container .draft-editor {
+  padding-left: 2%;
+  padding-right: 2%;
+}
+.main-container .main-editor .editor-container-overview .editor-container .draft-editor .controls {
   display: flex;
   font-family: sans-serif;
   margin: 1rem auto;
   padding: 0.5rem;
   border: 1px solid #1d2731;
 }
-.main-container .main-editor .main .controls .control-set {
+.main-container .main-editor .editor-container-overview .editor-container .draft-editor .controls .control-set {
   padding-left: 2px;
 }
-.main-container .main-editor .main .text-box {
+.main-container .main-editor .editor-container-overview .editor-container .draft-editor .text-box {
   font-family: Arial, Helvetica, sans-serif !important;
   margin: 1rem auto;
   padding: 0.5rem;
   border: 1px solid #1d2731;
   height: 400px;
+  padding-left: 2%;
+  padding-right: 2%;
 }
-.main-container .main-editor .main .text-box .RichEditor-root {
+.main-container .main-editor .editor-container-overview .editor-container .draft-editor .text-box .RichEditor-root {
   background: #fff;
   border: 1px solid #1d2731;
   font-family: "Georgia", serif;
   font-size: 14px;
   padding: 15px;
 }
-.main-container .main-editor .main .text-box .RichEditor-editor {
+.main-container .main-editor .editor-container-overview .editor-container .draft-editor .text-box .RichEditor-editor {
   border-top: 1px solid #1d2731;
   cursor: text;
   font-size: 16px;
   margin-top: 10px;
 }
-.main-container .main-editor .main .text-box .RichEditor-editor .public-DraftEditorPlaceholder-root,
-.main-container .main-editor .main .text-box .RichEditor-editor .public-DraftEditor-content {
+.main-container .main-editor .editor-container-overview .editor-container .draft-editor .text-box .RichEditor-editor .public-DraftEditorPlaceholder-root,
+.main-container .main-editor .editor-container-overview .editor-container .draft-editor .text-box .RichEditor-editor .public-DraftEditor-content {
   margin: 0 -15px -15px;
   padding: 15px;
 }
-.main-container .main-editor .main .text-box .RichEditor-editor .public-DraftEditor-content {
+.main-container .main-editor .editor-container-overview .editor-container .draft-editor .text-box .RichEditor-editor .public-DraftEditor-content {
   min-height: 100px;
 }
-.main-container .main-editor .main .text-box .RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+.main-container .main-editor .editor-container-overview .editor-container .draft-editor .text-box .RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
   display: none;
 }
-.main-container .main-editor .main .text-box .RichEditor-editor .RichEditor-blockquote {
+.main-container .main-editor .editor-container-overview .editor-container .draft-editor .text-box .RichEditor-editor .RichEditor-blockquote {
   border-left: 5px solid #eee;
   color: #666;
   font-family: "Hoefler Text", "Georgia", serif;
@@ -183,27 +195,32 @@
   margin: 16px 0;
   padding: 10px 20px;
 }
-.main-container .main-editor .main .text-box .RichEditor-editor .public-DraftStyleDefault-pre {
+.main-container .main-editor .editor-container-overview .editor-container .draft-editor .text-box .RichEditor-editor .public-DraftStyleDefault-pre {
   background-color: rgba(0, 0, 0, 0.05);
   font-family: "Inconsolata", "Menlo", "Consolas", monospace;
   font-size: 16px;
   padding: 20px;
 }
-.main-container .main-editor .main .text-box .RichEditor-controls {
+.main-container .main-editor .editor-container-overview .editor-container .draft-editor .text-box .RichEditor-controls {
   font-family: "Helvetica", sans-serif;
   font-size: 14px;
   margin-bottom: 5px;
   user-select: none;
 }
-.main-container .main-editor .main .text-box .RichEditor-styleButton {
+.main-container .main-editor .editor-container-overview .editor-container .draft-editor .text-box .RichEditor-styleButton {
   color: #999;
   cursor: pointer;
   margin-right: 16px;
   padding: 2px 0;
   display: inline-block;
 }
-.main-container .main-editor .main .text-box .RichEditor-activeButton {
+.main-container .main-editor .editor-container-overview .editor-container .draft-editor .text-box .RichEditor-activeButton {
   color: #5890ff;
+}
+.main-container .main-editor .editor-container-overview .component-manager {
+  flex-basis: 20%;
+  border-left: 1px solid #1d2731;
+  padding-left: 4px;
 }
 .modal-screen {
   display: flex;
@@ -213,7 +230,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: #00000066;
   justify-content: center;
   align-items: center;
 }
@@ -224,97 +241,30 @@
   border: 2px solid #1d2731;
   border-radius: 5px;
 }
-.modal-screen .modal .modal-content-success {
+.modal-screen .modal .modal-content {
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: 2px;
 }
-.modal-screen .modal .modal-content-success .modal-header {
+.modal-screen .modal .modal-content .modal-header {
   font-size: large;
   font-weight: 900;
+  height: 15%;
+}
+.modal-screen .modal .modal-content .success {
   background-color: #61af6f;
   color: #f9f8f5;
-  padding: 2px;
 }
-.modal-screen .modal .modal-content-success .modal-message {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2px;
-  height: 100%;
-}
-.modal-screen .modal .modal-content-success .modal-message .fontawesome {
-  color: #61af6f;
-  height: 80px;
-  width: 80px;
-}
-.modal-screen .modal .modal-content-error {
-  padding: 2%;
-}
-.modal-screen .modal .modal-content-error .modal-header {
-  font-size: large;
-  font-weight: 900;
-}
-.modal-screen .modal .modal-content-error .modal-message {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2px;
-}
-.modal-screen .modal .modal-content-loading {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.modal-screen .modal .modal-content-loading .modal-header {
-  font-size: large;
-  font-weight: 900;
+.modal-screen .modal .modal-content .loading {
   background-color: #c2dfeb;
   color: #f9f8f5;
-  padding: 2px;
 }
-.modal-screen .modal .modal-content-loading .modal-message {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2px;
-  height: 100%;
-}
-.modal-screen .modal .modal-content-loading .modal-message .fontawesome {
-  color: #c2dfeb;
-  height: 80px;
-  width: 80px;
-}
-.modal-screen .modal .modal-content-loading .modal-content-confirm {
-  padding: 2px;
-}
-.modal-screen .modal .modal-content-loading .modal-content-confirm .modal-header {
-  font-size: large;
-  font-weight: 900;
-}
-.modal-screen .modal .modal-content-loading .modal-content-confirm .modal-header .modal-message {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2px;
-}
-.modal-screen .modal .modal-content-error-loading {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.modal-screen .modal .modal-content-error-loading .modal-header {
-  font-size: large;
-  font-weight: 900;
+.modal-screen .modal .modal-content .error {
   background-color: #ff6961;
   color: #f9f8f5;
-  padding: 2px;
 }
-.modal-screen .modal .modal-content-error-loading .modal-message {
+.modal-screen .modal .modal-content .modal-message {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -322,22 +272,16 @@
   padding: 2px;
   height: 100%;
 }
-.modal-screen .modal .modal-content-error-loading .modal-message .fontawesome {
-  color: #ff6961;
+.modal-screen .modal .modal-content .modal-message .icon {
   height: 80px;
   width: 80px;
 }
-.modal-screen .modal .modal-content-error-loading .modal-content-confirm {
-  padding: 2px;
+.modal-screen .modal .modal-content .modal-message .success-icon {
+  color: #61af6f;
 }
-.modal-screen .modal .modal-content-error-loading .modal-content-confirm .modal-header {
-  font-size: large;
-  font-weight: 900;
+.modal-screen .modal .modal-content .modal-message .loading-icon {
+  color: #c2dfeb;
 }
-.modal-screen .modal .modal-content-error-loading .modal-content-confirm .modal-header .modal-message {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2px;
+.modal-screen .modal .modal-content .modal-message .error-icon {
+  color: #ff6961;
 }

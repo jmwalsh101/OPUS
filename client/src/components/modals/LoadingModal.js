@@ -5,13 +5,13 @@ const LoadingModal = () => {
   return (
     <div className="modal-screen">
       <div className="modal">
-        <div className="modal-content-loading">
-          <div className="modal-header">Loading</div>
+        <div className="modal-content">
+          <div className="modal-header loading">Loading</div>
           <div className="modal-message">
             <div>
               <FontAwesomeIcon
                 icon={faCircleNotch}
-                className="fontawesome"
+                className="icon loading-icon"
                 spin
               />
             </div>

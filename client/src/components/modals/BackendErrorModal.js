@@ -5,13 +5,13 @@ const BackendErrorModal = () => {
   return (
     <div className="modal-screen">
       <div className="modal">
-        <div className="modal-content-error-loading">
-          <div className="modal-header">Error</div>
+        <div className="modal-content">
+          <div className="modal-header error">Error</div>
           <div className="modal-message">
             <div>
               <FontAwesomeIcon
                 icon={faArrowDownUpAcrossLine}
-                className="fontawesome"
+                className="icon error-icon"
                 fade
               />
             </div>
