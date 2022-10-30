@@ -37,6 +37,7 @@ function Login() {
             if (err) {
               throw err;
             } else if (!isMatch) {
+              // error modal
               console.log("password does not match");
             } else {
               setLoggedIn(true);

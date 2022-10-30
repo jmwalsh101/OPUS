@@ -1,8 +1,9 @@
 import { useRef } from "react";
 import bcrypt from "bcryptjs";
 import { useNavigate } from "react-router-dom";
+import _ from "lodash";
 
-import { registrationSchema } from "../../validations/registration";
+import { registrationSchema } from "../../validations/Registration";
 
 function Register() {
   const username = useRef();
@@ -18,7 +19,6 @@ function Register() {
     const registerPassword = password.current.value;
 
     const hashedPassword = bcrypt.hashSync(registerPassword, 10);
-    console.log(hashedPassword);
 
     const formData = {
       username: registerUsername,
@@ -34,21 +34,63 @@ function Register() {
       },
     ];
 
-    registrationSchema.isValid(formData).then(function (valid) {
-      if (valid) {
-        console.log("works");
-        fetch("/account-register", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ parcel: accountDetails }),
+    // test to get errors -- CODE WORKS
+    /*
+    let answer = [];
+    registrationSchema
+      .validate(formData)
+      .then(function (valid) {
+        if (valid) {
+          answer = "works";
+        }
+      })
+      .catch(function (err) {
+        answer = { ...err }.errors;
+        console.log("answer", answer);
+      });
+      */
+
+    // end of test
+    fetch("/account-login")
+      .then((response) => response.json())
+      .then((data) => {
+        const accounts = data;
+        console.log("accounts", data);
+        let searchResult = null;
+        searchResult = _.find(accounts, {
+          username: registerUsername,
         });
 
-        navigate("/login");
-      } else {
-        // error modal
-        console.log("invalid credentials");
-      }
-    });
+        console.log(searchResult);
+        if (searchResult === undefined) {
+          console.log("tested false");
+          registrationSchema
+            .isValid(formData)
+            .then(function (valid, err) {
+              if (valid) {
+                console.log("got to validation");
+                fetch("/account-register", {
+                  method: "POST",
+                  headers: { "content-type": "application/json" },
+                  body: JSON.stringify({ parcel: accountDetails }),
+                });
+
+                navigate("/login");
+              } else {
+                // error modal for bad results. This section needs to change - modal mapping results
+                //console.log(err);
+                console.log("validation error");
+              }
+            })
+            .catch(function (err) {
+              // the errors are caught here
+              //console.log(err);
+            });
+        } else {
+          console.log("matched username");
+        }
+      }) // fail error modal here
+      .catch((error) => console.log("ERROR"));
   }
 
   return (
@@ -56,7 +98,8 @@ function Register() {
       Name <input type="text" ref={username} />
       Email <input type="email" ref={email} />
       Pasword <input type="password" ref={password} />
-      Confirm Password <input type="password" ref={confirmPassword} />
+      Confirm Password{" "}
+      <input type="password" ref={confirmPassword} placeholder="Password1%" />
       <button type="submit" onClick={register}>
         Submit
       </button>

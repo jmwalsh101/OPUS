@@ -17,7 +17,7 @@ function NotLoggedIn() {
           Login
         </a>
         <a className="nav-link" href="http://localhost:3000/register">
-          Register
+          Sign Up
         </a>
       </div>
     </>
