@@ -61,7 +61,6 @@ function TextEditor() {
   );
 
   const [createDate, setCreateDate] = useState(timestamp);
-  console.log(createDate);
 
   const [updater, setUpdater] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);

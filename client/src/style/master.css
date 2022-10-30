@@ -90,6 +90,7 @@
   flex-basis: 80%;
 }
 .main-container .main-editor .doc-container-overview .doc-creator-container .doc-actions {
+  display: flex;
   background-color: #c2dfeb;
   min-height: 30px;
   padding-top: 2px;
@@ -98,6 +99,7 @@
   padding-right: 4px;
   border-top: 1px solid #1d2731;
   border-bottom: 1px solid #1d2731;
+  justify-content: space-between;
 }
 .main-container .main-editor .doc-container-overview .doc-creator-container .document-container {
   background-color: #8e959d;

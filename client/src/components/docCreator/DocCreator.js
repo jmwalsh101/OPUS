@@ -18,7 +18,13 @@ import {
   usedComponentsContext,
   documentTitleContext,
   backendDocumentsContext,
+  documentAuthorContext,
+  documentCreatedDateContext,
+  documentUpdaterContext,
+  documentLastUpdatedContext,
 } from "../../contexts/DocumentContext";
+
+import { timestamp } from "../constants/TimeStamp";
 
 function DocCreator() {
   const [visVars, setVisVars] = useState(true);
@@ -42,6 +48,13 @@ function DocCreator() {
     backendDocumentsContext
   );
 
+  const { author, setAuthor } = useContext(documentAuthorContext);
+  const { createDate, setCreateDate } = useContext(documentCreatedDateContext);
+  const { updater, setUpdater } = useContext(documentUpdaterContext);
+  const { lastUpdated, setLastUpdated } = useContext(
+    documentLastUpdatedContext
+  );
+
   function handleConfirmUpdateModalClose() {
     setExistingTitleModal(false);
     // loading modal
@@ -49,8 +62,12 @@ function DocCreator() {
     const newDocument = {
       title: docTitle,
       content: componentIds,
+      author: author,
+      created: createDate,
+      updater: JSON.parse(sessionStorage.getItem("username")).registerUsername,
+      updated: timestamp,
     };
-    console.log(newDocument);
+    console.log("doc", newDocument);
 
     fetch("/document-update", {
       method: "POST",
@@ -63,6 +80,12 @@ function DocCreator() {
         if (response.ok) {
           setDocTitle("");
           setUsedComponents([]);
+          setAuthor(
+            JSON.parse(sessionStorage.getItem("username")).registerUsername
+          );
+          setCreateDate(timestamp);
+          setUpdater("");
+          setLastUpdated("");
           showSuccessModal(true);
           setTimeout(() => showSuccessModal(false), 1000);
         }
@@ -94,6 +117,12 @@ function DocCreator() {
           setUsedComponents([]);
           showSuccessModal(true);
           setTimeout(() => showSuccessModal(false), 1000);
+          setAuthor(
+            JSON.parse(sessionStorage.getItem("username")).registerUsername
+          );
+          setCreateDate(timestamp);
+          setUpdater("");
+          setLastUpdated("");
         }
         //else for modal
       })
@@ -106,6 +135,10 @@ function DocCreator() {
     e.preventDefault();
     setUsedComponents([]);
     setDocTitle("");
+    setAuthor(JSON.parse(sessionStorage.getItem("username")).registerUsername);
+    setCreateDate(timestamp);
+    setUpdater("");
+    setLastUpdated("");
     //confirm modal with conditions
   }
 
@@ -158,6 +191,10 @@ function DocCreator() {
       const newDocument = {
         title: docTitle,
         content: componentIds,
+        author: author,
+        created: createDate,
+        updater: null,
+        lastUpdated: null,
       };
 
       fetch("/document-new", {
@@ -173,6 +210,12 @@ function DocCreator() {
             setUsedComponents([]);
             showSuccessModal(true);
             setTimeout(() => showSuccessModal(false), 1000);
+            setAuthor(
+              JSON.parse(sessionStorage.getItem("username")).registerUsername
+            );
+            setCreateDate(timestamp);
+            setUpdater("");
+            setLastUpdated("");
           }
           //else for modal
         })
@@ -239,6 +282,22 @@ function DocCreator() {
                   onChange={handleSaveTitle}
                   value={docTitle}
                 />
+                <span>
+                  <p>Created By</p>
+                  <input type="text" readOnly="readonly" value={author} />
+                </span>
+                <span>
+                  <p>Created On</p>
+                  <input type="text" readOnly="readonly" value={createDate} />
+                </span>
+                <span>
+                  <p>Last Updated By</p>
+                  <input type="text" readOnly="readonly" value={updater} />
+                </span>
+                <span>
+                  <p>Updated On</p>
+                  <input type="text" readOnly="readonly" value={lastUpdated} />
+                </span>
                 <input type="submit" value="Save" onClick={handleSubmit} />
                 <input type="submit" value="Clear" onClick={handleClear} />
                 <input type="submit" value="Delete" onClick={handleDeleteDoc} />
