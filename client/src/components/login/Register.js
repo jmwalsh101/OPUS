@@ -2,6 +2,8 @@ import { useRef } from "react";
 import bcrypt from "bcryptjs";
 import { useNavigate } from "react-router-dom";
 
+import { registrationSchema } from "../../validations/registration";
+
 function Register() {
   const username = useRef();
   const email = useRef();
@@ -18,6 +20,12 @@ function Register() {
     const hashedPassword = bcrypt.hashSync(registerPassword, 10);
     console.log(hashedPassword);
 
+    const formData = {
+      username: registerUsername,
+      email: registerEmail,
+      password: registerPassword,
+    };
+
     const accountDetails = [
       {
         username: registerUsername,
@@ -26,13 +34,21 @@ function Register() {
       },
     ];
 
-    fetch("/account-register", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ parcel: accountDetails }),
-    });
+    registrationSchema.isValid(formData).then(function (valid) {
+      if (valid) {
+        console.log("works");
+        fetch("/account-register", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ parcel: accountDetails }),
+        });
 
-    navigate("/login");
+        navigate("/login");
+      } else {
+        // error modal
+        console.log("invalid credentials");
+      }
+    });
   }
 
   return (
