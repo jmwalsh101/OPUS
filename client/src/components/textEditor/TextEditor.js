@@ -393,11 +393,6 @@ function TextEditor() {
 
   return (
     <>
-      <h1>Component Editor</h1>
-      <p>
-        Create a new component for your documents. Add new components to
-        documents in the Document Creator.
-      </p>
       <div className="editor-container-overview">
         <div className="editor-container">
           <div className="component-actions">

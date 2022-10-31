@@ -3,7 +3,7 @@
 
   .sidebar {
     flex-basis: 12%;
-    background-color: @purpleLight;
+    background-image: linear-gradient(@purpleDark, @purpleLight, @purpleDark);
     border-right: @heavyPurpleBorder;
 
     .sidebar-item {
@@ -11,12 +11,13 @@
       justify-content: space-between;
       overflow-wrap: break-word;
       word-break: break-all;
-      @spacings padding-left: @spacingS;
+      padding-left: @spacingS;
       padding-right: @spacingS;
       align-items: center;
-      background-color: @blue;
+      background-color: @purple4;
       border-radius: @standardRadius;
       border: @standardBlack;
+      margin: @spacingS;
     }
   }
   .main-editor {

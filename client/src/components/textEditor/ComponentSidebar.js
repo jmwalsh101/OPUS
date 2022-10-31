@@ -25,6 +25,7 @@ function ComponenetSidebar() {
   return (
     <>
       <div>
+        <h3>Quick Access</h3>
         {componentsFromBackend.map(function (q, index) {
           return (
             <>

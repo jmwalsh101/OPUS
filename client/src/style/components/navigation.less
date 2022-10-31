@@ -19,6 +19,45 @@
     cursor: pointer;
   }
 
+  .nav-link:hover {
+    color: @inkblack;
+    background-color: @yellow;
+    padding: 9px;
+    font-weight: 900;
+    font-size: medium;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    text-decoration: @clean;
+    cursor: pointer;
+    border-radius: @standardRadius;
+  }
+
+  .active-link {
+    color: @yellow;
+    padding: 9px;
+    font-weight: 900;
+    font-size: medium;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 9.5px;
+  }
+
+  .active-link:hover {
+    color: @yellow;
+    padding: 6px;
+    font-weight: 900;
+    font-size: medium;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    border-radius: @standardRadius;
+    border: @heavyYellowBorder;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 9.5px;
+  }
+
   .logo {
     padding: 4px;
     color: @purpleDark;

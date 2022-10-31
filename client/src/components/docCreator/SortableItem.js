@@ -7,15 +7,9 @@ function SortableItem(props) {
   const style = { transform: CSS.Transform.toString(transform), transition };
 
   return (
-    <div
-      className="doc-component"
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-    >
-      {props.number}&nbsp;
-      {props.name}
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      <span>{props.number}&nbsp;</span>
+      <span>{props.name}</span>
     </div>
   );
 }

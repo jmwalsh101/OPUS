@@ -1,0 +1,28 @@
+button,
+input {
+  border-radius: @standardRadius;
+  padding: 14px;
+  border: @standardBlack;
+  max-width: 150px;
+}
+
+button:hover {
+  filter: brightness(150%);
+}
+
+.meta-info {
+  display: flex;
+  flex-direction: column;
+  input {
+    padding: 2px;
+    font-size: 12px;
+  }
+
+  .meta-created,
+  .meta-updated {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color: @secondaryColor;
+  }
+}

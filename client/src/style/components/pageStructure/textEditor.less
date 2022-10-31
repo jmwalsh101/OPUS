@@ -13,22 +13,29 @@
     .component-actions {
       display: flex;
       justify-content: space-between;
-      background-color: @blue;
+      background-image: radial-gradient(@blueLight, @blue, @blueDark);
       padding: 2%;
       border-top: @standardBlack;
       border-bottom: @standardBlack;
+      border-left: @standardBlack;
     }
 
     .draft-editor {
       padding-left: 2%;
       padding-right: 2%;
+      background-color: @grey;
+      border-left: @standardBlack;
 
       .controls {
         display: flex;
         font-family: sans-serif;
-        margin: 1rem auto;
-        padding: 0.5rem;
+        padding-left: 2%;
+        padding-right: 2%;
         border: @standardBlack;
+        background-color: @white;
+        height: 50px;
+        align-items: center;
+        justify-content: space-around;
 
         .control-set {
           padding-left: @spacingXS;
@@ -37,12 +44,12 @@
 
       .text-box {
         font-family: Arial, Helvetica, sans-serif !important;
-        margin: 1rem auto;
         padding: 0.5rem;
         border: @standardBlack;
         height: 400px;
         padding-left: 2%;
         padding-right: 2%;
+        background-color: @white;
 
         .RichEditor-root {
           background: #fff;
@@ -114,5 +121,12 @@
     flex-basis: 20%;
     border-left: @standardBlack;
     padding-left: @spacingS;
+
+    .meta-created,
+    .meta-updated {
+      padding: @spacingS;
+      border: @standardBlack;
+      margin: @spacingS;
+    }
   }
 }

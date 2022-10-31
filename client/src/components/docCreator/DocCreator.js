@@ -251,7 +251,7 @@ function DocCreator() {
     >
       {usedComponents.map(function (l, index) {
         return (
-          <>
+          <div className="doc-component">
             <SortableItem
               name={l.name}
               key={index}
@@ -261,7 +261,7 @@ function DocCreator() {
             <button onClick={handleDelete} value={index}>
               Delete
             </button>
-          </>
+          </div>
         );
       })}
     </SortableContext>
@@ -270,8 +270,6 @@ function DocCreator() {
   return (
     <>
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <h1>Document Editor</h1>
-        <p>Create, Edit, and Manage your documents.</p>
         <div>
           <div className="doc-container-overview">
             <div className="doc-creator-container">

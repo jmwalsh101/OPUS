@@ -12,19 +12,20 @@
 
     .doc-actions {
       display: flex;
-      background-color: @blue;
+      background-image: radial-gradient(@blueLight, @blue, @blueDark);
       min-height: 30px;
       padding-top: @spacingXS;
       padding-bottom: @spacingXS;
       padding-left: @spacingS;
       padding-right: @spacingS;
-      border-top: @standardBlack;
+      border-left: @standardBlack;
       border-bottom: @standardBlack;
       justify-content: space-between;
     }
 
     .document-container {
       background-color: @grey;
+      border-left: @standardBlack;
 
       .document {
         width: 80%;
@@ -46,6 +47,10 @@
   .component-manager {
     flex-basis: 20%;
     border-left: @standardBlack;
+
+    .doc-component {
+      display: flex;
+    }
 
     .doc-component:hover {
       background-color: blanchedalmond;

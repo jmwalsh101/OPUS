@@ -1,4 +1,6 @@
 import { loginContext } from "../../contexts/LoginContext";
+import { activePageContext } from "../../contexts/Navigation";
+
 import { useContext } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,30 +8,61 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 function LoggedIn(props) {
   const { loggedIn, setLoggedIn } = useContext(loginContext);
+  const { activePage, setActivePage } = useContext(activePageContext);
 
   const activeAccount = JSON.parse(sessionStorage.getItem("username"));
   return (
     <>
       <div className="navbar-container">
-        <a className="logo" href="http://localhost:3000/">
+        <a
+          className={` ${activePage === "home" ? "active-link" : "logo"}`}
+          href="http://localhost:3000/"
+          onClick={() => sessionStorage.setItem("activePage", "home")}
+        >
           OPUS
         </a>
-        <a className="nav-link" href="http://localhost:3000/">
+        <a
+          className={` ${
+            activePage === "documents" ? "active-link" : "nav-link"
+          }`}
+          href="http://localhost:3000/"
+          onClick={() => sessionStorage.setItem("activePage", "documents")}
+        >
           Documents
         </a>
-        <a className="nav-link" href="http://localhost:3000/">
+        <a
+          className={` ${activePage === "texts" ? "active-link" : "nav-link"}`}
+          href="http://localhost:3000/"
+          onClick={() => sessionStorage.setItem("activePage", "texts")}
+        >
           Texts
         </a>
-        <a className="nav-link" href="http://localhost:3000/text-editor">
+        <a
+          className={` ${activePage === "editor" ? "active-link" : "nav-link"}`}
+          href="http://localhost:3000/text-editor"
+          onClick={() => sessionStorage.setItem("activePage", "editor")}
+        >
           Editor
         </a>
-        <a className="nav-link" href="http://localhost:3000/doc-creator">
+        <a
+          className={` ${
+            activePage === "manager" ? "active-link" : "nav-link"
+          }`}
+          href="http://localhost:3000/doc-creator"
+          onClick={() => sessionStorage.setItem("activePage", "manager")}
+        >
           Manager
         </a>
         <a className="nav-link" onClick={props.logout}>
           Log Out
         </a>
-        <a className="nav-link" href="http://localhost:3000/account">
+        <a
+          className={` ${
+            activePage === "account" ? "active-link" : "nav-link"
+          }`}
+          href="http://localhost:3000/account"
+          onClick={() => sessionStorage.setItem("activePage", "account")}
+        >
           <FontAwesomeIcon icon={faUser} />
           &nbsp;&nbsp;
           {activeAccount.registerUsername}
