@@ -17,6 +17,7 @@ function Register() {
     const registerUsername = username.current.value;
     const registerEmail = email.current.value;
     const registerPassword = password.current.value;
+    const registerConfirmPassword = confirmPassword.current.value;
 
     const hashedPassword = bcrypt.hashSync(registerPassword, 10);
 
@@ -24,7 +25,10 @@ function Register() {
       username: registerUsername,
       email: registerEmail,
       password: registerPassword,
+      confirmPassword: registerConfirmPassword,
     };
+
+    console.log("cp2", formData);
 
     const accountDetails = [
       {

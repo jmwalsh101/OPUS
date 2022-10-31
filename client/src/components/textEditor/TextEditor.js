@@ -317,6 +317,7 @@ function TextEditor() {
       <div>
         {HEADER_TYPES.map((type) => (
           <StyleButton
+            key={type.label}
             label={type.label}
             onToggle={props.onToggle}
             style={type.style}
@@ -345,6 +346,7 @@ function TextEditor() {
       <div>
         {LIST_TYPES.map((type) => (
           <StyleButton
+            key={type.label}
             label={type.label}
             onToggle={props.onToggle}
             style={type.style}
@@ -370,7 +372,7 @@ function TextEditor() {
         {INLINE_STYLES.map((type) => (
           <>
             <StyleButton
-              // key={type.label}
+              key={type.label}
               label={type.label}
               onToggle={props.onToggle}
               style={type.style}

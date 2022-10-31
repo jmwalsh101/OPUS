@@ -17,4 +17,8 @@ export const registrationSchema = yup.object().shape({
     )
     */
     .required(),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords don't match")
+    .required(),
 });
