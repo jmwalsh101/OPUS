@@ -15,7 +15,7 @@ function LoggedIn(props) {
     <>
       <div className="navbar-container">
         <a
-          className={` ${activePage === "home" ? "active-link" : "logo"}`}
+          className={` ${activePage === "home" ? "logo" : "logo"}`}
           href="http://localhost:3000/"
           onClick={() => sessionStorage.setItem("activePage", "home")}
         >

@@ -43,8 +43,6 @@ app.get("/component-id", (req, res) => {
 
 app.post("/component-delete", (req, res) => {
   const { parcel } = req.body;
-  console.log("parcel", parcel);
-  console.log("doc start", documents);
   if (!parcel) {
     return res.status(400).sendStatus({ status: "failed" });
   }
@@ -59,7 +57,6 @@ app.post("/component-delete", (req, res) => {
     return component.id == parcel;
   });
   components.splice(componentIndex, 1);
-  console.log("doc end", documents);
 });
 
 app.post("/component-new", (req, res) => {
