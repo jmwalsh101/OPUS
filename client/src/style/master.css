@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 120vh;
+  height: 100vh;
   background-image: linear-gradient(to bottom, #f5f6fc00 0%, #75135d00 60%, #e09fb3 100%), url("../images/background-top.png");
   background-size: cover;
   background-position: center top;
@@ -19,66 +19,66 @@
   margin: 0;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
-.home-header2 {
+.home-background {
+  background-image: linear-gradient(to bottom, #e09fb3 0%, #d78da4 15%, #c07d92 50%, #d78da4 85%, #e09fb3 100%);
+}
+.home-background .home-header2 {
   padding-top: 8%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 400px;
-  background-color: #e09fb3;
   color: #f9f8f5;
   text-align: center;
 }
-.home-header2 h2 {
+.home-background .home-header2 h2 {
   font-size: 60px;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   padding: 0;
   margin: 0;
 }
-.home-header2 h3 {
+.home-background .home-header2 h3 {
   font-size: 20px;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
-.home-header2 .home-info-text {
+.home-background .home-header2 .home-info-text {
   width: 50%;
 }
-.home-header2 .home-images {
+.home-background .home-header2 .home-images {
   display: flex;
   justify-content: space-around;
   width: 85%;
 }
-.home-header2 p {
-  font-size: 20px;
+.home-background .home-header2 p {
+  font-size: 15px;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-weight: 800;
 }
-.home-header3 {
+.home-background .home-header3 {
   padding-top: 10%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 400px;
-  background-image: linear-gradient(to bottom, #e09fb3 0%, #d78da4 30%);
   color: #f9f8f5;
 }
-.home-header3 h2 {
+.home-background .home-header3 h2 {
   font-size: 65px;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
-.home-header3 .home-images {
+.home-background .home-header3 .home-images {
   display: flex;
   justify-content: space-around;
   width: 100%;
 }
-.home-header4 {
+.home-background .home-header4 {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 400px;
-  background-image: linear-gradient(to bottom, #d78da4 0%, #e09fb3 100%);
 }
 .home-header5 {
   display: flex;
@@ -93,7 +93,7 @@
 }
 .navbar-container {
   display: flex;
-  padding: 9px;
+  padding: 0.5%;
   background-color: #1d2731;
   color: #f9f8f5;
 }
@@ -186,7 +186,7 @@
 }
 .main-container .main-editor .doc-container-overview .doc-creator-container .doc-actions {
   display: flex;
-  background-image: radial-gradient(#d5e3ea, #c2dfeb, #a0b8c2);
+  background-image: radial-gradient(#d5e3ea, #c2dfeb, #8ba8b4);
   min-height: 30px;
   padding-top: 2px;
   padding-bottom: 2px;
@@ -236,7 +236,7 @@
 .main-container .main-editor .editor-container-overview .editor-container .component-actions {
   display: flex;
   justify-content: space-between;
-  background-image: radial-gradient(#d5e3ea, #c2dfeb, #a0b8c2);
+  background-image: radial-gradient(#d5e3ea, #c2dfeb, #8ba8b4);
   padding: 2%;
   border-top: 1px solid #1d2731;
   border-bottom: 1px solid #1d2731;
@@ -335,6 +335,142 @@
   padding: 4px;
   border: 1px solid #1d2731;
   margin: 4px;
+}
+.register-container {
+  display: flex;
+  justify-content: center;
+  height: 93vh;
+  background-color: #c2dfeb;
+}
+.register-container .register-text {
+  flex-basis: 60%;
+  background-image: url("../images/login.png");
+  background-size: cover;
+}
+.register-container .form {
+  flex-basis: 40%;
+  background-image: linear-gradient(to bottom, #e4cad2 0%, #d5cfbf 50%, #e4cad2 100%);
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-left: solid 5px #c07d92;
+}
+.register-container .form .form-contents {
+  background-color: #f9f8f5;
+  padding: 10%;
+  width: 40%;
+  height: 35vh;
+  border-radius: 5px;
+  border: solid 5px #e09fb3;
+}
+.register-container .form .form-contents table {
+  width: 60%;
+}
+.pricing-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 93vh;
+  background-color: #c2dfeb;
+  background-image: linear-gradient(to bottom, #c2dfeb 0%, #8ba8b4 50%, #c2dfeb 85%);
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  color: #1d2731;
+}
+.pricing-main .pricing-text {
+  width: 25%;
+  text-align: center;
+}
+.pricing-main .pricing-text .pricing-title {
+  color: #f2c9d5;
+  -webkit-text-stroke: 2px #d78da4;
+  font-size: 50px;
+  font-weight: 900;
+}
+.pricing-main .pricing-text .pricing-subtitle {
+  font-size: 20px;
+}
+.pricing-main .pricing-container {
+  padding-left: 5%;
+  width: 65%;
+  display: flex;
+  justify-content: space-around;
+  /*
+    display: flex;
+    width: 80%;
+    height: 60vh;
+    background-color: @white;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: @standardRadius;
+    margin-top: 5%;
+    border: 5px solid #c07d92;
+
+    .pricing-text {
+      width: 30%;
+      padding: 2%;
+    }
+
+    .pricing-tables {
+      width: 65%;
+
+      table {
+        width: 100%;
+
+        th,
+        td {
+          padding: 15px;
+        }
+      }
+    }
+      */
+}
+.pricing-main .pricing-container .box {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  background-color: #f9f8f5;
+  padding: 1%;
+  border: solid 5px #c07d92;
+  border-radius: 5px;
+}
+.pricing-main .pricing-container .box .box-header {
+  border-bottom: 1px solid #8e959d;
+}
+.pricing-main .pricing-container .box .pricing-price {
+  padding: 10px;
+  text-align: center;
+  font-size: 40px;
+  border-bottom: 1px solid #8e959d;
+}
+.pricing-main .pricing-container .box .pricing-price .amount {
+  font-size: 40px;
+}
+.pricing-main .pricing-container .box .pricing-price .frequency {
+  font-size: 20px;
+  color: #8e959d;
+}
+.pricing-main .pricing-container .box h4 {
+  text-align: center;
+  font-size: 20px;
+}
+.pricing-main .pricing-container .box .box-byline {
+  color: #a57485;
+  text-align: center;
+}
+.pricing-main .pricing-container .box .box-detail {
+  display: flex;
+  padding-top: 10%;
+}
+.pricing-main .pricing-container .box .box-detail .box-detail-text {
+  margin: 0;
+  padding-left: 5px;
+}
+.pricing-main .pricing-container .box .box-button {
+  margin-top: auto;
+  padding-top: 10%;
+  text-align: center;
 }
 .modal-screen {
   display: flex;

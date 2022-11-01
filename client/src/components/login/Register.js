@@ -99,14 +99,52 @@ function Register() {
 
   return (
     <>
-      Name <input type="text" ref={username} />
-      Email <input type="email" ref={email} />
-      Pasword <input type="password" ref={password} />
-      Confirm Password{" "}
-      <input type="password" ref={confirmPassword} placeholder="Password1%" />
-      <button type="submit" onClick={register}>
-        Submit
-      </button>
+      <div className="register-container">
+        <div className="register-text"> </div>
+        <div className="form">
+          <div className="form-contents">
+            <h2>Sign Up</h2>
+            <table>
+              <tbody>
+                <tr>
+                  <td>Name</td>
+                  <td>
+                    <input type="text" ref={username} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td>
+                    <input type="email" ref={email} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Pasword</td>
+                  <td>
+                    <input type="password" ref={password} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Confirm Password</td>
+                  <td>
+                    <input
+                      type="password"
+                      ref={confirmPassword}
+                      placeholder="Password1%"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="submit" onClick={register}>
+              Submit
+            </button>
+            <p>
+              Already have an account? <a href="/login">Log In</a>
+            </p>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

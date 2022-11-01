@@ -55,12 +55,42 @@ function Login() {
 
   return (
     <>
-      Name <input type="text" ref={username} />
-      Email <input type="email" ref={email} />
-      Pasword <input type="password" ref={password} />
-      <button type="submit" onClick={login}>
-        Login
-      </button>
+      <div className="register-container">
+        <div className="register-text"> </div>
+        <div className="form">
+          <div className="form-contents">
+            <h2>Login</h2>
+            <table>
+              <tbody>
+                <tr>
+                  <td>Name</td>
+                  <td>
+                    <input type="text" ref={username} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td>
+                    <input type="email" ref={email} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Pasword</td>
+                  <td>
+                    <input type="password" ref={password} />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="submit" onClick={login}>
+              Submit
+            </button>
+            <p>
+              Don't have an account? <a href="/register">Sign Up</a>
+            </p>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
