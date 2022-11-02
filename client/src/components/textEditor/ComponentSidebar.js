@@ -1,10 +1,14 @@
 import { useState, useContext } from "react";
+import _ from "lodash";
 
 import LoadingModal from "../modals/LoadingModal";
 import SuccessModal from "../modals/SuccessModal";
 
 import { backendComponentsContext } from "../../contexts/ComponentContext";
 import { componentIdContext } from "../../contexts/ComponentContext";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 
 function ComponenetSidebar() {
   const { componentsFromBackend, setComponentsFromBackend } = useContext(
@@ -17,6 +21,26 @@ function ComponenetSidebar() {
   const [loadingModal, setShowLoading] = useState(false);
   const [successModal, showSuccessModal] = useState(false);
 
+  const category1 = _.filter(componentsFromBackend, {
+    category: "volvo",
+  });
+  const category2 = _.filter(componentsFromBackend, {
+    category: "saab",
+  });
+  const category3 = _.filter(componentsFromBackend, {
+    category: "mercedes",
+  });
+  const category4 = _.filter(componentsFromBackend, {
+    category: "audi",
+  });
+
+  const [showCategory1, setShowCategory1] = useState(false);
+  const [showCategory2, setShowCategory2] = useState(false);
+  const [showCategory3, setShowCategory3] = useState(false);
+  const [showCategory4, setShowCategory4] = useState(false);
+
+  console.log(category1, category2, category3, category4);
+
   function handleSelect(e) {
     e.preventDefault();
     setBackendComponentId(e.target.value);
@@ -24,20 +48,132 @@ function ComponenetSidebar() {
 
   return (
     <>
-      <div>
+      <div className="sidebar-categories">
         <h3>Quick Access</h3>
-        {componentsFromBackend.map(function (q, index) {
-          return (
-            <>
-              <div key={index} className="sidebar-item">
-                <p>{q.name}</p>
-                <button onClick={handleSelect} value={q.id}>
-                  Select
-                </button>
-              </div>
-            </>
-          );
-        })}
+        <div
+          className="sidebar-category"
+          onClick={() => {
+            if (showCategory1 === false) {
+              setShowCategory1(true);
+            } else {
+              setShowCategory1(false);
+            }
+          }}
+        >
+          Volvo
+        </div>
+        {showCategory1
+          ? category1.map(function (l, index) {
+              return (
+                <>
+                  <div key={index} className="sidebar-item">
+                    <p>{l.name}</p>
+                    <p>{l.category}</p>
+                    <button onClick={handleSelect} value={l.id}>
+                      <FontAwesomeIcon
+                        icon={faArrowRightToBracket}
+                        style={{ pointerEvents: "none" }}
+                      />
+                    </button>
+                  </div>
+                </>
+              );
+            })
+          : null}
+
+        <div
+          className="sidebar-category"
+          onClick={() => {
+            if (showCategory2 === false) {
+              setShowCategory2(true);
+            } else {
+              setShowCategory2(false);
+            }
+          }}
+        >
+          Saab
+        </div>
+        {showCategory2
+          ? category2.map(function (l, index) {
+              return (
+                <>
+                  <div key={index} className="sidebar-item">
+                    <p>{l.name}</p>
+                    <p>{l.category}</p>
+                    <button onClick={handleSelect} value={l.id}>
+                      <FontAwesomeIcon
+                        icon={faArrowRightToBracket}
+                        style={{ pointerEvents: "none" }}
+                      />
+                    </button>
+                  </div>
+                </>
+              );
+            })
+          : null}
+
+        <div
+          className="sidebar-category"
+          onClick={() => {
+            if (showCategory3 === false) {
+              setShowCategory3(true);
+            } else {
+              setShowCategory3(false);
+            }
+          }}
+        >
+          Mercedes
+        </div>
+        {showCategory3
+          ? category3.map(function (l, index) {
+              return (
+                <>
+                  <div key={index} className="sidebar-item">
+                    <p>{l.name}</p>
+                    <p>{l.category}</p>
+                    <button onClick={handleSelect} value={l.id}>
+                      <FontAwesomeIcon
+                        icon={faArrowRightToBracket}
+                        style={{ pointerEvents: "none" }}
+                      />
+                    </button>
+                  </div>
+                </>
+              );
+            })
+          : null}
+
+        <div
+          className="sidebar-category"
+          onClick={() => {
+            if (showCategory4 === false) {
+              setShowCategory4(true);
+            } else {
+              setShowCategory4(false);
+            }
+          }}
+        >
+          Audi
+        </div>
+        {showCategory4
+          ? category4.map(function (l, index) {
+              return (
+                <>
+                  <div key={index} className="sidebar-item">
+                    <p>Cat1</p>
+                    <p>{l.name}</p>
+                    <p>{l.category}</p>
+                    <button onClick={handleSelect} value={l.id}>
+                      <FontAwesomeIcon
+                        icon={faArrowRightToBracket}
+                        style={{ pointerEvents: "none" }}
+                      />
+                    </button>
+                  </div>
+                </>
+              );
+            })
+          : null}
       </div>
       <div>
         {loadingModal ? (

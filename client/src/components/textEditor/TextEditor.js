@@ -64,6 +64,13 @@ function TextEditor() {
 
   const [updater, setUpdater] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [category, setCategory] = useState(null);
+
+  function handleCategory(e) {
+    e.preventDefault();
+    setCategory(e.target.value);
+    console.log(category);
+  }
 
   function handleConfirmUpdateModalClose() {
     const html = convertToHTML(editorState.getCurrentContent());
@@ -72,6 +79,7 @@ function TextEditor() {
         id: componentId,
         name: name,
         content: html,
+        category: category,
         author: author,
         created: createDate,
         updater: JSON.parse(sessionStorage.getItem("username"))
@@ -104,6 +112,7 @@ function TextEditor() {
           );
           setUpdater("");
           setLastUpdated("");
+          setCategory("");
         }
         //else for modal
       })
@@ -133,6 +142,7 @@ function TextEditor() {
           setCreateDate(timestamp);
           setUpdater("");
           setLastUpdated("");
+          setCategory("");
         }
         //else for modal
       })
@@ -170,6 +180,11 @@ function TextEditor() {
       const selectedTimestamp = selectedComponent.created;
       const selectedUpdater = selectedComponent.updater;
       const selectedLastUpdate = selectedComponent.lastUpdated;
+      const selectedCategory = selectedComponent.category;
+
+      console.log(selectedComponent);
+      console.log(selectedComponent.updater);
+      console.log(selectedCategory);
 
       /*}
       const contentState = ContentState.createFromBlockArray(
@@ -185,6 +200,7 @@ function TextEditor() {
       setEditorState(EditorState.createWithContent(selectedContent));
       setUpdater(selectedUpdater);
       setLastUpdated(selectedLastUpdate);
+      setCategory(selectedCategory);
     }
   }, [backendComponentId]);
 
@@ -216,6 +232,7 @@ function TextEditor() {
     setCreateDate(timestamp);
     setUpdater("");
     setLastUpdated("");
+    setCategory("");
   }
 
   function handleSaveName(e) {
@@ -247,6 +264,7 @@ function TextEditor() {
           id: componentId,
           name: name,
           content: html,
+          category: category,
           author: author,
           created: createDate,
           updater: null,
@@ -272,6 +290,7 @@ function TextEditor() {
             setCreateDate(timestamp);
             setUpdater("");
             setLastUpdated("");
+            setCategory("");
           } else {
             setShowLoading(false);
           }
@@ -404,7 +423,13 @@ function TextEditor() {
             </span>
             <span>
               <p>Category</p>
-              <input type="text" />
+              <select name="cars" id="cars" onChange={handleCategory}>
+                <option value=""></option>
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+              </select>
             </span>
             <span>
               <p>ID</p>

@@ -15,6 +15,8 @@ import { activePageContext } from "../../contexts/Navigation";
 import NotLoggedIn from "./NotLoggedIn";
 import Register from "../login/Register";
 import Account from "../account/Account";
+import Texts from "../texts/Texts";
+import Documents from "../documents/Documents";
 
 function Navigation() {
   const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem("username"));
@@ -40,6 +42,8 @@ function Navigation() {
           <Route path="/login" element={<LogIn />} />
           <Route path="/register" element={<Register />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/texts" element={<Texts />} />
+          <Route path="/documents" element={<Documents />} />
         </Routes>
       </loginContext.Provider>
     </activePageContext.Provider>

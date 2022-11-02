@@ -25,14 +25,14 @@ function LoggedIn(props) {
           className={` ${
             activePage === "documents" ? "active-link" : "nav-link"
           }`}
-          href="http://localhost:3000/"
+          href="http://localhost:3000/documents"
           onClick={() => sessionStorage.setItem("activePage", "documents")}
         >
           Documents
         </a>
         <a
           className={` ${activePage === "texts" ? "active-link" : "nav-link"}`}
-          href="http://localhost:3000/"
+          href="http://localhost:3000/texts"
           onClick={() => sessionStorage.setItem("activePage", "texts")}
         >
           Texts

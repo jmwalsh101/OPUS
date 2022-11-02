@@ -6,18 +6,41 @@
     background-image: linear-gradient(@purpleDark, @purpleLight, @purpleDark);
     border-right: @heavyPurpleBorder;
 
-    .sidebar-item {
+    .sidebar-categories {
       display: flex;
-      justify-content: space-between;
-      overflow-wrap: break-word;
-      word-break: break-all;
-      padding-left: @spacingS;
-      padding-right: @spacingS;
-      align-items: center;
-      background-color: @purple4;
-      border-radius: @standardRadius;
-      border: @standardBlack;
-      margin: @spacingS;
+      flex-direction: column;
+      width: 100%;
+
+      .sidebar-category {
+        display: flex;
+        align-items: center;
+        height: 3vh;
+        justify-content: center;
+        vertical-align: middle;
+        background-color: @purple4;
+        border-radius: @standardRadius;
+        border: @standardBlack;
+        margin: @spacingS;
+        padding-left: @spacingS;
+        padding-right: @spacingS;
+      }
+
+      .sidebar-item {
+        display: flex;
+        justify-content: space-between;
+        overflow-wrap: break-word;
+        word-break: break-all;
+        padding-left: @spacingS;
+        padding-right: @spacingS;
+        align-items: center;
+        background-color: @purple4;
+        border-bottom-right-radius: @standardRadius;
+        border-bottom-left-radius: @standardRadius;
+        border: @standardBlack;
+        margin-left: @spacingS;
+        margin-right: @spacingS;
+        margin-bottom: @spacingS;
+      }
     }
   }
   .main-editor {

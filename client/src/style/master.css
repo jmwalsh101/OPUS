@@ -159,7 +159,25 @@
   background-image: linear-gradient(#ac99a8, #cec4d6, #ac99a8);
   border-right: 2px solid #ac99a8;
 }
-.main-container .sidebar .sidebar-item {
+.main-container .sidebar .sidebar-categories {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.main-container .sidebar .sidebar-categories .sidebar-category {
+  display: flex;
+  align-items: center;
+  height: 3vh;
+  justify-content: center;
+  vertical-align: middle;
+  background-color: #958090;
+  border-radius: 5px;
+  border: 1px solid #1d2731;
+  margin: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.main-container .sidebar .sidebar-categories .sidebar-item {
   display: flex;
   justify-content: space-between;
   overflow-wrap: break-word;
@@ -168,9 +186,12 @@
   padding-right: 4px;
   align-items: center;
   background-color: #958090;
-  border-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
   border: 1px solid #1d2731;
-  margin: 4px;
+  margin-left: 4px;
+  margin-right: 4px;
+  margin-bottom: 4px;
 }
 .main-container .main-editor {
   flex-basis: 88%;
@@ -342,14 +363,19 @@
   height: 93vh;
   background-color: #c2dfeb;
 }
-.register-container .register-text {
+.register-container .login-text {
   flex-basis: 60%;
   background-image: url("../images/login.png");
   background-size: cover;
 }
+.register-container .register-text {
+  flex-basis: 60%;
+  background-image: url("../images/registration.png");
+  background-size: cover;
+}
 .register-container .form {
   flex-basis: 40%;
-  background-image: linear-gradient(to bottom, #e4cad2 0%, #d5cfbf 50%, #e4cad2 100%);
+  background-image: linear-gradient(to bottom, #ece0ea 0%, #e5c9d7 20%, #f2bdcd 50%, #e5c9d7 80%, #ece0ea 100%);
   width: 70%;
   display: flex;
   flex-direction: column;
@@ -374,7 +400,7 @@
   align-items: center;
   height: 93vh;
   background-color: #c2dfeb;
-  background-image: linear-gradient(to bottom, #c2dfeb 0%, #8ba8b4 50%, #c2dfeb 85%);
+  background-image: linear-gradient(to bottom, #a7d5e7 0%, #6ba9c2 50%, #a7d5e7 85%);
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   color: #1d2731;
 }

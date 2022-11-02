@@ -4,15 +4,17 @@
 
 2. Confirm modal for when replacing a document/component?
 3. Text editor style buttons need to be fixed
-4. Login credentials need to be set as required and full workflow implemented
-5. Icon button needed to fix places where icon doesn't work in a button
 
-6. Content for account page
-7. Get Texts and Documents pages layout and content done
-8. Get login and registration pages finished
-9. Add validation to docs and component submission?
-10. Disable buttons not valid for use
-    13: BUG: can delete document that doesn't exist - i.e. usedComponents == true but name != true
+4. Icon button needed to fix places where icon doesn't work in a button
+
+5. Content for account page
+6. Get Texts and Documents pages layout and content done
+
+7. Add validation to docs and component submission?
+8. Disable buttons not valid for use
+9. BUG: can delete document that doesn't exist - i.e. usedComponents == true but name != true
+10. Confirm modal for Log Out
+11. Category select not being updated by value passed to it
 
 **Nice To haves**
 

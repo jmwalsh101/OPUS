@@ -32,6 +32,8 @@ function Sidebar() {
     documentLastUpdatedContext
   );
 
+  // categories
+
   function handleSelect(e) {
     setLastUpdated();
     setUpdater();
@@ -102,7 +104,10 @@ function Sidebar() {
                   updater={q.updater}
                   lastUpdated={q.updated}
                 >
-                  S<FontAwesomeIcon icon={faArrowRightToBracket} />
+                  <FontAwesomeIcon
+                    icon={faArrowRightToBracket}
+                    style={{ pointerEvents: "none" }}
+                  />
                 </button>
               </span>
             </div>

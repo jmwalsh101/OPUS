@@ -56,7 +56,7 @@ function Login() {
   return (
     <>
       <div className="register-container">
-        <div className="register-text"> </div>
+        <div className="login-text"> </div>
         <div className="form">
           <div className="form-contents">
             <h2>Login</h2>
