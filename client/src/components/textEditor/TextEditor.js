@@ -66,6 +66,8 @@ function TextEditor() {
   const [lastUpdated, setLastUpdated] = useState(null);
   const [category, setCategory] = useState(null);
 
+  console.log(backendComponentId);
+
   function handleCategory(e) {
     e.preventDefault();
     setCategory(e.target.value);
@@ -178,13 +180,17 @@ function TextEditor() {
       const selectedAuthor = selectedComponent.author;
       const selectedContent = convertFromHTML(selectedComponent.content);
       const selectedTimestamp = selectedComponent.created;
-      const selectedUpdater = selectedComponent.updater;
-      const selectedLastUpdate = selectedComponent.lastUpdated;
+      let selectedUpdater = selectedComponent.updater;
+      let selectedLastUpdate = selectedComponent.lastUpdated;
       const selectedCategory = selectedComponent.category;
 
-      console.log(selectedComponent);
-      console.log(selectedComponent.updater);
-      console.log(selectedCategory);
+      if (selectedUpdater === undefined || selectedUpdater === null) {
+        selectedUpdater = "";
+      }
+
+      if (selectedLastUpdate === undefined || selectedLastUpdate === null) {
+        selectedLastUpdate = "";
+      }
 
       /*}
       const contentState = ContentState.createFromBlockArray(
@@ -233,6 +239,7 @@ function TextEditor() {
     setUpdater("");
     setLastUpdated("");
     setCategory("");
+    setBackendComponentId("");
   }
 
   function handleSaveName(e) {

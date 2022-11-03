@@ -101,7 +101,7 @@ function Register() {
     <>
       <div className="register-container">
         <div className="register-text"> </div>
-        <div className="form">
+        <div className="form form-register">
           <div className="form-contents">
             <h2>Sign Up</h2>
             <table>

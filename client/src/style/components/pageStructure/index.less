@@ -2,9 +2,11 @@
   display: flex;
 
   .sidebar {
-    flex-basis: 12%;
-    background-image: linear-gradient(@purpleDark, @purpleLight, @purpleDark);
-    border-right: @heavyPurpleBorder;
+    flex-basis: 20%;
+    background-image: url(../images/sidebar-background.png);
+    //background-image: linear-gradient(@purpleDark, @purpleLight, @purpleDark);
+    //border-right: @heavyPurpleBorder;
+    background-size: cover;
 
     .sidebar-categories {
       display: flex;
@@ -24,31 +26,98 @@
         padding-left: @spacingS;
         padding-right: @spacingS;
       }
-
-      .sidebar-item {
+      .sidebar-category-active {
         display: flex;
-        justify-content: space-between;
-        overflow-wrap: break-word;
-        word-break: break-all;
-        padding-left: @spacingS;
-        padding-right: @spacingS;
         align-items: center;
+        height: 3vh;
+        justify-content: center;
+        vertical-align: middle;
         background-color: @purple4;
-        border-bottom-right-radius: @standardRadius;
-        border-bottom-left-radius: @standardRadius;
+        border-top-left-radius: @standardRadius;
+        border-top-right-radius: @standardRadius;
         border: @standardBlack;
+        margin-top: @spacingS;
         margin-left: @spacingS;
         margin-right: @spacingS;
-        margin-bottom: @spacingS;
+        padding-left: @spacingS;
+        padding-right: @spacingS;
+      }
+
+      .sidebar-items {
+        .sidebar-item:not(:last-child) {
+          display: flex;
+          justify-content: space-between;
+          overflow-wrap: break-word;
+          word-break: break-all;
+          padding-left: @spacingS;
+          padding-right: @spacingS;
+          align-items: center;
+          background-color: @purple4;
+          border: @standardBlack;
+          margin-left: @spacingS;
+          margin-right: @spacingS;
+        }
+
+        .sidebar-item:last-child {
+          display: flex;
+          justify-content: space-between;
+          overflow-wrap: break-word;
+          word-break: break-all;
+          padding-left: @spacingS;
+          padding-right: @spacingS;
+          align-items: center;
+          background-color: @purple4;
+          border-bottom-right-radius: @standardRadius;
+          border-bottom-left-radius: @standardRadius;
+          border: @standardBlack;
+          margin-left: @spacingS;
+          margin-right: @spacingS;
+          margin-bottom: @spacingS;
+        }
+
+        /*
+
+        .sidebar-item:not(:last-child) {
+          padding-left: @spacingS;
+          padding-right: @spacingS;
+          align-items: center;
+          background-color: @purple4;
+          border: @standardBlack;
+          margin-left: @spacingS;
+          margin-right: @spacingS;
+          margin-bottom: @spacingS;
+        }
+        .sidebar-item:last-child(1) {
+          display: flex;
+          justify-content: space-between;
+          overflow-wrap: break-word;
+          word-break: break-all;
+          padding-left: @spacingS;
+          padding-right: @spacingS;
+          align-items: center;
+          background-color: @purple4;
+          border-bottom-right-radius: @standardRadius;
+          border-bottom-left-radius: @standardRadius;
+          border: @standardBlack;
+          margin-left: @spacingS;
+          margin-right: @spacingS;
+          margin-bottom: @spacingS;
+        }
+        */
       }
     }
   }
   .main-editor {
-    flex-basis: 88%;
+    flex-basis: 80%;
     margin: 0;
 
     @import "./docCreator.less";
     @import "./textEditor.less";
+  }
+
+  .main-display {
+    flex-basis: 60%;
+    margin: 0;
   }
 }
 

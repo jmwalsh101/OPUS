@@ -52,128 +52,143 @@ function ComponenetSidebar() {
         <h3>Quick Access</h3>
         <div
           className="sidebar-category"
-          onClick={() => {
+          onClick={(e) => {
             if (showCategory1 === false) {
               setShowCategory1(true);
             } else {
               setShowCategory1(false);
             }
+            e.currentTarget.classList.toggle("sidebar-category");
+            e.currentTarget.classList.toggle("sidebar-category-active");
           }}
         >
           Volvo
         </div>
-        {showCategory1
-          ? category1.map(function (l, index) {
-              return (
-                <>
-                  <div key={index} className="sidebar-item">
-                    <p>{l.name}</p>
-                    <p>{l.category}</p>
-                    <button onClick={handleSelect} value={l.id}>
-                      <FontAwesomeIcon
-                        icon={faArrowRightToBracket}
-                        style={{ pointerEvents: "none" }}
-                      />
-                    </button>
-                  </div>
-                </>
-              );
-            })
-          : null}
+        <div className="sidebar-items">
+          {showCategory1
+            ? category1.map(function (l, index) {
+                return (
+                  <>
+                    <div key={index} className="sidebar-item">
+                      <p>{l.name}</p>
+                      <p>{l.category}</p>
+                      <button onClick={handleSelect} value={l.id}>
+                        <FontAwesomeIcon
+                          icon={faArrowRightToBracket}
+                          style={{ pointerEvents: "none" }}
+                        />
+                      </button>
+                    </div>
+                  </>
+                );
+              })
+            : null}
+        </div>
 
         <div
           className="sidebar-category"
-          onClick={() => {
+          onClick={(e) => {
             if (showCategory2 === false) {
               setShowCategory2(true);
             } else {
               setShowCategory2(false);
             }
+            e.currentTarget.classList.toggle("sidebar-category");
+            e.currentTarget.classList.toggle("sidebar-category-active");
           }}
         >
           Saab
         </div>
-        {showCategory2
-          ? category2.map(function (l, index) {
-              return (
-                <>
-                  <div key={index} className="sidebar-item">
-                    <p>{l.name}</p>
-                    <p>{l.category}</p>
-                    <button onClick={handleSelect} value={l.id}>
-                      <FontAwesomeIcon
-                        icon={faArrowRightToBracket}
-                        style={{ pointerEvents: "none" }}
-                      />
-                    </button>
-                  </div>
-                </>
-              );
-            })
-          : null}
+        <div className="sidebar-items">
+          {showCategory2
+            ? category2.map(function (l, index) {
+                return (
+                  <>
+                    <div key={index} className="sidebar-item">
+                      <p>{l.name}</p>
+                      <p>{l.category}</p>
+                      <button onClick={handleSelect} value={l.id}>
+                        <FontAwesomeIcon
+                          icon={faArrowRightToBracket}
+                          style={{ pointerEvents: "none" }}
+                        />
+                      </button>
+                    </div>
+                  </>
+                );
+              })
+            : null}
+        </div>
 
         <div
           className="sidebar-category"
-          onClick={() => {
+          onClick={(e) => {
             if (showCategory3 === false) {
               setShowCategory3(true);
             } else {
               setShowCategory3(false);
             }
+            e.currentTarget.classList.toggle("sidebar-category");
+            e.currentTarget.classList.toggle("sidebar-category-active");
           }}
         >
           Mercedes
         </div>
-        {showCategory3
-          ? category3.map(function (l, index) {
-              return (
-                <>
-                  <div key={index} className="sidebar-item">
-                    <p>{l.name}</p>
-                    <p>{l.category}</p>
-                    <button onClick={handleSelect} value={l.id}>
-                      <FontAwesomeIcon
-                        icon={faArrowRightToBracket}
-                        style={{ pointerEvents: "none" }}
-                      />
-                    </button>
-                  </div>
-                </>
-              );
-            })
-          : null}
+        <div className="sidebar-items">
+          {showCategory3
+            ? category3.map(function (l, index) {
+                return (
+                  <>
+                    <div key={index} className="sidebar-item">
+                      <p>{l.name}</p>
+                      <p>{l.category}</p>
+                      <button onClick={handleSelect} value={l.id}>
+                        <FontAwesomeIcon
+                          icon={faArrowRightToBracket}
+                          style={{ pointerEvents: "none" }}
+                        />
+                      </button>
+                    </div>
+                  </>
+                );
+              })
+            : null}
+        </div>
 
         <div
           className="sidebar-category"
-          onClick={() => {
+          onClick={(e) => {
             if (showCategory4 === false) {
               setShowCategory4(true);
             } else {
               setShowCategory4(false);
             }
+            e.currentTarget.classList.toggle("sidebar-category");
+            e.currentTarget.classList.toggle("sidebar-category-active");
           }}
         >
           Audi
         </div>
-        {showCategory4
-          ? category4.map(function (l, index) {
-              return (
-                <>
-                  <div key={index} className="sidebar-item">
-                    <p>Cat1</p>
-                    <p>{l.name}</p>
-                    <p>{l.category}</p>
-                    <button onClick={handleSelect} value={l.id}>
-                      <FontAwesomeIcon
-                        icon={faArrowRightToBracket}
-                        style={{ pointerEvents: "none" }}
-                      />
-                    </button>
-                  </div>
-                </>
-              );
-            })
-          : null}
+        <div className="sidebar-items">
+          {showCategory4
+            ? category4.map(function (l, index) {
+                return (
+                  <>
+                    <div key={index} className="sidebar-item">
+                      <p>{l.name}</p>
+                      <p>{l.category}</p>
+                      <button onClick={handleSelect} value={l.id}>
+                        <FontAwesomeIcon
+                          icon={faArrowRightToBracket}
+                          style={{ pointerEvents: "none" }}
+                        />
+                      </button>
+                    </div>
+                  </>
+                );
+              })
+            : null}
+        </div>
       </div>
       <div>
         {loadingModal ? (

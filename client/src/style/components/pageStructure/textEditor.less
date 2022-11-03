@@ -13,11 +13,13 @@
     .component-actions {
       display: flex;
       justify-content: space-between;
-      background-image: radial-gradient(@blueLight, @blue, @blueDark);
+      background-image: url(../images/detail-background.png);
+      //background-image: radial-gradient(@blueLight, @blue, @blueDark);
+      background-size: cover;
       padding: 2%;
       border-top: @standardBlack;
       border-bottom: @standardBlack;
-      border-left: @standardBlack;
+      //border-left: @standardBlack;
     }
 
     .draft-editor {
@@ -25,6 +27,7 @@
       padding-right: 2%;
       background-color: @grey;
       border-left: @standardBlack;
+      border-radius: @standardRadius;
 
       .controls {
         display: flex;
