@@ -170,43 +170,85 @@ function TextEditor() {
   //
 
   useEffect(() => {
+    // this is extra long and doubled-up because I couldn't find a way of preserving state, getting the useEffect to run for componentsFromBack in time to manage the transtion of Edit in Texts to showing that component's details in Text Editor
     if (backendComponentId) {
       const convertedId = parseInt(backendComponentId);
-      const selectedComponent = _.find(componentsFromBackend, {
-        id: convertedId,
-      });
+      let components = componentsFromBackend;
 
-      const selectedName = selectedComponent.name;
-      const selectedAuthor = selectedComponent.author;
-      const selectedContent = convertFromHTML(selectedComponent.content);
-      const selectedTimestamp = selectedComponent.created;
-      let selectedUpdater = selectedComponent.updater;
-      let selectedLastUpdate = selectedComponent.lastUpdated;
-      const selectedCategory = selectedComponent.category;
+      if (!componentsFromBackend.length) {
+        fetch("/component-load")
+          .then((response) => response.json())
+          .then((data) => {
+            setComponentsFromBackend(data);
+            components = data;
 
-      if (selectedUpdater === undefined || selectedUpdater === null) {
-        selectedUpdater = "";
+            const selectedComponent = _.find(components, {
+              id: convertedId,
+            });
+
+            const selectedName = selectedComponent.name;
+            const selectedAuthor = selectedComponent.author;
+            const selectedContent = convertFromHTML(selectedComponent.content);
+            const selectedTimestamp = selectedComponent.created;
+            let selectedUpdater = selectedComponent.updater;
+            let selectedLastUpdate = selectedComponent.lastUpdated;
+            const selectedCategory = selectedComponent.category;
+
+            if (selectedUpdater === undefined || selectedUpdater === null) {
+              selectedUpdater = "";
+            }
+
+            if (
+              selectedLastUpdate === undefined ||
+              selectedLastUpdate === null
+            ) {
+              selectedLastUpdate = "";
+            }
+
+            setComponentSelected(true);
+            setComponentId(convertedId);
+            setName(selectedName);
+            setAuthor(selectedAuthor);
+            setCreateDate(selectedTimestamp);
+            setEditorState(EditorState.createWithContent(selectedContent));
+            setUpdater(selectedUpdater);
+            setLastUpdated(selectedLastUpdate);
+            setCategory(selectedCategory);
+          }) // fail error modal here
+          .catch((error) => console.log("ERROR"));
       }
 
-      if (selectedLastUpdate === undefined || selectedLastUpdate === null) {
-        selectedLastUpdate = "";
-      }
+      if (components.length) {
+        const selectedComponent = _.find(components, {
+          id: convertedId,
+        });
 
-      /*}
-      const contentState = ContentState.createFromBlockArray(
-        selectedContent.contentBlocks,
-        selectedContent.entityMap
-      );
-      */
-      setComponentSelected(true);
-      setComponentId(convertedId);
-      setName(selectedName);
-      setAuthor(selectedAuthor);
-      setCreateDate(selectedTimestamp);
-      setEditorState(EditorState.createWithContent(selectedContent));
-      setUpdater(selectedUpdater);
-      setLastUpdated(selectedLastUpdate);
-      setCategory(selectedCategory);
+        const selectedName = selectedComponent.name;
+        const selectedAuthor = selectedComponent.author;
+        const selectedContent = convertFromHTML(selectedComponent.content);
+        const selectedTimestamp = selectedComponent.created;
+        let selectedUpdater = selectedComponent.updater;
+        let selectedLastUpdate = selectedComponent.lastUpdated;
+        const selectedCategory = selectedComponent.category;
+
+        if (selectedUpdater === undefined || selectedUpdater === null) {
+          selectedUpdater = "";
+        }
+
+        if (selectedLastUpdate === undefined || selectedLastUpdate === null) {
+          selectedLastUpdate = "";
+        }
+
+        setComponentSelected(true);
+        setComponentId(convertedId);
+        setName(selectedName);
+        setAuthor(selectedAuthor);
+        setCreateDate(selectedTimestamp);
+        setEditorState(EditorState.createWithContent(selectedContent));
+        setUpdater(selectedUpdater);
+        setLastUpdated(selectedLastUpdate);
+        setCategory(selectedCategory);
+      }
     }
   }, [backendComponentId]);
 

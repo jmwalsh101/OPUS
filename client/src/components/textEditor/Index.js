@@ -19,6 +19,15 @@ function Index() {
       .catch((error) => console.log("ERROR"));
   }, [componentsFromBackend]);
 
+  useEffect(() => {
+    fetch("/component-load")
+      .then((response) => response.json())
+      .then((data) => {
+        setComponentsFromBackend(data);
+      }) // fail error modal here
+      .catch((error) => console.log("ERROR"));
+  }, [backendComponentId]);
+
   console.log(backendComponentId);
 
   return (

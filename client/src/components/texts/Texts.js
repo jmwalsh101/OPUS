@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +14,9 @@ function Texts() {
 
   const [componentsFromBackend, setComponentsFromBackend] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState("");
+  const [searchResult, setSearchResult] = useState(false);
+  const [searchContentResults, setSearchContentResults] = useState("");
+  const [searchNameResults, setSearchNameResults] = useState("");
   const [selectedComponent, setSelectedComponent] = useState();
 
   const navigate = useNavigate();
@@ -31,7 +34,8 @@ function Texts() {
     e.preventDefault();
     setSearchTerm(e.target.value);
     if (e.target.value === null) {
-      setSearchResults("");
+      setSearchContentResults("");
+      setSearchNameResults("");
     }
   }
 
@@ -39,11 +43,15 @@ function Texts() {
     e.preventDefault();
 
     if (searchTerm) {
-      setSearchResults(
+      setSearchNameResults(
+        componentsFromBackend.filter((comp) => comp.name.includes(searchTerm))
+      );
+      setSearchContentResults(
         componentsFromBackend.filter((comp) =>
           comp.content.includes(searchTerm)
         )
       );
+      setSearchResult(true);
     }
   }
 
@@ -53,13 +61,17 @@ function Texts() {
     const item = _.find(componentsFromBackend, { id: id });
 
     setSelectedComponent(item);
-    setSearchResults("");
+    setSearchContentResults("");
+    setSearchNameResults("");
+    setSearchTerm("");
   }
 
   function handleClear(e) {
     e.preventDefault();
-
-    setSearchResults("");
+    setSearchTerm("");
+    setSearchContentResults("");
+    setSearchNameResults("");
+    setSearchResult(false);
   }
 
   function handleEdit(e) {
@@ -93,15 +105,33 @@ function Texts() {
         </div>
         <div className="main-display">
           <input type="text" onChange={handleSearchTerm} value={searchTerm} />
-          {searchResults ? (
+          {searchContentResults ? (
             <button onClick={handleClear}>Clear</button>
           ) : (
             <input type="submit" onClick={handleSearch} />
           )}
 
           <div className="search-result-container">
-            {searchResults
-              ? searchResults.map(function (k, index) {
+            {searchNameResults
+              ? searchNameResults.map(function (k, index) {
+                  return (
+                    <>
+                      <div className="component-search-card">
+                        <h3>{k.name}</h3>
+                        <span
+                          key={index}
+                          dangerouslySetInnerHTML={{ __html: k.content }}
+                        />
+                        <button value={k.id} onClick={handleSelect}>
+                          View
+                        </button>
+                      </div>
+                    </>
+                  );
+                })
+              : null}
+            {searchContentResults
+              ? searchContentResults.map(function (k, index) {
                   return (
                     <>
                       <div className="component-search-card">
@@ -121,12 +151,16 @@ function Texts() {
           </div>
           <div className="text-box-container">
             <div className="texts-text-box">
-              <button value={selectedComponent?.id} onClick={handleEdit}>
-                Edit
-              </button>
+              <div className="text-box-header">
+                <h2>{selectedComponent?.name}</h2>
+                <Link to="/text-editor">
+                  <button value={selectedComponent?.id} onClick={handleEdit}>
+                    Edit
+                  </button>
+                </Link>
+              </div>
               <>
                 <div>
-                  <h2>{selectedComponent?.name}</h2>
                   <span
                     dangerouslySetInnerHTML={{
                       __html: selectedComponent?.content,

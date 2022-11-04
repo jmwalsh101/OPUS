@@ -683,4 +683,11 @@ button:hover {
   margin-top: 10px;
   margin-bottom: 10px;
   background-color: #f9f8f5;
+  border-radius: 5px;
+}
+.text-box-container .texts-text-box .text-box-header {
+  display: flex;
+  justify-content: space-around;
+  color: white;
+  background-color: black;
 }
