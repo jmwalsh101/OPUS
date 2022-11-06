@@ -39,8 +39,6 @@ function ComponenetSidebar() {
   const [showCategory3, setShowCategory3] = useState(false);
   const [showCategory4, setShowCategory4] = useState(false);
 
-  console.log(category1, category2, category3, category4);
-
   function handleSelect(e) {
     e.preventDefault();
     setBackendComponentId(e.target.value);
