@@ -18,8 +18,39 @@ function Texts() {
   const [searchContentResults, setSearchContentResults] = useState("");
   const [searchNameResults, setSearchNameResults] = useState("");
   const [selectedComponent, setSelectedComponent] = useState();
+  const [lastUpdated, setLastUpdated] = useState([]);
+  const [recentlyCreated, setRecentlyCreated] = useState([]);
 
   const navigate = useNavigate();
+  const allComponents = _.cloneDeep(componentsFromBackend);
+  const createdComponents = _.cloneDeep(componentsFromBackend);
+  const [selectedView, setSelectedView] = useState(true);
+
+  function handleLastUpdatedView(e) {
+    e.preventDefault();
+    setSelectedView(false);
+  }
+
+  function handleLastCreatedView(e) {
+    e.preventDefault();
+    setSelectedView(true);
+  }
+
+  useEffect(() => {
+    const lastUpdatedPrep = _.remove(allComponents, function (n) {
+      return n.lastUpdated != null;
+    });
+    const lastUpdatedResult = lastUpdatedPrep.sort(function (a, b) {
+      return b.lastUpdated.localeCompare(a.lastUpdated);
+    });
+
+    const lastCreated = createdComponents.sort(function (a, b) {
+      return b.created.localeCompare(a.created);
+    });
+
+    setLastUpdated(lastUpdatedResult);
+    setRecentlyCreated(lastCreated);
+  }, [componentsFromBackend]);
 
   useEffect(() => {
     fetch("/component-load")
@@ -56,9 +87,11 @@ function Texts() {
   }
 
   function handleSelect(e) {
+    console.log("target", e.target.value);
     e.preventDefault();
     const id = parseInt(e.target.value);
     const item = _.find(componentsFromBackend, { id: id });
+    console.log("target", id, componentsFromBackend);
 
     setSelectedComponent(item);
     setSearchContentResults("");
@@ -77,8 +110,97 @@ function Texts() {
   function handleEdit(e) {
     const id = e.target.value;
     setBackendComponentId(id);
+    sessionStorage.setItem("activePage", "editor");
     //navigate("/");
   }
+
+  /*
+
+  const componentView = selectedView
+    ? recentlyCreated.map(function (k, index) {
+        return (
+          <>
+            <div className="component-search-card">
+              <h3>{k.name}</h3>
+              <p>{k.lastUpdated}</p>
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: k.content,
+                }}
+              />
+              <button value={k.id} onClick={handleSelect}>
+                View
+              </button>
+            </div>
+          </>
+        );
+      })
+    : lastUpdated.map(function (k, index) {
+        return (
+          <>
+            <div className="component-search-card">
+              <h3>{k.name}</h3>
+              <p>{k.lastUpdated}</p>
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: k.content,
+                }}
+              />
+              <button value={k.id} onClick={handleSelect}>
+                View
+              </button>
+            </div>
+          </>
+        );
+      });
+
+      */
+
+  var textComponents = selectedView ? (
+    <div>
+      {recentlyCreated.map(function (k, index) {
+        if (index < 10) {
+          return (
+            <>
+              <div className="component-search-card" key={index}>
+                <h3>{k.name}</h3>
+                <p>{k.lastUpdated}</p>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: k.content,
+                  }}
+                />
+                <button value={k.id} onClick={handleSelect}>
+                  View
+                </button>
+              </div>
+            </>
+          );
+        }
+      })}
+    </div>
+  ) : (
+    <div>
+      {lastUpdated.map(function (k, index) {
+        return (
+          <>
+            <div className="component-search-card">
+              <h3>{k.name}</h3>
+              <p>{k.lastUpdated}</p>
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: k.content,
+                }}
+              />
+              <button value={k.id} onClick={handleSelect}>
+                View
+              </button>
+            </div>
+          </>
+        );
+      })}
+    </div>
+  );
 
   return (
     <>
@@ -104,51 +226,61 @@ function Texts() {
           </div>
         </div>
         <div className="main-display">
-          <input type="text" onChange={handleSearchTerm} value={searchTerm} />
-          {searchContentResults ? (
-            <button onClick={handleClear}>Clear</button>
-          ) : (
-            <input type="submit" onClick={handleSearch} />
-          )}
-
-          <div className="search-result-container">
-            {searchNameResults
-              ? searchNameResults.map(function (k, index) {
-                  return (
-                    <>
-                      <div className="component-search-card">
-                        <h3>{k.name}</h3>
-                        <span
-                          key={index}
-                          dangerouslySetInnerHTML={{ __html: k.content }}
-                        />
-                        <button value={k.id} onClick={handleSelect}>
-                          View
-                        </button>
-                      </div>
-                    </>
-                  );
-                })
-              : null}
-            {searchContentResults
-              ? searchContentResults.map(function (k, index) {
-                  return (
-                    <>
-                      <div className="component-search-card">
-                        <h3>{k.name}</h3>
-                        <span
-                          key={index}
-                          dangerouslySetInnerHTML={{ __html: k.content }}
-                        />
-                        <button value={k.id} onClick={handleSelect}>
-                          View
-                        </button>
-                      </div>
-                    </>
-                  );
-                })
-              : null}
+          <div className="search-box">
+            <input
+              type="text"
+              onChange={handleSearchTerm}
+              value={searchTerm}
+              className="search-input"
+            />
+            {searchResult ? (
+              <button onClick={handleClear}>Clear</button>
+            ) : (
+              <input type="submit" onClick={handleSearch} />
+            )}
           </div>
+          {searchResult ? (
+            <div className="search-result-container">
+              <h3>Names</h3>
+              {searchNameResults.length
+                ? searchNameResults.map(function (k, index) {
+                    return (
+                      <>
+                        <div className="component-search-card">
+                          <h3>{k.name}</h3>
+                          <span
+                            key={index}
+                            dangerouslySetInnerHTML={{ __html: k.content }}
+                          />
+                          <button value={k.id} onClick={handleSelect}>
+                            View
+                          </button>
+                        </div>
+                      </>
+                    );
+                  })
+                : "No results founds."}
+              <h3>Content</h3>
+              {searchContentResults.length
+                ? searchContentResults.map(function (k, index) {
+                    return (
+                      <>
+                        <div className="component-search-card">
+                          <h3>{k.name}</h3>
+                          <span
+                            key={index}
+                            dangerouslySetInnerHTML={{ __html: k.content }}
+                          />
+                          <button value={k.id} onClick={handleSelect}>
+                            View
+                          </button>
+                        </div>
+                      </>
+                    );
+                  })
+                : "No results found."}
+            </div>
+          ) : null}
           <div className="text-box-container">
             <div className="texts-text-box">
               <div className="text-box-header">
@@ -168,6 +300,54 @@ function Texts() {
                   />
                 </div>
               </>
+            </div>
+          </div>
+        </div>
+        <div className="sidebar-items">
+          <div className="recently-updated">
+            <button onClick={handleLastCreatedView}>Recently Created</button>
+            <button onClick={handleLastUpdatedView}>Recently Updated</button>
+            {textComponents}
+            <div>
+              {/*
+              {selectedView
+                ? recentlyCreated.map(function (k, index) {
+                    return (
+                      <>
+                        <div className="component-search-card">
+                          <h3>{k.name}</h3>
+                          <p>{k.lastUpdated}</p>
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html: k.content,
+                            }}
+                          />
+                          <button value={k.id} onClick={handleSelect}>
+                            View
+                          </button>
+                        </div>
+                      </>
+                    );
+                  })
+                : lastUpdated.map(function (k, index) {
+                    return (
+                      <>
+                        <div className="component-search-card">
+                          <h3>{k.name}</h3>
+                          <p>{k.lastUpdated}</p>
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html: k.content,
+                            }}
+                          />
+                          <button value={k.id} onClick={handleSelect}>
+                            View
+                          </button>
+                        </div>
+                      </>
+                    );
+                  })}
+                */}
             </div>
           </div>
         </div>

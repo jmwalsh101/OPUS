@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useEffect } from "react";
 
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "../home/Home";
@@ -22,9 +22,12 @@ import Documents from "../documents/Documents";
 function Navigation() {
   const [backendComponentId, setBackendComponentId] = useState();
   const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem("username"));
-  const [activePage, setActivePage] = useState(
-    sessionStorage.getItem("activePage")
-  );
+  const [activePage, setActivePage] = useState();
+
+  useEffect(() => {
+    setActivePage(sessionStorage.getItem("activePage"));
+    console.log("effect ran");
+  }, [backendComponentId]);
 
   const navigate = useNavigate();
   function handleLogout() {
