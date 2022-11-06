@@ -179,20 +179,23 @@ function Texts() {
   var textComponents = selectedView ? (
     <div>
       {recentlyCreated.map(function (k, index) {
-        if (index < 10) {
+        if (index < 5) {
           return (
             <>
-              <div className="component-search-card" key={index}>
-                <h3>{k.name}</h3>
-                <p>{k.lastUpdated}</p>
+              <div className="recent-card" key={index}>
+                <div className="recent-card-details">
+                  <h3>{k.name}</h3>
+                  <p>{k.author}</p>
+                  <p>{k.created}</p>
+                  <button value={k.id} onClick={handleSelect}>
+                    View
+                  </button>
+                </div>
                 <span
                   dangerouslySetInnerHTML={{
                     __html: k.content,
                   }}
                 />
-                <button value={k.id} onClick={handleSelect}>
-                  View
-                </button>
               </div>
             </>
           );
@@ -202,22 +205,27 @@ function Texts() {
   ) : (
     <div>
       {lastUpdated.map(function (k, index) {
-        return (
-          <>
-            <div className="component-search-card">
-              <h3>{k.name}</h3>
-              <p>{k.lastUpdated}</p>
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: k.content,
-                }}
-              />
-              <button value={k.id} onClick={handleSelect}>
-                View
-              </button>
-            </div>
-          </>
-        );
+        if (index < 5) {
+          return (
+            <>
+              <div className="recent-card" key={index}>
+                <div className="recent-card-details">
+                  <h3>{k.name}</h3>
+                  <p>{k.updater}</p>
+                  <p>{k.lastUpdated}</p>
+                  <button value={k.id} onClick={handleSelect}>
+                    View
+                  </button>
+                </div>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: k.content,
+                  }}
+                />
+              </div>
+            </>
+          );
+        }
       })}
     </div>
   );
@@ -371,17 +379,20 @@ function Texts() {
         </div>
         <div className="main-display">
           <div className="search-box">
-            <input
-              type="text"
-              onChange={handleSearchTerm}
-              value={searchTerm}
-              className="search-input"
-            />
-            {searchResult ? (
-              <button onClick={handleClear}>Clear</button>
-            ) : (
-              <input type="submit" onClick={handleSearch} />
-            )}
+            <div className="search-box-contents">
+              <input
+                type="text"
+                onChange={handleSearchTerm}
+                value={searchTerm}
+                className="search-input"
+                placeholder="Search texts"
+              />
+              {searchResult ? (
+                <button onClick={handleClear}>Clear</button>
+              ) : (
+                <input type="submit" onClick={handleSearch} />
+              )}
+            </div>
           </div>
           {searchResult ? (
             <div className="search-result-container">
@@ -451,7 +462,7 @@ function Texts() {
           <div className="recently-updated">
             <button onClick={handleLastCreatedView}>Recently Created</button>
             <button onClick={handleLastUpdatedView}>Recently Updated</button>
-            <div>{textComponents}</div>
+            <div className="text-components">{textComponents}</div>
           </div>
         </div>
       </div>
