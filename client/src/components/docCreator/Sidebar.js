@@ -49,8 +49,6 @@ function Sidebar() {
     let docLastUpdated = selectedItem.lastUpdated;
     const componentIds = selectedItem.content;
 
-    console.log("SI", selectedItem);
-
     if (docUpdater === undefined || docUpdater === null) {
       docUpdater = "";
     }

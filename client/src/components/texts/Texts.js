@@ -107,7 +107,6 @@ function Texts() {
   }
 
   function handleSelect(e) {
-    console.log("target", e.target.value);
     e.preventDefault();
     const id = parseInt(e.target.value);
     const item = _.find(componentsFromBackend, { id: id });
@@ -131,50 +130,7 @@ function Texts() {
     const id = e.target.value;
     setBackendComponentId(id);
     sessionStorage.setItem("activePage", "editor");
-    //navigate("/");
   }
-
-  /*
-
-  const componentView = selectedView
-    ? recentlyCreated.map(function (k, index) {
-        return (
-          <>
-            <div className="component-search-card">
-              <h3>{k.name}</h3>
-              <p>{k.lastUpdated}</p>
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: k.content,
-                }}
-              />
-              <button value={k.id} onClick={handleSelect}>
-                View
-              </button>
-            </div>
-          </>
-        );
-      })
-    : lastUpdated.map(function (k, index) {
-        return (
-          <>
-            <div className="component-search-card">
-              <h3>{k.name}</h3>
-              <p>{k.lastUpdated}</p>
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: k.content,
-                }}
-              />
-              <button value={k.id} onClick={handleSelect}>
-                View
-              </button>
-            </div>
-          </>
-        );
-      });
-
-      */
 
   var textComponents = selectedView ? (
     <div>
@@ -191,11 +147,6 @@ function Texts() {
                     View
                   </button>
                 </div>
-                <span
-                  dangerouslySetInnerHTML={{
-                    __html: k.content,
-                  }}
-                />
               </div>
             </>
           );
@@ -217,11 +168,6 @@ function Texts() {
                     View
                   </button>
                 </div>
-                <span
-                  dangerouslySetInnerHTML={{
-                    __html: k.content,
-                  }}
-                />
               </div>
             </>
           );
@@ -403,10 +349,7 @@ function Texts() {
                       <>
                         <div className="component-search-card">
                           <h3>{k.name}</h3>
-                          <span
-                            key={index}
-                            dangerouslySetInnerHTML={{ __html: k.content }}
-                          />
+
                           <button value={k.id} onClick={handleSelect}>
                             View
                           </button>
@@ -422,10 +365,6 @@ function Texts() {
                       <>
                         <div className="component-search-card">
                           <h3>{k.name}</h3>
-                          <span
-                            key={index}
-                            dangerouslySetInnerHTML={{ __html: k.content }}
-                          />
                           <button value={k.id} onClick={handleSelect}>
                             View
                           </button>
