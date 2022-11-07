@@ -23,7 +23,6 @@ function Documents() {
 
   function handleSearch(e) {
     e.preventDefault();
-    console.log(searchTerm);
 
     if (searchTerm) {
       setSearchNameResults(
@@ -45,8 +44,6 @@ function Documents() {
                 docResults.push(document.title);
               }
             }
-            console.log("docs", JSON.stringify(docResults));
-            console.log("final Result", _.uniq(docResults));
             setSearchContentResults(_.uniq(docResults));
             setSearchResult(true);
           })
@@ -65,14 +62,68 @@ function Documents() {
       });
   }, [backendData]);
 
+  //new select function required for Search
+  function handleSearchSelect(e) {
+    e.preventDefault();
+    console.log(e.target.value);
+
+    const item = _.find(documentsFromBackend, { title: e.target.value });
+    console.log(item);
+
+    const title = item.title;
+    const docAuthor = item.author;
+    const docCreated = item.createDate;
+    let docUpdater = item.updater;
+    let docLastUpdated = item.lastUpdated;
+    const componentIds = item.content;
+
+    if (docUpdater === undefined || docUpdater === null) {
+      docUpdater = "";
+    }
+
+    if (docLastUpdated === undefined || docLastUpdated === null) {
+      docLastUpdated = "";
+    }
+
+    fetch("/component-load")
+      .then((response) => response.json())
+      .then((data) => {
+        const fetchedComponents = data;
+        let component = [];
+
+        for (const i of componentIds) {
+          const id = parseInt(i);
+          const item = _.find(fetchedComponents, { id: id });
+          component.push(item);
+        }
+        if (component[0] !== undefined) {
+          setUsedComponents(component);
+        } else {
+          setUsedComponents([]);
+        }
+        setDocTitle(title);
+        setAuthor(docAuthor);
+        setCreateDate(docCreated);
+        setUpdater(docUpdater);
+        setLastUpdated(docLastUpdated);
+        setSearchContentResults([]);
+        setSearchNameResults([]);
+        setSearchResult(false);
+        setSearchTerm("");
+      })
+      // fail error modal here
+      .catch((error) => console.log("ERROR"));
+  }
+
   function handleSelect(e) {
+    console.log(e.target.value);
+    console.log("target", Object.values({ ...e.target.value }));
+
     setLastUpdated();
     setUpdater();
     e.preventDefault();
-    console.log("target", Object.values({ ...e.target }));
     let item = Object.values({ ...e.target });
     let selectedItem = item[1];
-    console.log("target", selectedItem.lastUpdated);
     const title = selectedItem.title;
     const docAuthor = selectedItem.author;
     const docCreated = selectedItem.createDate;
@@ -109,7 +160,6 @@ function Documents() {
         setCreateDate(docCreated);
         setUpdater(docUpdater);
         setLastUpdated(docLastUpdated);
-        console.log("ld", docUpdater);
       })
       // fail error modal here
       .catch((error) => console.log("ERROR"));
@@ -287,7 +337,9 @@ function Documents() {
                       <>
                         <div className="component-search-card" key={index}>
                           <h3>{k.title}</h3>
-                          <button value={k.id}>View</button>
+                          <button value={k.title} onClick={handleSearchSelect}>
+                            View
+                          </button>
                         </div>
                       </>
                     );
@@ -296,12 +348,13 @@ function Documents() {
               <h3>Content</h3>
               {searchContentResults.length
                 ? searchContentResults.map(function (k, index) {
-                    console.log(k);
                     return (
                       <>
                         <div className="component-search-card">
                           <h3>{k}</h3>
-                          <button value={k}>View</button>
+                          <button value={k} onClick={handleSearchSelect}>
+                            View
+                          </button>
                         </div>
                       </>
                     );
