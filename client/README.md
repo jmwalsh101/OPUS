@@ -13,8 +13,8 @@
 7. Add validation to docs and component submission?
 8. Disable buttons not valid for use
 9. BUG: can delete document that doesn't exist - i.e. usedComponents == true but name != true
-10. Confirm modal for Log Out
-11. Category select not being updated by value passed to it
+
+10. Category select not being updated by value passed to it
 
 **Nice To haves**
 

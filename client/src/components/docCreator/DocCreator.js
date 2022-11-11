@@ -54,6 +54,13 @@ function DocCreator() {
   const { lastUpdated, setLastUpdated } = useContext(
     documentLastUpdatedContext
   );
+  const [category, setCategory] = useState(null);
+
+  function handleCategory(e) {
+    e.preventDefault();
+    setCategory(e.target.value);
+    console.log(category);
+  }
 
   function handleConfirmUpdateModalClose() {
     setExistingTitleModal(false);
@@ -62,6 +69,7 @@ function DocCreator() {
     const newDocument = {
       title: docTitle,
       content: componentIds,
+      category: category,
       author: author,
       created: createDate,
       updater: JSON.parse(sessionStorage.getItem("username")).registerUsername,
@@ -191,6 +199,7 @@ function DocCreator() {
       const newDocument = {
         title: docTitle,
         content: componentIds,
+        category: category,
         author: author,
         created: createDate,
         updater: null,
@@ -295,6 +304,16 @@ function DocCreator() {
                 <span>
                   <p>Updated On</p>
                   <input type="text" readOnly="readonly" value={lastUpdated} />
+                </span>
+                <span>
+                  <p>Category</p>
+                  <select name="cars" id="cars" onChange={handleCategory}>
+                    <option value=""></option>
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+                  </select>
                 </span>
                 <input type="submit" value="Save" onClick={handleSubmit} />
                 <input type="submit" value="Clear" onClick={handleClear} />

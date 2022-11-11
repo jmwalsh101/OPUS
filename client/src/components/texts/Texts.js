@@ -110,7 +110,6 @@ function Texts() {
     e.preventDefault();
     const id = parseInt(e.target.value);
     const item = _.find(componentsFromBackend, { id: id });
-    console.log("target", id, componentsFromBackend);
 
     setSelectedComponent(item);
     setSearchContentResults("");

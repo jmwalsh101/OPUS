@@ -65,10 +65,8 @@ function Documents() {
   //new select function required for Search
   function handleSearchSelect(e) {
     e.preventDefault();
-    console.log(e.target.value);
 
     const item = _.find(documentsFromBackend, { title: e.target.value });
-    console.log(item);
 
     const title = item.title;
     const docAuthor = item.author;
@@ -116,9 +114,6 @@ function Documents() {
   }
 
   function handleSelect(e) {
-    console.log(e.target.value);
-    console.log("target", Object.values({ ...e.target.value }));
-
     setLastUpdated();
     setUpdater();
     e.preventDefault();

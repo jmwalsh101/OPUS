@@ -71,7 +71,6 @@ function TextEditor() {
   function handleCategory(e) {
     e.preventDefault();
     setCategory(e.target.value);
-    console.log(category);
   }
 
   function handleConfirmUpdateModalClose() {
