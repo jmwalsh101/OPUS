@@ -2,6 +2,15 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 const _ = require("lodash");
+const mongoose = require("mongoose");
+require("dotenv/config");
+
+const Post = require("./models/Post");
+
+mongoose.connect(process.env.DB_CONNECTION, { useNewURLParser: true });
+const db = mongoose.connection;
+db.on("error", (error) => console.error(error));
+db.once("open", () => console.log("connected to db"));
 
 const accounts = [];
 
@@ -61,12 +70,31 @@ app.post("/component-delete", (req, res) => {
 
 app.post("/component-new", (req, res) => {
   const { parcel } = req.body;
+  console.log(parcel[0].id);
+  /*
   if (!parcel) {
     return res.status(400).sendStatus({ status: "failed" });
   }
   res.status(200).send({ status: "received" });
   components.push(...parcel);
   componentId = componentId + 1;
+*/
+  const post = new Post({
+    id: parcel[0].id,
+    name: parcel[0].name,
+    content: parcel[0].content,
+    category: parcel[0].category,
+    author: parcel[0].author,
+    created: parcel[0].created,
+    updater: parcel[0].updater,
+    lastUpdated: parcel[0].lastUpdated,
+  });
+  post
+    .save()
+    .then((data) => res.json(data))
+    .catch((err) => {
+      res.json(err);
+    });
 });
 
 app.post("/component-update", (req, res) => {
