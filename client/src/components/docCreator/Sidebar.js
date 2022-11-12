@@ -96,7 +96,6 @@ function Sidebar() {
         setCreateDate(docCreated);
         setUpdater(docUpdater);
         setLastUpdated(docLastUpdated);
-        console.log("ld", docUpdater);
       })
       // fail error modal here
       .catch((error) => console.log("ERROR"));
