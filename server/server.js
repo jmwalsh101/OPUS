@@ -42,12 +42,14 @@ app.get("/account-login", (req, res) => {
 
 // COMPONENTS
 
-app.get("/component-load", (req, res) => {
-  res.json(components);
-});
-
-app.get("/component-id", (req, res) => {
-  res.json(componentId);
+app.get("/component-load", async (req, res) => {
+  try {
+    //res.json(components);
+    const databaseData = await Post.find();
+    res.json(databaseData);
+  } catch (err) {
+    res.json({ message: err });
+  }
 });
 
 app.post("/component-delete", (req, res) => {
@@ -70,15 +72,7 @@ app.post("/component-delete", (req, res) => {
 
 app.post("/component-new", (req, res) => {
   const { parcel } = req.body;
-  console.log(parcel[0].id);
-  /*
-  if (!parcel) {
-    return res.status(400).sendStatus({ status: "failed" });
-  }
-  res.status(200).send({ status: "received" });
-  components.push(...parcel);
-  componentId = componentId + 1;
-*/
+
   const post = new Post({
     id: parcel[0].id,
     name: parcel[0].name,

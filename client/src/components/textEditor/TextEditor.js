@@ -40,7 +40,8 @@ function TextEditor() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [name, setName] = useState("");
   const editor = React.useRef(null);
-  const [componentId, setComponentId] = useState(0);
+  const [componentId, setComponentId] = useState(1);
+  console.log("CI", componentId);
   const [componentSelected, setComponentSelected] = useState(false);
 
   const [errorModal, setErrorModal] = useState(false);
@@ -65,8 +66,6 @@ function TextEditor() {
   const [updater, setUpdater] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
   const [category, setCategory] = useState(null);
-
-  console.log(backendComponentId);
 
   function handleCategory(e) {
     e.preventDefault();
@@ -171,7 +170,6 @@ function TextEditor() {
   useEffect(() => {
     // this is extra long and doubled-up because I couldn't find a way of preserving state, getting the useEffect to run for componentsFromBack in time to manage the transtion of Edit in Texts to showing that component's details in Text Editor
     if (backendComponentId) {
-      const convertedId = parseInt(backendComponentId);
       let components = componentsFromBackend;
 
       if (!componentsFromBackend.length) {
@@ -182,7 +180,7 @@ function TextEditor() {
             components = data;
 
             const selectedComponent = _.find(components, {
-              id: convertedId,
+              id: backendComponentId,
             });
 
             const selectedName = selectedComponent.name;
@@ -205,7 +203,8 @@ function TextEditor() {
             }
 
             setComponentSelected(true);
-            setComponentId(convertedId);
+            console.log("1A", backendComponentId);
+            setComponentId(backendComponentId);
             setName(selectedName);
             setAuthor(selectedAuthor);
             setCreateDate(selectedTimestamp);
@@ -219,9 +218,8 @@ function TextEditor() {
 
       if (components.length) {
         const selectedComponent = _.find(components, {
-          id: convertedId,
+          id: backendComponentId,
         });
-
         const selectedName = selectedComponent.name;
         const selectedAuthor = selectedComponent.author;
         const selectedContent = convertFromHTML(selectedComponent.content);
@@ -239,7 +237,8 @@ function TextEditor() {
         }
 
         setComponentSelected(true);
-        setComponentId(convertedId);
+        console.log("1B", backendComponentId);
+        setComponentId(backendComponentId);
         setName(selectedName);
         setAuthor(selectedAuthor);
         setCreateDate(selectedTimestamp);
@@ -251,20 +250,20 @@ function TextEditor() {
     }
   }, [backendComponentId]);
 
+  // This provides the correct ID for a new text. It does not use componentsFromBackend.length because due to the deletion of components that could lead to duplicates. Instead it takes the ID of the last submitted component.
+
+  // The problem with this is if the last component gets deleted. There probably should be a separate database store for counts. Can implement later.
   useEffect(() => {
-    fetch("/component-id")
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        if (componentSelected === false) {
-          setComponentId(parseInt(data) + 1);
-        }
-      })
-      .catch((error) => {
-        setTimeout(() => setBackendErrorModal(true), 3000);
-      });
-  }, [name]);
+    if (componentSelected === false) {
+      if (componentsFromBackend.length) {
+        const lastID = _.maxBy(componentsFromBackend, function (item) {
+          return item.id;
+        });
+        console.log("li", lastID);
+        setComponentId(parseInt(lastID.id) + 1);
+      }
+    }
+  }, [componentsFromBackend]);
 
   function focusEditor() {
     editor.current.focus();
@@ -280,7 +279,7 @@ function TextEditor() {
     setUpdater("");
     setLastUpdated("");
     setCategory("");
-    setBackendComponentId("");
+    setBackendComponentId();
   }
 
   function handleSaveName(e) {
