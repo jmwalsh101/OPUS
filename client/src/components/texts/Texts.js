@@ -21,7 +21,6 @@ function Texts() {
   const [lastUpdated, setLastUpdated] = useState([]);
   const [recentlyCreated, setRecentlyCreated] = useState([]);
 
-  const navigate = useNavigate();
   const allComponents = _.cloneDeep(componentsFromBackend);
   const createdComponents = _.cloneDeep(componentsFromBackend);
   const [selectedView, setSelectedView] = useState(true);
@@ -108,7 +107,7 @@ function Texts() {
 
   function handleSelect(e) {
     e.preventDefault();
-    const id = parseInt(e.target.value);
+    const id = e.target.value;
     const item = _.find(componentsFromBackend, { id: id });
 
     setSelectedComponent(item);
