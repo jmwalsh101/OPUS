@@ -52,22 +52,13 @@ app.get("/component-load", async (req, res) => {
   }
 });
 
-app.post("/component-delete", (req, res) => {
-  const { parcel } = req.body;
-  if (!parcel) {
-    return res.status(400).sendStatus({ status: "failed" });
+app.post("/component-delete", async (req, res) => {
+  try {
+    const deleteComponent = await Post.remove({ id: req.body.componentId });
+    res.json(deleteComponent);
+  } catch (err) {
+    res.json({ message: err });
   }
-  res.status(200).send({ status: "received" });
-  documents = documents.map((obj) => {
-    return {
-      ...obj,
-      content: obj.content.filter((n) => Number(n) !== parcel),
-    };
-  });
-  const componentIndex = _.findIndex(components, function (component) {
-    return component.id == parcel;
-  });
-  components.splice(componentIndex, 1);
 });
 
 app.post("/component-new", (req, res) => {

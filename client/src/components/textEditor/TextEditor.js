@@ -128,7 +128,7 @@ function TextEditor() {
     fetch("/component-delete", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ parcel: componentId }),
+      body: JSON.stringify({ componentId }),
     })
       .then((response) => {
         response.json();
