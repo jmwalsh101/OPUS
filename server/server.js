@@ -127,7 +127,6 @@ app.post("/document-new", (req, res) => {
 
 app.get("/documents-load", async (req, res) => {
   try {
-    //res.json(components);
     const databaseData = await Document.find();
     res.json(databaseData);
   } catch (err) {
@@ -135,7 +134,18 @@ app.get("/documents-load", async (req, res) => {
   }
 });
 
-app.post("/document-delete", (req, res) => {
+app.post("/document-delete", async (req, res) => {
+  const { parcel } = req.body;
+  try {
+    const deleteDocument = await Document.remove({
+      title: parcel,
+    });
+    res.json(deleteDocument);
+  } catch (err) {
+    res.json({ message: err });
+  }
+
+  /*
   const { parcel } = req.body;
 
   if (!parcel) {
@@ -146,6 +156,7 @@ app.post("/document-delete", (req, res) => {
     title: parcel,
   });
   documents.splice(documentIndex, 1);
+  */
 });
 
 app.post("/document-update", (req, res) => {
