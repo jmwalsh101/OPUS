@@ -38,8 +38,7 @@ function Documents() {
             const fetchedComponents = data;
 
             for (const i of componentIds) {
-              const id = parseInt(i);
-              const item = _.find(fetchedComponents, { id: id });
+              const item = _.find(fetchedComponents, { id: i });
               if (item.content.includes(searchTerm)) {
                 docResults.push(document.title);
               }
@@ -90,8 +89,7 @@ function Documents() {
         let component = [];
 
         for (const i of componentIds) {
-          const id = parseInt(i);
-          const item = _.find(fetchedComponents, { id: id });
+          const item = _.find(fetchedComponents, { id: i });
           component.push(item);
         }
         if (component[0] !== undefined) {
@@ -141,8 +139,7 @@ function Documents() {
         let component = [];
 
         for (const i of componentIds) {
-          const id = parseInt(i);
-          const item = _.find(fetchedComponents, { id: id });
+          const item = _.find(fetchedComponents, { id: i });
           component.push(item);
         }
         if (component[0] !== undefined) {
