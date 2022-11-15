@@ -1,7 +1,6 @@
-const { toInteger } = require("lodash");
 const mongoose = require("mongoose");
 
-const PostSchema = mongoose.Schema({
+const ComponentSchema = mongoose.Schema({
   id: String,
   name: String,
   content: String,
@@ -12,4 +11,4 @@ const PostSchema = mongoose.Schema({
   lastUpdated: String,
 });
 
-module.exports = mongoose.model("Posts", PostSchema);
+module.exports = mongoose.model("Component", ComponentSchema);

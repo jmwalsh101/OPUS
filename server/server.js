@@ -5,7 +5,8 @@ const _ = require("lodash");
 const mongoose = require("mongoose");
 require("dotenv/config");
 
-const Post = require("./models/Post");
+const Component = require("./models/Component");
+const Document = require("./models/Document");
 
 mongoose.connect(process.env.DB_CONNECTION, { useNewURLParser: true });
 const db = mongoose.connection;
@@ -13,9 +14,6 @@ db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("connected to db"));
 
 const accounts = [];
-
-const components = [];
-let componentId = 0;
 
 let documents = [];
 let documentId = 0;
@@ -45,7 +43,7 @@ app.get("/account-login", (req, res) => {
 app.get("/component-load", async (req, res) => {
   try {
     //res.json(components);
-    const databaseData = await Post.find();
+    const databaseData = await Component.find();
     res.json(databaseData);
   } catch (err) {
     res.json({ message: err });
@@ -54,7 +52,9 @@ app.get("/component-load", async (req, res) => {
 
 app.post("/component-delete", async (req, res) => {
   try {
-    const deleteComponent = await Post.remove({ id: req.body.componentId });
+    const deleteComponent = await Component.remove({
+      id: req.body.componentId,
+    });
     res.json(deleteComponent);
   } catch (err) {
     res.json({ message: err });
@@ -64,7 +64,7 @@ app.post("/component-delete", async (req, res) => {
 app.post("/component-new", (req, res) => {
   const { parcel } = req.body;
 
-  const post = new Post({
+  const post = new Component({
     id: parcel[0].id,
     name: parcel[0].name,
     content: parcel[0].content,
@@ -85,9 +85,8 @@ app.post("/component-new", (req, res) => {
 app.post("/component-update", async (req, res) => {
   const { parcel } = req.body;
   const spread = Object.values({ ...parcel });
-  console.log(spread[0]);
   try {
-    const updateComponent = await Post.updateOne(
+    const updateComponent = await Component.updateOne(
       { id: spread[0].id },
       {
         $set: {
@@ -101,27 +100,41 @@ app.post("/component-update", async (req, res) => {
   } catch (err) {
     res.json({ message: err });
   }
-  /*
-  const componentIndex = _.findIndex(components, function (component) {
-    return component.id == spread[0].id;
-  });
-  components.splice(componentIndex, 1, spread[0]);*/
 });
 
 // DOCUMENTS
 
 app.post("/document-new", (req, res) => {
   const { parcel } = req.body;
-  if (!parcel) {
-    return res.status(400).sendStatus({ status: "failed" });
-  }
-  res.status(200).send({ status: "received" });
-  documents.push(parcel);
-  documentId = documentId + 1;
+
+  const document = new Document({
+    title: parcel.title,
+    content: parcel.content,
+    category: parcel.category,
+    author: parcel.author,
+    created: parcel.created,
+    updater: parcel.updater,
+    lastUpdated: parcel.lastUpdated,
+  });
+
+  document
+    .save()
+    .then((data) => res.json(data))
+    .catch((err) => {
+      res.json(err);
+    });
 });
 
-app.get("/documents-load", (req, res) => {
-  res.json(documents);
+app.get("/documents-load", async (req, res) => {
+  try {
+    //res.json(components);
+    const databaseData = await Document.find();
+    res.json(databaseData);
+  } catch (err) {
+    res.json({ message: err });
+  }
+
+  //res.json(documents);
 });
 
 app.post("/document-delete", (req, res) => {
