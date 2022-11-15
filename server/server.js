@@ -90,6 +90,7 @@ app.post("/component-update", async (req, res) => {
       { id: spread[0].id },
       {
         $set: {
+          category: spread[0].category,
           content: spread[0].content,
           updater: spread[0].updater,
           lastUpdated: spread[0].lastUpdated,
@@ -114,7 +115,7 @@ app.post("/document-new", (req, res) => {
     author: parcel.author,
     created: parcel.created,
     updater: parcel.updater,
-    lastUpdated: parcel.lastUpdated,
+    updated: parcel.updated,
   });
 
   document
@@ -144,29 +145,25 @@ app.post("/document-delete", async (req, res) => {
   } catch (err) {
     res.json({ message: err });
   }
-
-  /*
-  const { parcel } = req.body;
-
-  if (!parcel) {
-    return res.status(400).sendStatus({ status: "failed" });
-  }
-  res.status(200).send({ status: "received" });
-  const documentIndex = _.findIndex(documents, {
-    title: parcel,
-  });
-  documents.splice(documentIndex, 1);
-  */
 });
 
-app.post("/document-update", (req, res) => {
+app.post("/document-update", async (req, res) => {
   const { parcel } = req.body;
-  if (!parcel) {
-    return res.status(400).sendStatus({ status: "failed" });
+
+  try {
+    const updateDocument = await Document.updateOne(
+      { title: parcel.title },
+      {
+        $set: {
+          category: parcel.category,
+          content: parcel.content,
+          updater: parcel.updater,
+          updated: parcel.updated,
+        },
+      }
+    );
+    res.json(updateDocument);
+  } catch (err) {
+    res.json({ message: err });
   }
-  res.status(200).send({ status: "received" });
-  const documentIndex = _.findIndex(documents, function (document) {
-    return document.title == String(parcel.title);
-  });
-  documents.splice(documentIndex, 1, parcel);
 });

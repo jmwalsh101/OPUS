@@ -7,7 +7,7 @@ const DocumentSchema = mongoose.Schema({
   author: String,
   created: String,
   updater: String,
-  lastUpdated: String,
+  updated: String,
 });
 
 module.exports = mongoose.model("Document", DocumentSchema);
