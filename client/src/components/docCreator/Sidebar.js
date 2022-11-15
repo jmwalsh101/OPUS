@@ -82,8 +82,8 @@ function Sidebar() {
         let component = [];
 
         for (const i of componentIds) {
-          const id = parseInt(i);
-          const item = _.find(fetchedComponents, { id: id });
+          const item = _.find(fetchedComponents, { id: i });
+
           component.push(item);
         }
         if (component[0] !== undefined) {

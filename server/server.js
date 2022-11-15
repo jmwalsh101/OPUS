@@ -133,8 +133,6 @@ app.get("/documents-load", async (req, res) => {
   } catch (err) {
     res.json({ message: err });
   }
-
-  //res.json(documents);
 });
 
 app.post("/document-delete", (req, res) => {
