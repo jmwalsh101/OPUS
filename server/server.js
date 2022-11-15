@@ -82,17 +82,30 @@ app.post("/component-new", (req, res) => {
     });
 });
 
-app.post("/component-update", (req, res) => {
+app.post("/component-update", async (req, res) => {
   const { parcel } = req.body;
-  if (!parcel) {
-    return res.status(400).sendStatus({ status: "failed" });
-  }
-  res.status(200).send({ status: "received" });
   const spread = Object.values({ ...parcel });
+  console.log(spread[0]);
+  try {
+    const updateComponent = await Post.updateOne(
+      { id: spread[0].id },
+      {
+        $set: {
+          content: spread[0].content,
+          updater: spread[0].updater,
+          lastUpdated: spread[0].lastUpdated,
+        },
+      }
+    );
+    res.json(updateComponent);
+  } catch (err) {
+    res.json({ message: err });
+  }
+  /*
   const componentIndex = _.findIndex(components, function (component) {
     return component.id == spread[0].id;
   });
-  components.splice(componentIndex, 1, spread[0]);
+  components.splice(componentIndex, 1, spread[0]);*/
 });
 
 // DOCUMENTS
