@@ -9,8 +9,14 @@ jobs:
   test:
     docker:
       - image: cimg/node:14.13.0
+    working_directory: ~/client
+
     steps:
       - checkout
+
+      - run:
+          name: pwd
+          command: pwd
 
       - run:
           name: switch folders
