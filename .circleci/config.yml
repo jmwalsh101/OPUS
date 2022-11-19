@@ -9,6 +9,7 @@ workflows:
       - test
       - cypress/run:
           working_directory: client
+          install-command: npm i && cd .. && cd server && npm i
           start: npm run remote-test
           wait-on: http://localhost:3000
 
