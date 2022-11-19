@@ -30,6 +30,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "remote-test": "cd .. && cd server && npm run dev & react-scripts start",
     "build": "react-scripts build",
     "test": "cypress open",
     "eject": "react-scripts eject"
