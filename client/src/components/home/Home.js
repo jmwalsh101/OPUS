@@ -38,7 +38,7 @@ function Home() {
           <img src={MissingPiece} height="200" />
         </div>
         <div className="home-header4">
-          <h2>Powerfully simple</h2>
+          <h2>Powerfully Simple</h2>
           <p>Screenshots showing it done</p>
         </div>
       </div>

@@ -109,25 +109,26 @@ function Register() {
                 <tr>
                   <td>Name</td>
                   <td>
-                    <input type="text" ref={username} />
+                    <input id="username" type="text" ref={username} />
                   </td>
                 </tr>
                 <tr>
                   <td>Email</td>
                   <td>
-                    <input type="email" ref={email} />
+                    <input id="email" type="email" ref={email} />
                   </td>
                 </tr>
                 <tr>
                   <td>Pasword</td>
                   <td>
-                    <input type="password" ref={password} />
+                    <input id="password" type="password" ref={password} />
                   </td>
                 </tr>
                 <tr>
                   <td>Confirm Password</td>
                   <td>
                     <input
+                      id="confirm-password"
                       type="password"
                       ref={confirmPassword}
                       placeholder="Password1%"

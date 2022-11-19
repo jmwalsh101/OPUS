@@ -283,8 +283,9 @@ function DocCreator() {
           <div className="doc-container-overview">
             <div className="doc-creator-container">
               <div className="doc-actions">
-                Name
+                Title
                 <input
+                  id="title"
                   type="text"
                   onChange={handleSaveTitle}
                   value={docTitle}
@@ -307,7 +308,7 @@ function DocCreator() {
                 </span>
                 <span>
                   <p>Category</p>
-                  <select name="cars" id="cars" onChange={handleCategory}>
+                  <select name="cars" id="category" onChange={handleCategory}>
                     <option value=""></option>
                     <option value="volvo">Volvo</option>
                     <option value="saab">Saab</option>
@@ -315,9 +316,19 @@ function DocCreator() {
                     <option value="audi">Audi</option>
                   </select>
                 </span>
-                <input type="submit" value="Save" onClick={handleSubmit} />
+                <input
+                  id="save"
+                  type="submit"
+                  value="Save"
+                  onClick={handleSubmit}
+                />
                 <input type="submit" value="Clear" onClick={handleClear} />
-                <input type="submit" value="Delete" onClick={handleDeleteDoc} />
+                <input
+                  id="delete"
+                  type="submit"
+                  value="Delete"
+                  onClick={handleDeleteDoc}
+                />
               </div>
               <div className="document-container">
                 <div className="document">

@@ -5,9 +5,9 @@ const _ = require("lodash");
 const mongoose = require("mongoose");
 require("dotenv/config");
 
-const Component = require("./models/Component").default;
-const Document = require("./models/Document").default;
-const Account = require("./models/Account").default;
+const Component = require("./models/Component");
+const Document = require("./models/Document");
+const Account = require("./models/Account");
 
 app.listen(5000, () => {
   console.log("Server started on port 5000");

@@ -466,11 +466,16 @@ function TextEditor() {
           <div className="component-actions">
             <span>
               <p>Name</p>
-              <input type="text" onChange={handleSaveName} value={name} />
+              <input
+                id="name"
+                type="text"
+                onChange={handleSaveName}
+                value={name}
+              />
             </span>
             <span>
               <p>Category</p>
-              <select name="cars" id="cars" onChange={handleCategory}>
+              <select name="cars" id="category" onChange={handleCategory}>
                 <option value=""></option>
                 <option value="volvo">Volvo</option>
                 <option value="saab">Saab</option>
@@ -486,10 +491,15 @@ function TextEditor() {
               <input type="submit" value="Clear" onClick={handleClear} />
             </span>
             <span>
-              <input type="submit" onClick={handleSubmit} />
+              <input id="submit" type="submit" onClick={handleSubmit} />
             </span>
             <span>
-              <input type="submit" value="Delete" onClick={handleDelete} />
+              <input
+                id="delete"
+                type="submit"
+                value="Delete"
+                onClick={handleDelete}
+              />
             </span>
           </div>
           <div className="draft-editor">

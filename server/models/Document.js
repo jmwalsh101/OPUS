@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+const mongoose = require("mongoose");
 
-const DocumentSchema = Schema({
+const DocumentSchema = mongoose.Schema({
   title: String,
   content: Array,
   category: String,
@@ -10,4 +10,4 @@ const DocumentSchema = Schema({
   updated: String,
 });
 
-export default model("Document", DocumentSchema);
+module.exports = mongoose.model("Document", DocumentSchema);

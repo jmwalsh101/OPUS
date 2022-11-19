@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+const mongoose = require("mongoose");
 
-const ComponentSchema = Schema({
+const ComponentSchema = mongoose.Schema({
   id: String,
   name: String,
   content: String,
@@ -11,4 +11,4 @@ const ComponentSchema = Schema({
   lastUpdated: String,
 });
 
-export default model("Component", ComponentSchema);
+module.exports = mongoose.model("Component", ComponentSchema);

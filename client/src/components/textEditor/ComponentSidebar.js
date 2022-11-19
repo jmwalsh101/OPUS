@@ -50,6 +50,7 @@ function ComponenetSidebar() {
         <h3>Quick Access</h3>
         <div
           className="sidebar-category"
+          id="cy-select"
           onClick={(e) => {
             if (showCategory1 === false) {
               setShowCategory1(true);

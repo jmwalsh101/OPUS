@@ -9,7 +9,9 @@ const SuccessModal = (props) => {
           <div className="modal-message">{props.message}</div>
           <div className="modal-footer">
             <button onClick={props.cancel}>Cancel</button>
-            <button onClick={onClose}>{props.confirmButton}</button>
+            <button id="modal-confirm" onClick={onClose}>
+              {props.confirmButton}
+            </button>
           </div>
         </div>
       </div>
