@@ -7,7 +7,7 @@ workflows:
   test-deploy:
     jobs:
       - test
-      - cypress/run
+      - cd client && cypress/run
 
 jobs:
   test:
