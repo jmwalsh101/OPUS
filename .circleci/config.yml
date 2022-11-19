@@ -9,7 +9,7 @@ workflows:
       - test
       - cypress/run:
           working_directory: client
-          start: npm remote-test
+          start: npm run remote-test
           wait-on: http://localhost:3000
 
 jobs:
