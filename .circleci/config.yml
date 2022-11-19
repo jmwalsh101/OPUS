@@ -15,8 +15,8 @@ jobs:
       - checkout
 
       - run:
-          name: pwd
-          command: pwd
+          name: ls
+          command: ls
 
       - run:
           name: switch folders
