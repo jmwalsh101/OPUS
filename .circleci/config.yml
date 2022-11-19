@@ -4,27 +4,11 @@ orbs:
   cypress: cypress-io/cypress@1
 
 workflows:
-  test-deploy:
+  build:
     jobs:
       - test
-       - cypress/install:
-            command: cd client && npm i
-        - cypress/run:
-            name: Chrome
-            yarn: true
-            requires:
-              - cypress/install
-            executor: with-chrome
-            browser: chrome
-            record: true
-        - cypress/run:
-            name: Firefox
-            yarn: true
-            requires:
-              - cypress/install
-            executor: with-firefox
-            browser: firefox
-            record: true
+      - cypress/run
+          install-command: cd client && npm i
 
 jobs:
   test:
@@ -40,3 +24,4 @@ jobs:
       - run:
           name: run tests
           command: cd client && npm run test
+
