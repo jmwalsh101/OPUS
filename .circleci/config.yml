@@ -17,6 +17,13 @@ jobs:
       - run:
           name: ls
           command: ls
+          command: pwd
+
+      - run:
+          name: cd
+          command: cd client
+          command: pwd
+          command: ls
 
       - run:
           name: switch folders
