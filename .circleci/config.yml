@@ -11,6 +11,10 @@ jobs:
       - image: cimg/node:14.13.0
     steps:
       - checkout
+
+      - run:
+          name: switch folders
+          command: cd client
       - run:
           name: install dependencies
           command: npm i
