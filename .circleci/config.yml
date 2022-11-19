@@ -15,27 +15,8 @@ jobs:
       - checkout
 
       - run:
-          name: ls
-          command: ls
-
-      - run:
-          name: cd
-          command: cd client
-
-      - run:
-          name: ls
-          command: ls
-
-      - run:
-          name: pwd
-          command: pwd
-
-      - run:
-          name: switch folders
-          command: cd client
-      - run:
           name: install dependencies
           command: cd client && npm i
       - run:
           name: run tests
-          command: npm run test
+          command: cd client && npm run test
