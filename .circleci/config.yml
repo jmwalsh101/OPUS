@@ -35,7 +35,7 @@ jobs:
           command: cd client
       - run:
           name: install dependencies
-          command: npm i
+          command: cd client && npm i
       - run:
           name: run tests
           command: npm run test
