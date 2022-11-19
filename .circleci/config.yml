@@ -9,7 +9,8 @@ workflows:
       - test
       - cypress/run:
           working_directory: client
-          start: npm start
+          start-client: npm start
+          start-server: cd .. && cd server && npm run dev
           wait-on: http://localhost:3000
 
 jobs:
