@@ -7,7 +7,24 @@ workflows:
   test-deploy:
     jobs:
       - test
-      - cd client && cypress/run
+       - cypress/install:
+            install-command: cd client && npm i
+        - cypress/run:
+            name: Chrome
+            yarn: true
+            requires:
+              - cypress/install
+            executor: with-chrome
+            browser: chrome
+            record: true
+        - cypress/run:
+            name: Firefox
+            yarn: true
+            requires:
+              - cypress/install
+            executor: with-firefox
+            browser: firefox
+            record: true
 
 jobs:
   test:
