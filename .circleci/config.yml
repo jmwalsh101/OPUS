@@ -7,7 +7,7 @@ workflows:
   build:
     jobs:
       - test
-      - cypress/run
+      - cypress/run:
           working_directory: ~/client
 
 jobs:
@@ -24,4 +24,3 @@ jobs:
       - run:
           name: run tests
           command: cd client && npm run test
-
