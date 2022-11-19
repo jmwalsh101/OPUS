@@ -23,12 +23,12 @@ jobs:
           command: cd client
 
       - run:
-        name: ls
-        command: ls
+          name: ls
+          command: ls
 
       - run:
-        name: pwd
-        command: pwd
+          name: pwd
+          command: pwd
 
       - run:
           name: switch folders
