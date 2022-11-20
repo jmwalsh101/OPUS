@@ -1,4 +1,4 @@
-cd client
+cd /home/ubuntu/client
 npm i
 cd ..
 cd server
