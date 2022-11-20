@@ -38,7 +38,7 @@ workflows:
       - aws-code-deploy/deploy:
           application-name: opus
           bundle-bucket: opus-project-bucket
-          bundle-key: code/source
+          bundle-key: /
           deployment-group: main
           service-role-arn: CodeDeployServiceRole
 
