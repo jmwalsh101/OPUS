@@ -36,11 +36,11 @@ workflows:
       # You can run more than one job
       # The job accepts the following parameters
       - aws-code-deploy/deploy:
-          application-name: $APP_NAME
-          bundle-bucket: $BUNDLE_BUCKET
+          application-name: opus
+          bundle-bucket: opus-project-bucket
           bundle-key: code/source
-          deployment-group: master
-          service-role-arn: $ARN
+          deployment-group: main
+          service-role-arn: CodeDeployServiceRole
 
 jobs:
   test:
