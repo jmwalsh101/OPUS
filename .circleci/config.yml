@@ -40,7 +40,7 @@ workflows:
           bundle-bucket: opus-project-bucket
           bundle-key: code
           deployment-group: main
-          service-role-arn: CodeDeployServiceRole
+          service-role-arn: arn:aws:s3:::opus-project-bucket
 
 jobs:
   test:
