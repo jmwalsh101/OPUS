@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   cypress: cypress-io/cypress@1
+  aws-code-deploy: circleci/aws-code-deploy@1.0.1
 
 #executors:
 #  with-mongo:
@@ -22,12 +23,24 @@ workflows:
   build:
     jobs:
       - test
-#      - cypress/run:
-#          executor: with-mongo
-#          working_directory: client
-#          install-command: npm i && cd .. && cd server && npm i
-#          start: npm run remote-test
-#          wait-on: http://localhost:3000
+  #      - cypress/run:
+  #          executor: with-mongo
+  #          working_directory: client
+  #          install-command: npm i && cd .. && cd server && npm i
+  #          start: npm run remote-test
+  #          wait-on: http://localhost:3000
+  deploy_application:
+    # jobs are used to perform actions i.e. run instructions
+    jobs:
+      # This is the name of the job being run
+      # You can run more than one job
+      # The job accepts the following parameters
+      - aws-code-deploy/deploy:
+          application-name: $APP_NAME
+          bundle-bucket: $BUNDLE_BUCKET
+          bundle-key: code/source
+          deployment-group: master
+          service-role-arn: $ARN
 
 jobs:
   test:
