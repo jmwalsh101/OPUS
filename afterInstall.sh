@@ -5,4 +5,4 @@ cd server
 npm i
 cd ..
 cd client
-npm run remote-test
+npm start
