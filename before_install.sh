@@ -1,4 +1,9 @@
-cd /home/ubuntu/
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-apt-get install -y nodejs  
+cd /home/ubuntu/nodejs
+sudo apt-get remove nodejs
+sudo apt-get remove npm
 
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+chmod +x ~/.nvm/nvm.sh
+source ~/.bashrc 
+
+nvm install 17
