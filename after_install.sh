@@ -1,6 +1,9 @@
 cd /home/ubuntu/client
-npm install
+echo "in directory"
 npm install --save react react-dom react-scripts react-particles-js
+echo "react installed"
+npm install
+echo "npm installed"
 cd .. 
 cd server
 npm install
