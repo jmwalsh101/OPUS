@@ -7,5 +7,6 @@ echo "npm installed"
 cd .. 
 cd server
 npm install
+
 cd ..
 npm install pm2 -g
