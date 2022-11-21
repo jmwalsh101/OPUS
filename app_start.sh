@@ -1,5 +1,5 @@
 cd /home/ubuntu/client
-npm run remote-start
+npm start
 pm2 start npm --name "covidapp" -- start
 pm2 startup
 pm2 save
