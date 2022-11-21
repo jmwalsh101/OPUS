@@ -1,5 +1,4 @@
 cd /home/ubuntu/client
-npm i
 npm start
 pm2 start npm --name "covidapp" -- start
 pm2 startup

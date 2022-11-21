@@ -1,4 +1,4 @@
 cd /home/ubuntu/
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh | bash
-
+curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs  
 
