@@ -1,4 +1,4 @@
-cd /home/ec2-user/client
+cd /var/www/html/
 npm start
 pm2 start npm --name "opus" -- start
 pm2 startup
