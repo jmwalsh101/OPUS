@@ -26,7 +26,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: docker-login
-          command: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          command: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
       - run:
           name: Build Docker Image
           command: docker build -t $IMAGE_NAME:latest .
