@@ -1,0 +1,58 @@
+version: 2.1
+
+orbs:
+  cypress: cypress-io/cypress@1
+  aws-code-deploy: circleci/aws-code-deploy@1.0.1
+
+#executors:
+#  with-mongo:
+#    docker:
+# image used to install source code,
+# run our server and run Cypress tests
+#      - image: cypress/base:14.16.0
+#        environment:
+#          MONGO_URI: mongodb://$MONGO_USERNAME:$MONGO_PASSWORD@localhost:27017/?authSource=admin
+
+# image used to run Mongo in a separate container
+#      - image: mongo:4.4.5
+#        environment:
+#          MONGO_INITDB_ROOT_USERNAME: $MONGO_USERNAME
+#          MONGO_INITDB_ROOT_PASSWORD: $MONGO_PASSWORD
+
+workflows:
+  build:
+    jobs:
+      - test
+  #      - cypress/run:
+  #          executor: with-mongo
+  #          working_directory: client
+  #          install-command: npm i && cd .. && cd server && npm i
+  #          start: npm run remote-test
+  #          wait-on: http://localhost:3000
+  deploy_application:
+    # jobs are used to perform actions i.e. run instructions
+    jobs:
+      # This is the name of the job being run
+      # You can run more than one job
+      # The job accepts the following parameters
+      - aws-code-deploy/deploy:
+          application-name: opus
+          bundle-bucket: opus-project-bucket
+          bundle-key: code
+          deployment-group: main
+          service-role-arn: arn:aws:s3:::opus-project-bucket
+
+jobs:
+  test:
+    docker:
+      - image: cimg/node:14.13.0
+    working_directory: ~/client
+
+    steps:
+      - checkout
+      - run:
+          name: install dependencies
+          command: cd client && npm i
+#      - run:
+#          name: run tests
+#          command: cd client && npm run test
