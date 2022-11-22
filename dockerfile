@@ -1,11 +1,7 @@
-FROM node:16
-WORKDIR /opus
-
-# copy both client and server
-COPY client/package*.json ./
-COPY server/package*.json ./
-
-RUN npm ci
+# syntax=docker/dockerfile:1
+FROM circleci/node:10.16.3
+ENV NODE_ENV=production
+COPY ["client/package*.json",  "client/package*.json", "./"]
+RUN sudo npm install
 COPY . .
-EXPOSE 8081
-CMD [“node”, “index.js”]
+CMD ["npm", "start"]
