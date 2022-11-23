@@ -4,4 +4,4 @@ ENV NODE_ENV=production
 COPY ["client/package*.json",  "server/package*.json", "./"]
 RUN sudo npm install -g
 COPY . .
-CMD ["npm run", "remote-start"]
+CMD ["npm", "run", "remote-start"]
