@@ -1,14 +1,18 @@
-# syntax=docker/dockerfile:1
-# change node image
-FROM circleci/node:16.18.1
-# this should be coming from the runner
-ENV NODE_ENV=production
-# local - dev/ circlci - test; aws prod
-# copy server later too
-COPY [ "./client/", "./"]
-RUN ls
-RUN cd ./client
-RUN ls
+#command to run: docker run -p 3000:3000 -p 5000:5000 reactimage14
+FROM node:16.17.0
+
+WORKDIR /client
+COPY ./client/package.json /client/package.json
 RUN npm install
-# COPY . .
+COPY ./client /client
+
+
+WORKDIR /server
+COPY ./server/package.json /server/package.json
+RUN npm install
+COPY ./server /server
+
+EXPOSE 3000 5000
+
+WORKDIR /client
 CMD ["npm", "start"]

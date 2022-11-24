@@ -30,6 +30,9 @@
     "@testing-library/cypress": "^8.0.7",
     "cypress": "^11.1.0"
   },
+  "resolve.fallback": {
+    "crypto": false
+  },
   "scripts": {
     "start": "react-scripts start",
     "remote-test": "cd .. && cd server && npm run dev & react-scripts start",
