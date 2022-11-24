@@ -15,4 +15,4 @@ COPY ./server /server
 EXPOSE 3000 5000
 
 WORKDIR /client
-CMD ["npm", "start"]
+CMD ["npm", "run", "remote-test"]
