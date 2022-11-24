@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # change node image
-FROM circleci/node:16.17.0
+FROM circleci/node:16.18.1
 # this should be coming from the runner
 ENV NODE_ENV=production
 # local - dev/ circlci - test; aws prod
