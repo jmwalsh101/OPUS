@@ -9,7 +9,7 @@ const Component = require("./models/Component");
 const Document = require("./models/Document");
 const Account = require("./models/Account");
 
-app.listen("http://54.234.44.9:5000", () => {
+app.listen(5000, "54.234.44.9", () => {
   console.log("Server started on port 5000");
 });
 
