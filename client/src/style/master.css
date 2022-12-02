@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image: linear-gradient(to bottom, #f5f6fc00 0%, #75135d00 60%, #e09fb3 100%), url("../images/background-top.png");
+  background-image: linear-gradient(to bottom, #f5f6fc00 0%, #75135d00 60%, #e09fb3 100%), url("../images/background-top.webp");
   background-size: cover;
   background-position: center top;
   color: #1d2731;
@@ -97,7 +97,7 @@
   align-items: center;
   height: 900px;
   background-color: #e09fb3;
-  background-image: linear-gradient(to bottom, #e09fb3 0%, #f5f6fc00 60%, #75135d00 100%), url("../images/background-bottom2.png");
+  background-image: linear-gradient(to bottom, #e09fb3 0%, #f5f6fc00 60%, #75135d00 100%), url("../images/background-bottom2.webp");
   background-size: cover;
   background-position: center bottom;
 }
@@ -258,7 +258,7 @@
 }
 .main-container {
   display: flex;
-  background-image: url(../images/main-background.png);
+  background-image: url(../images/main-background.webp);
   background-size: cover;
   min-height: 93vh;
 }
@@ -784,12 +784,12 @@
 }
 .register-container .login-text {
   flex-basis: 60%;
-  background-image: url("../images/login.png");
+  background-image: url("../images/login.webp");
   background-size: cover;
 }
 .register-container .register-text {
   flex-basis: 60%;
-  background-image: url("../images/registration.png");
+  background-image: url("../images/registration.webp");
   background-size: cover;
 }
 .register-container .form {

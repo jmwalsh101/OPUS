@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useContext } from "react";
 import _ from "lodash";
-import TextBadge from "../../images/badges/typewriter/TYPEWRITER.svg";
-import DocBadge from "../../images/badges/vecteezy_documents-with-bars-statistical-graph-isolated-icon-vector-illustration-design_1923556/doc.jpg";
+import TextBadge from "../../images/badges/typewriter.svg";
+import DocBadge from "../../images/badges/doc.jpg";
 import bcrypt from "bcryptjs";
 import { useNavigate } from "react-router-dom";
 

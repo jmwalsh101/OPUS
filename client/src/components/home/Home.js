@@ -1,7 +1,7 @@
-import CodeExample from "../../images/codeExample.png";
-import WebExample from "../../images/publish2.png";
-import DocExample from "../../images/document.png";
-import MissingPiece from "../../images/missing-piece2.png";
+import CodeExample from "../../images/codeExample.webp";
+import WebExample from "../../images/publish2.webp";
+import DocExample from "../../images/document.webp";
+import MissingPiece from "../../images/missing-piece2.webp";
 
 function Home() {
   return (
