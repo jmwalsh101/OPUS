@@ -13,8 +13,11 @@ import ConfirmModal from "../modals/ConfirmModal";
 
 import _ from "lodash";
 
-import { backendComponentsContext } from "../../contexts/ComponentContext";
-import { componentIdContext } from "../../contexts/ComponentContext";
+import {
+  backendComponentsContext,
+  componentIdContext,
+  componentCategoryContext,
+} from "../../contexts/ComponentContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faB } from "@fortawesome/free-solid-svg-icons";
@@ -33,6 +36,9 @@ function TextEditor() {
   const { componentsFromBackend, setComponentsFromBackend } = useContext(
     backendComponentsContext
   );
+
+  const { optionState, setOptionState } = useContext(componentCategoryContext);
+  console.log("os", optionState);
 
   const { backendComponentId, setBackendComponentId } =
     useContext(componentIdContext);
@@ -70,6 +76,8 @@ function TextEditor() {
   function handleCategory(e) {
     e.preventDefault();
     setCategory(e.target.value);
+    console.log("os target", e.target.value);
+    setOptionState(e.target.value);
   }
 
   function handleConfirmUpdateModalClose() {
@@ -143,6 +151,8 @@ function TextEditor() {
           setUpdater("");
           setLastUpdated("");
           setCategory("");
+          setComponentSelected(false);
+          setOptionState("Volvo");
         }
         //else for modal
       })
@@ -212,6 +222,7 @@ function TextEditor() {
             setUpdater(selectedUpdater);
             setLastUpdated(selectedLastUpdate);
             setCategory(selectedCategory);
+            setOptionState(selectedCategory);
           }) // fail error modal here
           .catch((error) => console.log("ERROR"));
       }
@@ -246,6 +257,7 @@ function TextEditor() {
         setUpdater(selectedUpdater);
         setLastUpdated(selectedLastUpdate);
         setCategory(selectedCategory);
+        setOptionState(selectedCategory);
       }
     }
   }, [backendComponentId]);
@@ -255,15 +267,15 @@ function TextEditor() {
   // The problem with this is if the last component gets deleted. There probably should be a separate database store for counts. Can implement later.
   useEffect(() => {
     if (componentSelected === false) {
-      if (componentsFromBackend.length) {
-        const lastID = _.maxBy(componentsFromBackend, function (item) {
-          return item.id;
-        });
-        console.log("li", lastID);
-        setComponentId(parseInt(lastID.id) + 1);
-      }
+      fetch("/textId-load")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("id call", data[0].idCount);
+          setComponentId(data[0].idCount + 1);
+        })
+        .catch((error) => console.log("ERROR"));
     }
-  }, [componentsFromBackend]);
+  }, [name]);
 
   function focusEditor() {
     editor.current.focus();
@@ -280,6 +292,7 @@ function TextEditor() {
     setLastUpdated("");
     setCategory("");
     setBackendComponentId();
+    setOptionState("Volvo");
   }
 
   function handleSaveName(e) {
@@ -299,8 +312,6 @@ function TextEditor() {
     } else if (componentSelected === true) {
       setShowLoading(false);
       setConfirmUpdateModal(true);
-
-      // CONFIRM MODAL REQUIRED
     } else if (existingName) {
       setShowLoading(false);
       setExistingNameModal(true);
@@ -338,6 +349,8 @@ function TextEditor() {
             setUpdater("");
             setLastUpdated("");
             setCategory("");
+            setComponentSelected(false);
+            setOptionState("Volvo");
           } else {
             setShowLoading(false);
           }
@@ -464,43 +477,58 @@ function TextEditor() {
       <div className="editor-container-overview">
         <div className="editor-container">
           <div className="component-actions">
-            <span>
-              <p>Name</p>
+            <div className="component-actions1">
+              <span className="component-action">
+                <p>Name</p>&nbsp;&nbsp;
+                <input
+                  id="name"
+                  type="text"
+                  onChange={handleSaveName}
+                  value={name}
+                />
+              </span>
+              <span className="component-action">
+                <p>Category</p>&nbsp;&nbsp;
+                <select
+                  name="cars"
+                  id="category"
+                  onChange={handleCategory}
+                  className="category-input"
+                  value={optionState}
+                >
+                  <option value=""></option>
+                  <option value="Volvo">Volvo</option>
+                  <option value="saab">Saab</option>
+                  <option value="mercedes">Mercedes</option>
+                  <option value="audi">Audi</option>
+                </select>
+              </span>
+              <span className="component-action">
+                <p>ID</p>&nbsp;&nbsp;
+                <input
+                  type="text"
+                  readOnly="readonly"
+                  value={componentId}
+                  className="id-input"
+                />
+              </span>
+            </div>
+            <div className="component-actions2">
               <input
-                id="name"
-                type="text"
-                onChange={handleSaveName}
-                value={name}
+                type="submit"
+                value="Clear"
+                onClick={handleClear}
+                className="caution"
               />
-            </span>
-            <span>
-              <p>Category</p>
-              <select name="cars" id="category" onChange={handleCategory}>
-                <option value=""></option>
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
-              </select>
-            </span>
-            <span>
-              <p>ID</p>
-              <input type="text" readOnly="readonly" value={componentId} />
-            </span>
-            <span>
-              <input type="submit" value="Clear" onClick={handleClear} />
-            </span>
-            <span>
-              <input id="submit" type="submit" onClick={handleSubmit} />
-            </span>
-            <span>
               <input
                 id="delete"
                 type="submit"
                 value="Delete"
                 onClick={handleDelete}
+                className="warning"
               />
-            </span>
+              <input id="submit" type="submit" onClick={handleSubmit} />
+            </div>
           </div>
           <div className="draft-editor">
             <div onClick={focusEditor}>

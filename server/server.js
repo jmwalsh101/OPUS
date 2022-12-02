@@ -8,6 +8,7 @@ require("dotenv/config");
 const Component = require("./models/Component");
 const Document = require("./models/Document");
 const Account = require("./models/Account");
+const TextId = require("./models/TextId");
 
 app.listen(5000, () => {
   console.log("Server started on port 5000");
@@ -22,7 +23,6 @@ db.once("open", () => console.log("connected to db"));
 
 app.post("/account-register", (req, res) => {
   const { parcel } = req.body;
-  console.log(parcel);
 
   const account = new Account({
     username: parcel[0].username,
@@ -46,6 +46,38 @@ app.get("/account-login", async (req, res) => {
   }
 });
 
+app.patch("/account-update", async (req, res) => {
+  const { parcel } = req.body;
+
+  try {
+    const updatedAccount = await Account.updateOne(
+      {
+        username: parcel[0].username,
+      },
+      { $set: { email: parcel[0].email, password: parcel[0].password } }
+    );
+    console.log("updated account", updatedAccount);
+    res.json(updatedAccount);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
+
+app.post("/account-delete", async (req, res) => {
+  const { parcel } = req.body;
+  console.log("parcel", parcel);
+
+  try {
+    const deleteAccount = await Account.deleteOne({
+      username: parcel,
+    });
+    console.log(deleteAccount);
+    res.json(deleteAccount);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
+
 // COMPONENTS
 
 app.get("/component-load", async (req, res) => {
@@ -60,34 +92,55 @@ app.get("/component-load", async (req, res) => {
 
 app.post("/component-delete", async (req, res) => {
   try {
-    const deleteComponent = await Component.remove({
+    const deleteComponent = await Component.deleteOne({
       id: req.body.componentId,
     });
+
+    const documentComponents = await Document.updateMany(
+      {
+        content: req.body.componentId,
+      },
+      { $pull: { content: req.body.componentId } }
+    );
+    console.log(documentComponents);
     res.json(deleteComponent);
   } catch (err) {
     res.json({ message: err });
   }
 });
 
-app.post("/component-new", (req, res) => {
+app.post("/component-new", async (req, res) => {
   const { parcel } = req.body;
-
-  const component = new Component({
-    id: parcel[0].id,
-    name: parcel[0].name,
-    content: parcel[0].content,
-    category: parcel[0].category,
-    author: parcel[0].author,
-    created: parcel[0].created,
-    updater: parcel[0].updater,
-    lastUpdated: parcel[0].lastUpdated,
-  });
-  component
-    .save()
-    .then((data) => res.json(data))
-    .catch((err) => {
-      res.json(err);
+  try {
+    const idCount = await TextId.find();
+    console.log("id count", idCount[0].idCount);
+    await TextId.updateOne(
+      { name: "ID Count" },
+      {
+        $set: {
+          idCount: idCount[0].idCount + 1,
+        },
+      }
+    );
+    const component = await new Component({
+      id: parcel[0].id,
+      name: parcel[0].name,
+      content: parcel[0].content,
+      category: parcel[0].category,
+      author: parcel[0].author,
+      created: parcel[0].created,
+      updater: parcel[0].updater,
+      lastUpdated: parcel[0].lastUpdated,
     });
+    component
+      .save()
+      .then((data) => res.json(data))
+      .catch((err) => {
+        res.json(err);
+      });
+  } catch (err) {
+    res.json({ message: err });
+  }
 });
 
 app.post("/component-update", async (req, res) => {
@@ -106,6 +159,15 @@ app.post("/component-update", async (req, res) => {
       }
     );
     res.json(updateComponent);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
+
+app.get("/textId-load", async (req, res) => {
+  try {
+    const textIds = await TextId.find();
+    res.json(textIds);
   } catch (err) {
     res.json({ message: err });
   }

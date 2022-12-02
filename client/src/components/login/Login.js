@@ -1,12 +1,18 @@
-import { useRef, useContext } from "react";
+import { useRef, useContext, useState } from "react";
 import bcrypt from "bcryptjs";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
+
+import ErrorModal from "../modals/ErrorModal";
 
 import { loginContext } from "../../contexts/LoginContext";
 
 function Login() {
   const { loggedIn, setLoggedIn } = useContext(loginContext);
+  const [errorModal, setErrorModal] = useState(false);
+  const handleClose = () => setErrorModal(false);
+  const [userNameError, setUserNameError] = useState(false);
+  const handleUserClose = () => setUserNameError(false);
 
   const username = useRef();
   const email = useRef();
@@ -18,7 +24,6 @@ function Login() {
   function login(e) {
     e.preventDefault();
     const registerUsername = username.current.value;
-    const registerEmail = email.current.value;
     const registerPassword = password.current.value;
 
     fetch("/account-login")
@@ -37,8 +42,7 @@ function Login() {
             if (err) {
               throw err;
             } else if (!isMatch) {
-              // error modal
-              console.log("password does not match");
+              setErrorModal(true);
             } else {
               setLoggedIn(true);
               sessionStorage.setItem(
@@ -50,7 +54,7 @@ function Login() {
           }
         );
       }) // fail error modal here
-      .catch((error) => console.log("ERROR"));
+      .catch((error) => setUserNameError(true));
   }
 
   return (
@@ -69,12 +73,6 @@ function Login() {
                   </td>
                 </tr>
                 <tr>
-                  <td>Email</td>
-                  <td>
-                    <input id="email" type="email" ref={email} />
-                  </td>
-                </tr>
-                <tr>
                   <td>Pasword</td>
                   <td>
                     <input id="password" type="password" ref={password} />
@@ -82,14 +80,32 @@ function Login() {
                 </tr>
               </tbody>
             </table>
-            <button type="submit" onClick={login}>
-              Submit
-            </button>
-            <p>
-              Don't have an account? <a href="/register">Sign Up</a>
-            </p>
+            <div className="form-submit">
+              <button type="submit" onClick={login} className="form-submit">
+                Submit
+              </button>
+            </div>
+            <div className="form-submit">
+              <p>
+                Don't have an account? <a href="/register">Sign Up</a>
+              </p>
+            </div>
           </div>
         </div>
+        {errorModal ? (
+          <ErrorModal
+            show={errorModal}
+            onClose={handleClose}
+            message="Your password is incorrect."
+          />
+        ) : null}
+        {userNameError ? (
+          <ErrorModal
+            show={userNameError}
+            onClose={handleUserClose}
+            message="Your username is incorrect."
+          />
+        ) : null}
       </div>
     </>
   );

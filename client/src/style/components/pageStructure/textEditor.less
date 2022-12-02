@@ -8,25 +8,46 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    flex-basis: 80%;
+    flex-basis: 75%;
 
     .component-actions {
       display: flex;
       justify-content: space-between;
-      background-image: url(../images/detail-background.png);
+      background-color: #a2a7b7;
+      border: @standardBlack;
+      border-radius: @standardRadius;
+      //background-image: url(../images/detail-background.png);
       //background-image: radial-gradient(@blueLight, @blue, @blueDark);
-      background-size: cover;
-      padding: 2%;
-      border-bottom: @standardBlack;
+      margin: 1%;
+      padding: 1%;
+      align-items: center;
+      box-shadow: -3px 3px 10px rgb(0 0 0 / 0.2);
+
       //border-left: @standardBlack;
+      .component-actions1 {
+        display: flex;
+        flex-basis: 70%;
+        justify-content: space-around;
+
+        .component-action {
+          display: flex;
+        }
+      }
+      .component-actions2 {
+        display: flex;
+        flex-basis: 30%;
+        justify-content: space-around;
+      }
     }
 
     .draft-editor {
       padding-left: 2%;
       padding-right: 2%;
       background-color: @grey;
-      border-left: @standardBlack;
+      border: @standardBlack;
       border-radius: @standardRadius;
+      min-height: 75vh;
+      box-shadow: -3px 3px 10px rgb(0 0 0 / 0.2);
 
       .controls {
         display: flex;
@@ -38,6 +59,9 @@
         height: 50px;
         align-items: center;
         justify-content: space-around;
+        margin-top: 2%;
+        border-top-left-radius: @standardRadius;
+        border-top-right-radius: @standardRadius;
 
         .control-set {
           padding-left: @spacingXS;
@@ -48,10 +72,14 @@
         font-family: Arial, Helvetica, sans-serif !important;
         padding: 0.5rem;
         border: @standardBlack;
-        height: 400px;
         padding-left: 2%;
         padding-right: 2%;
         background-color: @white;
+        min-height: 62.5vh;
+        padding-bottom: 2%;
+        box-shadow: -3px 3px 10px rgb(0 0 0 / 0.2);
+        border-bottom-left-radius: @standardRadius;
+        border-bottom-right-radius: @standardRadius;
 
         .RichEditor-root {
           background: #fff;
@@ -120,15 +148,35 @@
     }
   }
   .component-manager {
-    flex-basis: 20%;
-    border-left: @standardBlack;
-    padding-left: @spacingS;
+    flex-basis: 25%;
 
-    .meta-created,
-    .meta-updated {
-      padding: @spacingS;
+    .meta-info {
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      margin-right: @spacingS;
+      margin-left: @spacingS;
+      border-radius: @standardRadius;
       border: @standardBlack;
-      margin: @spacingS;
+      margin-top: 10vh;
+      padding: 3%;
+      margin-left: 5%;
+      margin-right: 5%;
+      box-shadow: -3px 3px 10px rgb(0 0 0 / 0.2);
+      background-color: @blueLight;
+
+      .meta-created,
+      .meta-updated {
+        padding: @spacingS;
+        border: @standardBlack;
+        margin: @spacingS;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        color: @secondaryColor;
+        border-radius: @standardRadius;
+        background-color: white;
+      }
     }
   }
 }

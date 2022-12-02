@@ -14,6 +14,9 @@ import ErrorModal from "../modals/ErrorModal";
 import BackendErrorModal from "../modals/BackendErrorModal";
 import ConfirmModal from "../modals/ConfirmModal";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
+
 import {
   usedComponentsContext,
   documentTitleContext,
@@ -22,6 +25,7 @@ import {
   documentCreatedDateContext,
   documentUpdaterContext,
   documentLastUpdatedContext,
+  documentCategoryContext,
 } from "../../contexts/DocumentContext";
 
 import { timestamp } from "../constants/TimeStamp";
@@ -37,10 +41,13 @@ function DocCreator() {
   const handleExistingName = () => setExistingNameModal(false);
   const [backendErrorModal, setBackendErrorModal] = useState(false);
   const [existingTitleModal, setExistingTitleModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const { usedComponents, setUsedComponents } = useContext(
     usedComponentsContext
   );
+
+  const [activeTab, setActiveTab] = useState("Select Components");
 
   const { docTitle, setDocTitle } = useContext(documentTitleContext);
 
@@ -56,10 +63,12 @@ function DocCreator() {
   );
   const [category, setCategory] = useState(null);
 
+  const { optionState, setOptionState } = useContext(documentCategoryContext);
+
   function handleCategory(e) {
     e.preventDefault();
     setCategory(e.target.value);
-    console.log(category);
+    setOptionState(e.target.value);
   }
 
   function handleConfirmUpdateModalClose() {
@@ -109,7 +118,17 @@ function DocCreator() {
     setExistingTitleModal(false);
   }
 
+  function handleDeleteCancel(e) {
+    e.preventDefault();
+    setDeleteModal(false);
+  }
+
   function handleDeleteDoc(e) {
+    e.preventDefault();
+    setDeleteModal(true);
+  }
+
+  function handleConfirmDeleteDoc(e) {
     e.preventDefault();
 
     fetch("/document-delete", {
@@ -123,14 +142,13 @@ function DocCreator() {
         if (response.ok) {
           setDocTitle("");
           setUsedComponents([]);
-          showSuccessModal(true);
-          setTimeout(() => showSuccessModal(false), 1000);
           setAuthor(
             JSON.parse(sessionStorage.getItem("username")).registerUsername
           );
           setCreateDate(timestamp);
           setUpdater("");
           setLastUpdated("");
+          setDeleteModal(false);
         }
         //else for modal
       })
@@ -158,10 +176,12 @@ function DocCreator() {
 
   function showSelected() {
     setVisVars(true);
+    setActiveTab("Select Components");
   }
 
   function selectComponents() {
     setVisVars(false);
+    setActiveTab("Order Components");
   }
 
   useEffect(() => {
@@ -174,6 +194,7 @@ function DocCreator() {
 
   function handleAdd(e) {
     e.preventDefault();
+    console.log(e.target.value);
     const item = e.target.value.split(",");
     setUsedComponents((current) => [
       ...current,
@@ -239,40 +260,228 @@ function DocCreator() {
     setUsedComponents(arrayMove(usedComponents, active.id, over.id));
   }
 
+  //
+  const category1 = _.filter(backendData, {
+    category: "Volvo",
+  });
+  const category2 = _.filter(backendData, {
+    category: "saab",
+  });
+  const category3 = _.filter(backendData, {
+    category: "mercedes",
+  });
+  const category4 = _.filter(backendData, {
+    category: "audi",
+  });
+
+  const [showCategory1, setShowCategory1] = useState(false);
+  const [showCategory2, setShowCategory2] = useState(false);
+  const [showCategory3, setShowCategory3] = useState(false);
+  const [showCategory4, setShowCategory4] = useState(false);
+
+  //
+
   var docComponents = visVars ? (
-    <div>
-      {backendData.map(function (i, index) {
-        return (
-          <button
-            onClick={handleAdd}
-            value={[i.id, i.name, i.content]}
-            key={index}
+    <>
+      {category1.length ? (
+        <>
+          <div
+            className="component-category"
+            id="cy-component-select"
+            onClick={(e) => {
+              if (showCategory1 === false) {
+                setShowCategory1(true);
+              } else {
+                setShowCategory1(false);
+              }
+              e.currentTarget.classList.toggle("component-category");
+              e.currentTarget.classList.toggle("component-category-active");
+            }}
           >
-            {i.name}
-          </button>
-        );
-      })}
-    </div>
+            Volvo
+          </div>
+          <div className="component-items">
+            {showCategory1
+              ? category1.map(function (l, index) {
+                  return (
+                    <>
+                      <div key={index} className="component-item">
+                        <p>{l.name}</p>
+                        <p>{l.category}</p>
+                        <button
+                          onClick={handleAdd}
+                          value={[l.id, l.name, l.content]}
+                          id="cy-components"
+                        >
+                          <FontAwesomeIcon
+                            icon={faArrowRightToBracket}
+                            style={{ pointerEvents: "none" }}
+                          />
+                        </button>
+                      </div>
+                    </>
+                  );
+                })
+              : null}
+          </div>
+        </>
+      ) : null}
+      {category2.length ? (
+        <>
+          <div
+            className="component-category"
+            onClick={(e) => {
+              if (showCategory2 === false) {
+                setShowCategory2(true);
+              } else {
+                setShowCategory2(false);
+              }
+              if (category2.length) {
+                e.currentTarget.classList.toggle("component-category");
+                e.currentTarget.classList.toggle("component-category-active");
+              }
+            }}
+          >
+            Saab
+          </div>
+          <div className="component-items">
+            {showCategory2
+              ? category2.map(function (l, index) {
+                  return (
+                    <>
+                      <div key={index} className="component-item">
+                        <p>{l.name}</p>
+                        <p>{l.category}</p>
+                        <button
+                          onClick={handleAdd}
+                          value={[l.id, l.name, l.content]}
+                        >
+                          <FontAwesomeIcon
+                            icon={faArrowRightToBracket}
+                            style={{ pointerEvents: "none" }}
+                          />
+                        </button>
+                      </div>
+                    </>
+                  );
+                })
+              : null}
+          </div>
+        </>
+      ) : null}
+      {category3.length ? (
+        <>
+          <div
+            className="component-category"
+            onClick={(e) => {
+              if (showCategory3 === false) {
+                setShowCategory3(true);
+              } else {
+                setShowCategory3(false);
+              }
+              if (category3.length) {
+                e.currentTarget.classList.toggle("component-category");
+                e.currentTarget.classList.toggle("component-category-active");
+              }
+            }}
+          >
+            Mercedes
+          </div>
+          <div className="component-items">
+            {showCategory3
+              ? category3.map(function (l, index) {
+                  return (
+                    <>
+                      <div key={index} className="component-item">
+                        <p>{l.name}</p>
+                        <p>{l.category}</p>
+                        <button
+                          onClick={handleAdd}
+                          value={[l.id, l.name, l.content]}
+                        >
+                          <FontAwesomeIcon
+                            icon={faArrowRightToBracket}
+                            style={{ pointerEvents: "none" }}
+                          />
+                        </button>
+                      </div>
+                    </>
+                  );
+                })
+              : null}
+          </div>
+        </>
+      ) : null}
+      {category4.length ? (
+        <>
+          <div
+            className="component-category"
+            onClick={(e) => {
+              if (showCategory4 === false) {
+                setShowCategory4(true);
+              } else {
+                setShowCategory4(false);
+              }
+              e.currentTarget.classList.toggle("component-category");
+              e.currentTarget.classList.toggle("component-category-active");
+            }}
+          >
+            Audi
+          </div>
+          <div className="component-items">
+            {showCategory4
+              ? category4.map(function (l, index) {
+                  return (
+                    <>
+                      <div key={index} className="component-item">
+                        <p>{l.name}</p>
+                        <p>{l.category}</p>
+                        <button
+                          onClick={handleAdd}
+                          value={[l.id, l.name, l.content]}
+                        >
+                          <FontAwesomeIcon
+                            icon={faArrowRightToBracket}
+                            style={{ pointerEvents: "none" }}
+                          />
+                        </button>
+                      </div>
+                    </>
+                  );
+                })
+              : null}
+          </div>
+        </>
+      ) : null}
+    </>
   ) : (
     <SortableContext
       strategy={verticalListSortingStrategy}
       items={usedComponents}
     >
-      {usedComponents.map(function (l, index) {
-        return (
-          <div className="doc-component">
-            <SortableItem
-              name={l.name}
-              key={index}
-              id={index}
-              number={index + 1}
-            />
-            <button onClick={handleDelete} value={index}>
-              Delete
-            </button>
-          </div>
-        );
-      })}
+      <table>
+        {usedComponents.map(function (l, index) {
+          return (
+            <tr className="doc-component">
+              <SortableItem
+                name={l.name}
+                key={index}
+                id={index}
+                number={index + 1}
+              />
+              <td>
+                <button
+                  onClick={handleDelete}
+                  value={index}
+                  className="warning"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          );
+        })}
+      </table>
     </SortableContext>
   );
 
@@ -283,53 +492,86 @@ function DocCreator() {
           <div className="doc-container-overview">
             <div className="doc-creator-container">
               <div className="doc-actions">
-                Title
+                <div className="doc-actions1">
+                  <span className="doc-action">
+                    Title&nbsp;&nbsp;
+                    <input
+                      id="title"
+                      type="text"
+                      onChange={handleSaveTitle}
+                      value={docTitle}
+                    />
+                  </span>
+                  <span className="doc-action">
+                    <p>Category</p>&nbsp;&nbsp;
+                    <select
+                      name="cars"
+                      id="category"
+                      onChange={handleCategory}
+                      className="category-input select-input"
+                      value={optionState}
+                    >
+                      <option value=""></option>
+                      <option value="Volvo">Volvo</option>
+                      <option value="saab">Saab</option>
+                      <option value="mercedes">Mercedes</option>
+                      <option value="audi">Audi</option>
+                    </select>
+                  </span>
+                  <div className="doc-action-minimal-container">
+                    <span className="doc-action-minimal">
+                      <p>Author</p>&nbsp;&nbsp;
+                      <input
+                        type="text"
+                        readOnly="readonly"
+                        value={author}
+                        className="odd-spaced-input"
+                      />
+                    </span>
+                    <span className="doc-action-minimal">
+                      <p>Created On</p>&nbsp;&nbsp;
+                      <input
+                        type="text"
+                        readOnly="readonly"
+                        value={createDate}
+                      />
+                    </span>
+                  </div>
+                  <div className="doc-action-minimal-container">
+                    <span className="doc-action-minimal">
+                      <p>Updated By</p>&nbsp;&nbsp;
+                      <input type="text" readOnly="readonly" value={updater} />
+                    </span>
+                    <span className="doc-action-minimal">
+                      <p>Updated On</p>&nbsp;&nbsp;
+                      <input
+                        type="text"
+                        readOnly="readonly"
+                        value={lastUpdated}
+                      />
+                    </span>
+                  </div>
+                </div>
                 <input
-                  id="title"
-                  type="text"
-                  onChange={handleSaveTitle}
-                  value={docTitle}
-                />
-                <span>
-                  <p>Created By</p>
-                  <input type="text" readOnly="readonly" value={author} />
-                </span>
-                <span>
-                  <p>Created On</p>
-                  <input type="text" readOnly="readonly" value={createDate} />
-                </span>
-                <span>
-                  <p>Last Updated By</p>
-                  <input type="text" readOnly="readonly" value={updater} />
-                </span>
-                <span>
-                  <p>Updated On</p>
-                  <input type="text" readOnly="readonly" value={lastUpdated} />
-                </span>
-                <span>
-                  <p>Category</p>
-                  <select name="cars" id="category" onChange={handleCategory}>
-                    <option value=""></option>
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="mercedes">Mercedes</option>
-                    <option value="audi">Audi</option>
-                  </select>
-                </span>
-                <input
-                  id="save"
                   type="submit"
-                  value="Save"
-                  onClick={handleSubmit}
+                  value="Clear"
+                  onClick={handleClear}
+                  className="caution"
                 />
-                <input type="submit" value="Clear" onClick={handleClear} />
                 <input
                   id="delete"
                   type="submit"
                   value="Delete"
                   onClick={handleDeleteDoc}
                 />
+                <input
+                  id="save"
+                  type="submit"
+                  value="Save"
+                  onClick={handleSubmit}
+                />
               </div>
+
               <div className="document-container">
                 <div className="document">
                   {usedComponents.map(function (j, index) {
@@ -348,9 +590,28 @@ function DocCreator() {
               </div>
             </div>
             <div className="component-manager">
-              <button onClick={showSelected}>Select Components</button>
-              <button onClick={selectComponents}>Order Components</button>
-              {docComponents}
+              <div className="component-container">
+                <div className="component-tabs">
+                  <button
+                    onClick={showSelected}
+                    className={` ${
+                      activeTab === "Select Components" ? "active-tab" : "tab"
+                    }`}
+                  >
+                    Select Components
+                  </button>
+                  &nbsp;&nbsp;
+                  <button
+                    onClick={selectComponents}
+                    className={` ${
+                      activeTab === "Order Components" ? "active-tab" : "tab"
+                    }`}
+                  >
+                    Order Components
+                  </button>
+                </div>
+                <div className="doc-components">{docComponents}</div>
+              </div>
             </div>
           </div>
           {successModal ? <SuccessModal message="Document created!" /> : null}
@@ -380,6 +641,23 @@ function DocCreator() {
                     <p>
                       A document named <strong>{docTitle}</strong> already
                       exists. You can update this document with your changes.
+                    </p>
+                  </>
+                }
+              />
+            </>
+          ) : null}
+          {deleteModal ? (
+            <>
+              <ConfirmModal
+                onClose={handleConfirmDeleteDoc}
+                cancel={handleDeleteCancel}
+                confirmButton="Delete"
+                message={
+                  <>
+                    <p>
+                      This will permanently delete the document named {docTitle}
+                      . You will not be able to recover it.
                     </p>
                   </>
                 }

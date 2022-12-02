@@ -8,31 +8,64 @@
   .doc-creator-container {
     display: flex;
     flex-direction: column;
-    flex-basis: 80%;
+    flex-basis: 75%;
 
     .doc-actions {
       display: flex;
-      background-image: radial-gradient(@blueLight, @blue, @blueDark);
       min-height: 30px;
       padding-top: @spacingXS;
       padding-bottom: @spacingXS;
       padding-left: @spacingS;
       padding-right: @spacingS;
-      border-left: @standardBlack;
-      border-bottom: @standardBlack;
-      justify-content: space-between;
+      align-items: center;
+      justify-content: space-around;
+      background-color: #a2a7b7;
+      margin: 1%;
+      padding: 1%;
+      box-shadow: -3px 3px 10px rgb(0 0 0 / 0.2);
+      border: @standardBlack;
+      border-radius: @standardRadius;
+
+      .doc-actions1 {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 80%;
+
+        .doc-action {
+          display: flex;
+          align-items: center;
+          input {
+            width: 40%;
+          }
+        }
+        .doc-action-minimal-container {
+          display: flex;
+          flex-direction: column;
+          padding-left: 1%;
+          .doc-action-minimal {
+            display: flex;
+            align-items: center;
+            input {
+              width: 50%;
+            }
+          }
+        }
+      }
     }
 
     .document-container {
       background-color: @grey;
-      border-left: @standardBlack;
+      border: @standardBlack;
+      box-shadow: @shadow;
+      border-radius: @standardRadius;
 
       .document {
         width: 80%;
         margin-left: 5%;
         margin-right: 5%;
         margin-top: 2%;
-        min-height: 500px;
+        min-height: 70vh;
         background-color: @white;
         border: @heavyBlack;
         padding-top: 2%;
@@ -40,20 +73,123 @@
         padding-right: 5%;
         margin-bottom: 2%;
         border-radius: @standardRadius;
+        box-shadow: @shadow;
       }
     }
   }
 
   .component-manager {
-    flex-basis: 20%;
-    border-left: @standardBlack;
+    flex-basis: 25%;
 
-    .doc-component {
-      display: flex;
-    }
+    .component-container {
+      margin-top: 10vh;
+      background-color: @blueLight;
+      border: @standardBlack;
+      border-radius: @standardRadius;
+      box-shadow: @shadow;
+      margin-left: 2%;
+      margin-right: 2%;
 
-    .doc-component:hover {
-      background-color: blanchedalmond;
+      .component-tabs {
+        margin-bottom: @spacingS;
+        background-color: @blueDark;
+        padding: 2%;
+        border-top-left-radius: @standardRadius;
+        border-top-right-radius: @standardRadius;
+      }
+
+      .doc-components {
+        display: flex;
+        flex-direction: column;
+        padding: 2%;
+
+        .component-category {
+          background-color: @blueDark;
+          display: flex;
+          align-items: center;
+          height: 3vh;
+          justify-content: center;
+          vertical-align: middle;
+          border-radius: @standardRadius;
+          border: @standardBlack;
+          margin: @spacingS;
+          padding-left: @spacingS;
+          padding-right: @spacingS;
+          color: white;
+        }
+
+        .component-category-active {
+          display: flex;
+          align-items: center;
+          height: 3vh;
+          justify-content: center;
+          vertical-align: middle;
+          background-color: @blueDark;
+          border-top-left-radius: @standardRadius;
+          border-top-right-radius: @standardRadius;
+          border: @standardBlack;
+          margin-top: @spacingS;
+          margin-left: @spacingS;
+          margin-right: @spacingS;
+          padding-left: @spacingS;
+          padding-right: @spacingS;
+          color: white;
+        }
+
+        .component-items {
+          .component-item:not(:last-child) {
+            display: flex;
+            justify-content: space-between;
+            overflow-wrap: break-word;
+            word-break: break-all;
+            padding-left: @spacingS;
+            padding-right: @spacingS;
+            align-items: center;
+            background-color: @blue;
+            border: @standardBlack;
+            margin-left: @spacingS;
+            margin-right: @spacingS;
+          }
+
+          .component-item:last-child {
+            display: flex;
+            justify-content: space-between;
+            overflow-wrap: break-word;
+            word-break: break-all;
+            padding-left: @spacingS;
+            padding-right: @spacingS;
+            align-items: center;
+            background-color: @blue;
+            border-bottom-right-radius: @standardRadius;
+            border-bottom-left-radius: @standardRadius;
+            border: @standardBlack;
+            margin-left: @spacingS;
+            margin-right: @spacingS;
+            margin-bottom: @spacingS;
+          }
+        }
+      }
+
+      .doc-component {
+        display: flex;
+        padding: 2%;
+        width: 98%;
+        justify-content: space-between;
+
+        .awkward-div {
+          width: 50%;
+          display: flex;
+          justify-content: space-between;
+          margin-right: 30%;
+          margin-left: 5%;
+          align-self: center;
+        }
+      }
+
+      .doc-component:hover {
+        background-color: blanchedalmond;
+        border-radius: @standardRadius;
+      }
     }
   }
 }

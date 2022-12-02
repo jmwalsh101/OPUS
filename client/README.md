@@ -1,20 +1,12 @@
 **To Do**
 
-1. Error modals need to be included where missing
-
-2. Confirm modal for when replacing a document/component?
 3. Text editor style buttons need to be fixed
 
 4. Icon button needed to fix places where icon doesn't work in a button
 
-5. Content for account page
-6. Get Texts and Documents pages layout and content done
-
-7. Add validation to docs and component submission?
-8. Disable buttons not valid for use
-9. BUG: can delete document that doesn't exist - i.e. usedComponents == true but name != true
-
-10. Category select not being updated by value passed to it
+5. Add validation to docs and component submission?
+6. Disable buttons not valid for use
+7. BUG: can delete document that doesn't exist - i.e. usedComponents == true but name != true
 
 **Nice To haves**
 

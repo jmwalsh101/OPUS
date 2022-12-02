@@ -13,3 +13,5 @@ export const documentCreatedDateContext = createContext("");
 export const documentUpdaterContext = createContext("");
 
 export const documentLastUpdatedContext = createContext("");
+
+export const documentCategoryContext = createContext("");

@@ -16,57 +16,65 @@ function LoggedIn(props) {
       <div className="navbar-container">
         <a
           className={` ${activePage === "home" ? "logo" : "logo"}`}
-          href="http://54.234.44.9:3000/"
+          href="http://localhost:3000/"
           onClick={() => sessionStorage.setItem("activePage", "home")}
         >
           OPUS
         </a>
-        <a
-          className={` ${
-            activePage === "documents" ? "active-link" : "nav-link"
-          }`}
-          href="http://54.234.44.9:3000/documents"
-          onClick={() => sessionStorage.setItem("activePage", "documents")}
-        >
-          Documents
-        </a>
-        <a
-          className={` ${activePage === "texts" ? "active-link" : "nav-link"}`}
-          href="http://54.234.44.9:3000/texts"
-          onClick={() => sessionStorage.setItem("activePage", "texts")}
-        >
-          Texts
-        </a>
-        <a
-          className={` ${activePage === "editor" ? "active-link" : "nav-link"}`}
-          href="http://54.234.44.9:3000/text-editor"
-          onClick={() => sessionStorage.setItem("activePage", "editor")}
-        >
-          Editor
-        </a>
-        <a
-          className={` ${
-            activePage === "manager" ? "active-link" : "nav-link"
-          }`}
-          href="http://54.234.44.9:3000/doc-creator"
-          onClick={() => sessionStorage.setItem("activePage", "manager")}
-        >
-          Manager
-        </a>
-        <a className="nav-link" onClick={props.logout}>
-          Log Out
-        </a>
-        <a
-          className={` ${
-            activePage === "account" ? "active-link" : "nav-link"
-          }`}
-          href="http://54.234.44.9:3000/account"
-          onClick={() => sessionStorage.setItem("activePage", "account")}
-        >
-          <FontAwesomeIcon icon={faUser} />
-          &nbsp;&nbsp;
-          {activeAccount.registerUsername}
-        </a>
+        <div className="navbar-left">
+          <a
+            className={` ${
+              activePage === "documents" ? "active-link" : "nav-link"
+            }`}
+            href="http://localhost:3000/documents"
+            onClick={() => sessionStorage.setItem("activePage", "documents")}
+          >
+            Documents
+          </a>
+          <a
+            className={` ${
+              activePage === "texts" ? "active-link" : "nav-link"
+            }`}
+            href="http://localhost:3000/texts"
+            onClick={() => sessionStorage.setItem("activePage", "texts")}
+          >
+            Texts
+          </a>
+          <a
+            className={` ${
+              activePage === "editor" ? "active-link" : "nav-link"
+            }`}
+            href="http://localhost:3000/text-editor"
+            onClick={() => sessionStorage.setItem("activePage", "editor")}
+          >
+            Editor
+          </a>
+          <a
+            className={` ${
+              activePage === "manager" ? "active-link" : "nav-link"
+            }`}
+            href="http://localhost:3000/doc-creator"
+            onClick={() => sessionStorage.setItem("activePage", "manager")}
+          >
+            Manager
+          </a>
+        </div>
+        <div className="navbar-right">
+          <a className="nav-link" onClick={props.logout}>
+            Log Out
+          </a>
+          <a
+            className={` ${
+              activePage === "account" ? "active-link" : "nav-link"
+            }`}
+            href="http://localhost:3000/account"
+            onClick={() => sessionStorage.setItem("activePage", "account")}
+          >
+            <FontAwesomeIcon icon={faUser} />
+            &nbsp;&nbsp;
+            {activeAccount.registerUsername}
+          </a>
+        </div>
       </div>
     </>
   );

@@ -3,12 +3,18 @@ import TextEditor from "./TextEditor";
 import { useState, useEffect, useContext } from "react";
 
 import { backendComponentsContext } from "../../contexts/ComponentContext";
-import { componentIdContext } from "../../contexts/ComponentContext";
+import {
+  componentIdContext,
+  componentCategoryContext,
+} from "../../contexts/ComponentContext";
 
 function Index() {
   const [componentsFromBackend, setComponentsFromBackend] = useState([]);
   const { backendComponentId, setBackendComponentId } =
     useContext(componentIdContext);
+
+  const [optionState, setOptionState] = useState("Volvo");
+  console.log("index os", optionState);
 
   useEffect(() => {
     fetch("/component-load")
@@ -31,18 +37,20 @@ function Index() {
   console.log(backendComponentId);
 
   return (
-    <backendComponentsContext.Provider
-      value={{ componentsFromBackend, setComponentsFromBackend }}
-    >
-      <div className="main-container">
-        <div className="sidebar">
-          <ComponenetSidebar />
+    <componentCategoryContext.Provider value={{ optionState, setOptionState }}>
+      <backendComponentsContext.Provider
+        value={{ componentsFromBackend, setComponentsFromBackend }}
+      >
+        <div className="main-container">
+          <div className="sidebar">
+            <ComponenetSidebar />
+          </div>
+          <div className="main-editor">
+            <TextEditor />
+          </div>
         </div>
-        <div className="main-editor">
-          <TextEditor />
-        </div>
-      </div>
-    </backendComponentsContext.Provider>
+      </backendComponentsContext.Provider>
+    </componentCategoryContext.Provider>
   );
 }
 

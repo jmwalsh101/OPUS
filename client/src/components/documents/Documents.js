@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import _ from "lodash";
 
+import ErrorModal from "../modals/ErrorModal";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,6 +20,9 @@ function Documents() {
   const [createDate, setCreateDate] = useState("");
   const [updater, setUpdater] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [activeTab, setActiveTab] = useState("Recently Created");
+  const [errorModal, setErrorModal] = useState(false);
+  const handleClose = () => setErrorModal(false);
 
   // search
 
@@ -46,8 +51,15 @@ function Documents() {
             setSearchContentResults(_.uniq(docResults));
             setSearchResult(true);
           })
-          // fail error modal here
-          .catch((error) => console.log("ERROR"));
+          .catch((error) => {
+            return (
+              <ErrorModal
+                show={errorModal}
+                onClose={handleClose}
+                message="Error Retrieving Results"
+              />
+            );
+          });
       }
     }
   }
@@ -59,7 +71,7 @@ function Documents() {
       .then((data) => {
         setBackendData(data);
       });
-  }, [backendData]);
+  }, []);
 
   //new select function required for Search
   function handleSearchSelect(e) {
@@ -117,6 +129,8 @@ function Documents() {
     e.preventDefault();
     let item = Object.values({ ...e.target });
     let selectedItem = item[1];
+    console.log("SI", selectedItem);
+
     const title = selectedItem.title;
     const docAuthor = selectedItem.author;
     const docCreated = selectedItem.createDate;
@@ -185,7 +199,7 @@ function Documents() {
       .catch((error) => {
         // setTimeout(() => setBackendErrorModal(true), 3000);
       });
-  }, [documentsFromBackend]);
+  }, []);
 
   // For View Tabs
   const allDocuments = _.cloneDeep(documentsFromBackend);
@@ -210,49 +224,67 @@ function Documents() {
   }, [documentsFromBackend]);
 
   var documentsView = selectedView ? (
-    <div>
+    <table>
       {recentlyCreated.map(function (k, index) {
         if (index < 5) {
           return (
-            <>
-              <div className="recent-card" key={index}>
-                <div className="recent-card-details">
-                  <h3>{k.name}</h3>
-                  <p>{k.author}</p>
-                  <p>{k.created}</p>
-                  <button
-                    title={k.title}
-                    author={k.author}
-                    content={k.content}
-                    createDate={k.created}
-                    updater={k.updater}
-                    lastUpdated={k.updated}
-                    onClick={handleSelect}
-                  >
-                    View
-                  </button>
-                </div>
-              </div>
-            </>
+            <tr key={index}>
+              <td>
+                <h4>{k.title}</h4>
+              </td>
+              <td>
+                <p>{k.author}</p>
+              </td>
+              <td>
+                <p>{k.created}</p>
+              </td>
+              <td>
+                <button
+                  title={k.title}
+                  author={k.author}
+                  content={k.content}
+                  createDate={k.created}
+                  updater={k.updater}
+                  lastUpdated={k.updated}
+                  onClick={handleSelect}
+                >
+                  View
+                </button>
+              </td>
+            </tr>
           );
         }
       })}
-    </div>
+    </table>
   ) : (
     <div>
       {lastUpdated.map(function (k, index) {
         if (index < 5) {
           return (
-            <>
-              <div className="recent-card" key={index}>
-                <div className="recent-card-details">
-                  <h3>{k.name}</h3>
-                  <p>{k.updater}</p>
-                  <p>{k.lastUpdated}</p>
-                  <button value={k.id}>View</button>
-                </div>
-              </div>
-            </>
+            <tr key={index}>
+              <td>
+                <h4>{k.title}</h4>
+              </td>
+              <td>
+                <p>{k.updater}</p>
+              </td>
+              <td>
+                <p>{k.lastUpdated}</p>
+              </td>
+              <td>
+                <button
+                  title={k.title}
+                  author={k.author}
+                  content={k.content}
+                  createDate={k.created}
+                  updater={k.updater}
+                  lastUpdated={k.updated}
+                  onClick={handleSelect}
+                >
+                  View
+                </button>
+              </td>
+            </tr>
           );
         }
       })}
@@ -262,15 +294,17 @@ function Documents() {
   function handleLastUpdatedView(e) {
     e.preventDefault();
     setSelectedView(false);
+    setActiveTab("Recently Updated");
   }
 
   function handleLastCreatedView(e) {
     e.preventDefault();
     setSelectedView(true);
+    setActiveTab("Recently Created");
   }
 
   const category1 = _.filter(documentsFromBackend, {
-    category: "volvo",
+    category: "Volvo",
   });
   const category2 = _.filter(documentsFromBackend, {
     category: "saab",
@@ -292,178 +326,197 @@ function Documents() {
       <div className="main-container">
         <div className="sidebar">
           <div className="sidebar-categories">
-            <h3>Quick Access</h3>
-            <div
-              className="sidebar-category"
-              onClick={(e) => {
-                if (showCategory1 === false) {
-                  setShowCategory1(true);
-                } else {
-                  setShowCategory1(false);
-                }
-                e.currentTarget.classList.toggle("sidebar-category");
-                e.currentTarget.classList.toggle("sidebar-category-active");
-              }}
-            >
-              Volvo
-            </div>
-            <div className="sidebar-items">
-              {showCategory1
-                ? category1.map(function (l, index) {
-                    return (
-                      <>
-                        <div key={index} className="sidebar-item">
-                          <p>{l.title}</p>
-                          <p>{l.category}</p>
-                          <button
-                            onClick={handleSelect}
-                            title={l.title}
-                            author={l.author}
-                            content={l.content}
-                            createDate={l.created}
-                            updater={l.updater}
-                            lastUpdated={l.updated}
-                          >
-                            <FontAwesomeIcon
-                              icon={faArrowRightToBracket}
-                              style={{ pointerEvents: "none" }}
-                            />
-                          </button>
-                        </div>
-                      </>
-                    );
-                  })
-                : null}
+            <div className="sidebar-header">
+              <h3>Documents</h3>
             </div>
 
-            <div
-              className="sidebar-category"
-              onClick={(e) => {
-                if (showCategory2 === false) {
-                  setShowCategory2(true);
-                } else {
-                  setShowCategory2(false);
-                }
-                e.currentTarget.classList.toggle("sidebar-category");
-                e.currentTarget.classList.toggle("sidebar-category-active");
-              }}
-            >
-              Saab
-            </div>
-            <div className="sidebar-items">
-              {showCategory2
-                ? category2.map(function (l, index) {
-                    return (
-                      <>
-                        <div key={index} className="sidebar-item">
-                          <p>{l.title}</p>
-                          <p>{l.category}</p>
-                          <button
-                            onClick={handleSelect}
-                            title={l.title}
-                            author={l.author}
-                            content={l.content}
-                            createDate={l.created}
-                            updater={l.updater}
-                            lastUpdated={l.updated}
-                          >
-                            <FontAwesomeIcon
-                              icon={faArrowRightToBracket}
-                              style={{ pointerEvents: "none" }}
-                            />
-                          </button>
-                        </div>
-                      </>
-                    );
-                  })
-                : null}
-            </div>
+            {category1.length ? (
+              <>
+                <div
+                  className="sidebar-category"
+                  onClick={(e) => {
+                    if (showCategory1 === false) {
+                      setShowCategory1(true);
+                    } else {
+                      setShowCategory1(false);
+                    }
+                    e.currentTarget.classList.toggle("sidebar-category");
+                    e.currentTarget.classList.toggle("sidebar-category-active");
+                  }}
+                >
+                  Volvo
+                </div>
+                <div className="sidebar-items">
+                  {showCategory1
+                    ? category1.map(function (l, index) {
+                        return (
+                          <>
+                            <div key={index} className="sidebar-item">
+                              <p>{l.title}</p>
+                              <p>{l.category}</p>
+                              <button
+                                onClick={handleSelect}
+                                title={l.title}
+                                author={l.author}
+                                content={l.content}
+                                createDate={l.created}
+                                updater={l.updater}
+                                lastUpdated={l.updated}
+                              >
+                                <FontAwesomeIcon
+                                  icon={faArrowRightToBracket}
+                                  style={{ pointerEvents: "none" }}
+                                />
+                              </button>
+                            </div>
+                          </>
+                        );
+                      })
+                    : null}
+                </div>
+              </>
+            ) : null}
 
-            <div
-              className="sidebar-category"
-              onClick={(e) => {
-                if (showCategory3 === false) {
-                  setShowCategory3(true);
-                } else {
-                  setShowCategory3(false);
-                }
-                e.currentTarget.classList.toggle("sidebar-category");
-                e.currentTarget.classList.toggle("sidebar-category-active");
-              }}
-            >
-              Mercedes
-            </div>
-            <div className="sidebar-items">
-              {showCategory3
-                ? category3.map(function (l, index) {
-                    return (
-                      <>
-                        <div key={index} className="sidebar-item">
-                          <p>{l.title}</p>
-                          <p>{l.category}</p>
-                          <button
-                            onClick={handleSelect}
-                            title={l.title}
-                            author={l.author}
-                            content={l.content}
-                            createDate={l.created}
-                            updater={l.updater}
-                            lastUpdated={l.updated}
-                          >
-                            <FontAwesomeIcon
-                              icon={faArrowRightToBracket}
-                              style={{ pointerEvents: "none" }}
-                            />
-                          </button>
-                        </div>
-                      </>
-                    );
-                  })
-                : null}
-            </div>
+            {category2.length ? (
+              <>
+                <div
+                  className="sidebar-category"
+                  onClick={(e) => {
+                    if (showCategory2 === false) {
+                      setShowCategory2(true);
+                    } else {
+                      setShowCategory2(false);
+                    }
+                    e.currentTarget.classList.toggle("sidebar-category");
+                    e.currentTarget.classList.toggle("sidebar-category-active");
+                  }}
+                >
+                  Saab
+                </div>
+                <div className="sidebar-items">
+                  {showCategory2
+                    ? category2.map(function (l, index) {
+                        return (
+                          <>
+                            <div key={index} className="sidebar-item">
+                              <p>{l.title}</p>
+                              <p>{l.category}</p>
+                              <button
+                                onClick={handleSelect}
+                                title={l.title}
+                                author={l.author}
+                                content={l.content}
+                                createDate={l.created}
+                                updater={l.updater}
+                                lastUpdated={l.updated}
+                              >
+                                <FontAwesomeIcon
+                                  icon={faArrowRightToBracket}
+                                  style={{ pointerEvents: "none" }}
+                                />
+                              </button>
+                            </div>
+                          </>
+                        );
+                      })
+                    : null}
+                </div>
+              </>
+            ) : null}
 
-            <div
-              className="sidebar-category"
-              onClick={(e) => {
-                if (showCategory4 === false) {
-                  setShowCategory4(true);
-                } else {
-                  setShowCategory4(false);
-                }
-                e.currentTarget.classList.toggle("sidebar-category");
-                e.currentTarget.classList.toggle("sidebar-category-active");
-              }}
-            >
-              Audi
-            </div>
-            <div className="sidebar-items">
-              {showCategory4
-                ? category4.map(function (l, index) {
-                    return (
-                      <>
-                        <div key={index} className="sidebar-item">
-                          <p>{l.title}</p>
-                          <p>{l.category}</p>
-                          <button
-                            onClick={handleSelect}
-                            title={l.title}
-                            author={l.author}
-                            content={l.content}
-                            createDate={l.created}
-                            updater={l.updater}
-                            lastUpdated={l.updated}
-                          >
-                            <FontAwesomeIcon
-                              icon={faArrowRightToBracket}
-                              style={{ pointerEvents: "none" }}
-                            />
-                          </button>
-                        </div>
-                      </>
-                    );
-                  })
-                : null}
-            </div>
+            {category3.length ? (
+              <>
+                <div
+                  className="sidebar-category"
+                  onClick={(e) => {
+                    if (showCategory3 === false) {
+                      setShowCategory3(true);
+                    } else {
+                      setShowCategory3(false);
+                    }
+                    e.currentTarget.classList.toggle("sidebar-category");
+                    e.currentTarget.classList.toggle("sidebar-category-active");
+                  }}
+                >
+                  Mercedes
+                </div>
+                <div className="sidebar-items">
+                  {showCategory3
+                    ? category3.map(function (l, index) {
+                        return (
+                          <>
+                            <div key={index} className="sidebar-item">
+                              <p>{l.title}</p>
+                              <p>{l.category}</p>
+                              <button
+                                onClick={handleSelect}
+                                title={l.title}
+                                author={l.author}
+                                content={l.content}
+                                createDate={l.created}
+                                updater={l.updater}
+                                lastUpdated={l.updated}
+                              >
+                                <FontAwesomeIcon
+                                  icon={faArrowRightToBracket}
+                                  style={{ pointerEvents: "none" }}
+                                />
+                              </button>
+                            </div>
+                          </>
+                        );
+                      })
+                    : null}
+                </div>
+              </>
+            ) : null}
+
+            {category4.length ? (
+              <>
+                <div
+                  className="sidebar-category"
+                  onClick={(e) => {
+                    if (showCategory4 === false) {
+                      setShowCategory4(true);
+                    } else {
+                      setShowCategory4(false);
+                    }
+                    e.currentTarget.classList.toggle("sidebar-category");
+                    e.currentTarget.classList.toggle("sidebar-category-active");
+                  }}
+                >
+                  Audi
+                </div>
+                <div className="sidebar-items">
+                  {showCategory4
+                    ? category4.map(function (l, index) {
+                        return (
+                          <>
+                            <div key={index} className="sidebar-item">
+                              <p>{l.title}</p>
+                              <p>{l.category}</p>
+                              <button
+                                onClick={handleSelect}
+                                title={l.title}
+                                author={l.author}
+                                content={l.content}
+                                createDate={l.created}
+                                updater={l.updater}
+                                lastUpdated={l.updated}
+                              >
+                                <FontAwesomeIcon
+                                  icon={faArrowRightToBracket}
+                                  style={{ pointerEvents: "none" }}
+                                />
+                              </button>
+                            </div>
+                          </>
+                        );
+                      })
+                    : null}
+                </div>
+              </>
+            ) : null}
           </div>
         </div>
         <div className="main-display">
@@ -477,7 +530,9 @@ function Documents() {
                 placeholder="Search documents"
               />
               {searchResult ? (
-                <button onClick={handleClear}>Clear</button>
+                <button onClick={handleClear} className="caution">
+                  Clear
+                </button>
               ) : (
                 <input type="submit" onClick={handleSearch} />
               )}
@@ -486,60 +541,82 @@ function Documents() {
           {searchResult ? (
             <div className="search-result-container">
               <h3>Names</h3>
-              {searchNameResults.length
-                ? searchNameResults.map(function (k, index) {
-                    return (
-                      <>
-                        <div className="component-search-card" key={index}>
-                          <h3>{k.title}</h3>
+              <div className="component-search-card">
+                {searchNameResults.length
+                  ? searchNameResults.map(function (k, index) {
+                      return (
+                        <>
+                          <h3 key={index}>{k.title}</h3>
                           <button value={k.title} onClick={handleSearchSelect}>
                             View
                           </button>
-                        </div>
-                      </>
-                    );
-                  })
-                : "No results founds."}
+                        </>
+                      );
+                    })
+                  : "No results founds."}
+              </div>
+
               <h3>Content</h3>
-              {searchContentResults.length
-                ? searchContentResults.map(function (k, index) {
-                    return (
-                      <>
-                        <div className="component-search-card">
-                          <h3>{k}</h3>
+              <div className="component-search-card">
+                {searchContentResults.length
+                  ? searchContentResults.map(function (k, index) {
+                      return (
+                        <>
+                          <h4>{k}</h4>
                           <button value={k} onClick={handleSearchSelect}>
                             View
                           </button>
-                        </div>
-                      </>
-                    );
-                  })
-                : "No results found."}
+                        </>
+                      );
+                    })
+                  : "No results found."}
+              </div>
             </div>
           ) : null}
           <div className="text-box-container">
             <div className="texts-text-box">
-              <div className="text-box-header"></div>
-              {usedComponents.map(function (j, index) {
-                return (
-                  <>
-                    <div id={j.id}>
-                      <h1>{j.title}</h1>
-                      <span
-                        key={index}
-                        dangerouslySetInnerHTML={{ __html: j.content }}
-                      />
-                    </div>
-                  </>
-                );
-              })}
+              <div className="text-box-header">
+                <h2>{docTitle}</h2>
+              </div>
+              <div className="text-box-content">
+                {usedComponents.map(function (j, index) {
+                  return (
+                    <>
+                      <div id={j.id}>
+                        <h1>{j.title}</h1>
+                        <span
+                          key={index}
+                          dangerouslySetInnerHTML={{ __html: j.content }}
+                        />
+                      </div>
+                    </>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
-        <div className="sidebar-items">
+        <div className="updated-created">
           <div className="recently-updated">
-            <button onClick={handleLastCreatedView}>Recently Created</button>
-            <button onClick={handleLastUpdatedView}>Recently Updated</button>
+            <div className="texts-tabs">
+              <button
+                className={` ${
+                  activeTab === "Recently Created" ? "active-tab" : "tab"
+                }`}
+                onClick={handleLastCreatedView}
+              >
+                Recently Created
+              </button>
+              &nbsp;&nbsp;
+              <button
+                className={` ${
+                  activeTab === "Recently Updated" ? "active-tab" : "tab"
+                }`}
+                onClick={handleLastUpdatedView}
+              >
+                Recently Updated
+              </button>
+            </div>
             <div className="text-components">{documentsView}</div>
           </div>
         </div>

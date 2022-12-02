@@ -1,9 +1,13 @@
 .main-container {
   display: flex;
+  background-image: url(../images/main-background.png);
+  background-size: cover;
+  min-height: 93vh;
 
+  @import "./account.less";
   .sidebar {
     flex-basis: 20%;
-    background-image: url(../images/sidebar-background.png);
+    //background-image: url(../images/sidebar-background.png);
     //background-image: linear-gradient(@purpleDark, @purpleLight, @purpleDark);
     //border-right: @heavyPurpleBorder;
     background-size: cover;
@@ -11,9 +15,26 @@
     .sidebar-categories {
       display: flex;
       flex-direction: column;
-      width: 100%;
+      margin-right: 5%;
+      margin-left: 5%;
+      background-color: @purpleLight;
+      margin-top: 10vh;
+      border: @standardBlack;
+      border-radius: @standardRadius;
+      box-shadow: @shadow;
+      min-height: 13vh;
+
+      .sidebar-header {
+        color: white;
+        background-color: @purple4;
+        margin-bottom: 2%;
+        padding: 2%;
+        border-top-left-radius: @standardRadius;
+        border-top-right-radius: @standardRadius;
+      }
 
       .sidebar-category {
+        padding: 2%;
         display: flex;
         align-items: center;
         height: 3vh;
@@ -25,6 +46,7 @@
         margin: @spacingS;
         padding-left: @spacingS;
         padding-right: @spacingS;
+        color: white;
       }
       .sidebar-category-active {
         display: flex;
@@ -41,6 +63,7 @@
         margin-right: @spacingS;
         padding-left: @spacingS;
         padding-right: @spacingS;
+        color: white;
       }
 
       .sidebar-items {
@@ -52,7 +75,7 @@
           padding-left: @spacingS;
           padding-right: @spacingS;
           align-items: center;
-          background-color: @purple4;
+          background-color: @purple3;
           border: @standardBlack;
           margin-left: @spacingS;
           margin-right: @spacingS;
@@ -66,7 +89,7 @@
           padding-left: @spacingS;
           padding-right: @spacingS;
           align-items: center;
-          background-color: @purple4;
+          background-color: @purple3;
           border-bottom-right-radius: @standardRadius;
           border-bottom-left-radius: @standardRadius;
           border: @standardBlack;
@@ -110,6 +133,7 @@
   .main-editor {
     flex-basis: 80%;
     margin: 0;
+    min-height: 80vh;
 
     @import "./docCreator.less";
     @import "./textEditor.less";

@@ -7,10 +7,16 @@ function SortableItem(props) {
   const style = { transform: CSS.Transform.toString(transform), transition };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <td
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="awkward-div"
+    >
       <span>{props.number}&nbsp;</span>
       <span>{props.name}</span>
-    </div>
+    </td>
   );
 }
 export default SortableItem;

@@ -10,19 +10,77 @@ button:hover {
   filter: brightness(150%);
 }
 
-.meta-info {
-  display: flex;
-  flex-direction: column;
+.meta-info,
+.doc-action-minimal {
   input {
-    padding: 2px;
     font-size: 12px;
-  }
+    padding: 2px;
+    width: 75%;
 
-  .meta-created,
-  .meta-updated {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    color: @secondaryColor;
+    @media screen and (min-width: 1075px) and (max-width: 1270px) {
+      font-size: 8px;
+      padding: 1px;
+    }
+
+    @media screen and (min-width: 769px) and (max-width: 1074px) {
+      font-size: 6px;
+      padding: 1px;
+    }
   }
+  p {
+    font-size: 12px;
+    @media screen and (min-width: 1075px) and (max-width: 1270px) {
+      font-size: 8px;
+    }
+
+    @media screen and (min-width: 769px) and (max-width: 1074px) {
+      font-size: 6px;
+    }
+  }
+}
+
+.id-input {
+  width: 10%;
+}
+
+.category-input {
+  border-radius: @standardRadius;
+  border: @standardBlack;
+}
+
+.warning {
+  background-color: @red;
+}
+
+.caution {
+  background-color: @orange;
+}
+
+.odd-spaced-input {
+  margin-left: 12%;
+}
+
+.select-input {
+  padding-top: 10%;
+  padding-bottom: 10%;
+}
+
+.tab {
+  background-color: unset;
+  border: unset;
+  border-radius: unset;
+  padding: 1%;
+  border-bottom: @standardWhite;
+  color: white;
+  font-weight: 900;
+}
+
+.active-tab {
+  background-color: unset;
+  border: unset;
+  border-radius: unset;
+  padding: 1%;
+  border-bottom: @heavyWhite;
+  color: white;
+  font-weight: 900;
 }

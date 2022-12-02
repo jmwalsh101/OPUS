@@ -1,0 +1,56 @@
+.account-container {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  padding: 2%;
+  border: @standardBlack;
+  box-shadow: @shadow;
+  background-color: @white;
+  border-radius: @standardRadius;
+
+  .header {
+    text-align: center;
+    border-bottom: @heavyBlack;
+  }
+
+  .account-details,
+  .account-facts,
+  .badges {
+    padding: 5%;
+
+    p {
+      text-align: center;
+    }
+
+    h3 {
+      text-align: center;
+      color: white;
+      background-color: @inkblack;
+      padding: 1%;
+    }
+
+    .account-details-container {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 5%;
+    }
+    .badges-container {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+
+      .badge {
+        max-height: 50%;
+        max-width: 50%;
+        justify-content: center;
+
+        img {
+          height: 10em;
+          width: 10em;
+        }
+      }
+    }
+  }
+}

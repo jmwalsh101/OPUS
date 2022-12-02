@@ -4,7 +4,7 @@ import "@testing-library/cypress/add-commands";
 
 describe("Register and Login", () => {
   it("should register", () => {
-    cy.visit("http://54.234.44.9:3000/register");
+    cy.visit("http://localhost:3000/register");
     cy.get("#username").should("exist").type("Cypress Test");
     cy.get("#email").should("exist").type("1@1.com");
     cy.get("#password").should("exist").type("1");
@@ -17,7 +17,6 @@ describe("Register and Login", () => {
 
   it("should log in", () => {
     cy.get("#username").should("exist").type("Cypress Test");
-    cy.get("#email").should("exist").type("1@1.com");
     cy.get("#password").should("exist").type("1");
 
     cy.get("button").click();
@@ -30,7 +29,7 @@ describe("Register and Login", () => {
     cy.get(".navbar-container").contains("Editor").click();
 
     cy.get("#name").should("exist").type("Cypress Text");
-    cy.get("#category").should("exist").select("volvo");
+    cy.get("#category").should("exist").select("Volvo");
 
     cy.get("#submit").click();
     cy.findByText("You must enter a name and a text.").should("exist");
@@ -46,7 +45,7 @@ describe("Register and Login", () => {
     cy.get(".navbar-container").contains("Manager").click();
 
     cy.get("#title").should("exist").type("Cypress Document");
-    cy.get("#category").should("exist").select("volvo");
+    cy.get("#category").should("exist").select("Volvo");
 
     cy.get("#save").click();
     cy.findByText("You must enter a title and select components.").should(
@@ -54,7 +53,8 @@ describe("Register and Login", () => {
     );
     cy.findByText("OK").click();
 
-    cy.findByText("Cypress Text").click();
+    cy.get("#cy-component-select").click();
+    cy.findByText("Cypress Text").siblings("button").click();
 
     cy.findByText("Order Components").click();
 
@@ -65,9 +65,8 @@ describe("Register and Login", () => {
 
   it("should select and delete a document", () => {
     cy.get("#cy-select").click();
-    cy.findByText("Cypress Document").siblings("button").click();
 
-    //cy.get("#title").contains("Cypress Document");
+    cy.findByText("Cypress Document").siblings("button").click();
 
     cy.get("#delete").click();
   });

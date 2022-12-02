@@ -11,6 +11,7 @@ import {
   documentCreatedDateContext,
   documentLastUpdatedContext,
   documentUpdaterContext,
+  documentCategoryContext,
 } from "../../contexts/DocumentContext";
 
 import BackendErrorModal from "../modals/BackendErrorModal";
@@ -30,6 +31,8 @@ function DCIndex() {
 
   const [backendErrorModal, setBackendErrorModal] = useState(false);
 
+  const [optionState, setOptionState] = useState("Volvo");
+
   useEffect(() => {
     fetch("/documents-load")
       .then((response) => response.json())
@@ -43,37 +46,41 @@ function DCIndex() {
 
   return (
     <>
-      <documentLastUpdatedContext.Provider
-        value={{ lastUpdated, setLastUpdated }}
-      >
-        <documentCreatedDateContext.Provider
-          value={{ createDate, setCreateDate }}
+      <documentCategoryContext.Provider value={{ optionState, setOptionState }}>
+        <documentLastUpdatedContext.Provider
+          value={{ lastUpdated, setLastUpdated }}
         >
-          <documentAuthorContext.Provider value={{ author, setAuthor }}>
-            <documentUpdaterContext.Provider value={{ updater, setUpdater }}>
-              <documentTitleContext.Provider value={{ docTitle, setDocTitle }}>
-                <usedComponentsContext.Provider
-                  value={{ usedComponents, setUsedComponents }}
+          <documentCreatedDateContext.Provider
+            value={{ createDate, setCreateDate }}
+          >
+            <documentAuthorContext.Provider value={{ author, setAuthor }}>
+              <documentUpdaterContext.Provider value={{ updater, setUpdater }}>
+                <documentTitleContext.Provider
+                  value={{ docTitle, setDocTitle }}
                 >
-                  <backendDocumentsContext.Provider
-                    value={{ documentsFromBackend, setDocumentsFromBackend }}
+                  <usedComponentsContext.Provider
+                    value={{ usedComponents, setUsedComponents }}
                   >
-                    <div className="main-container">
-                      <div className="sidebar">
-                        <Sidebar />
+                    <backendDocumentsContext.Provider
+                      value={{ documentsFromBackend, setDocumentsFromBackend }}
+                    >
+                      <div className="main-container">
+                        <div className="sidebar">
+                          <Sidebar />
+                        </div>
+                        <div className="main-editor">
+                          <DocCreator />
+                        </div>
+                        {backendErrorModal ? <BackendErrorModal /> : null}
                       </div>
-                      <div className="main-editor">
-                        <DocCreator />
-                      </div>
-                      {backendErrorModal ? <BackendErrorModal /> : null}
-                    </div>
-                  </backendDocumentsContext.Provider>
-                </usedComponentsContext.Provider>
-              </documentTitleContext.Provider>
-            </documentUpdaterContext.Provider>
-          </documentAuthorContext.Provider>
-        </documentCreatedDateContext.Provider>
-      </documentLastUpdatedContext.Provider>
+                    </backendDocumentsContext.Provider>
+                  </usedComponentsContext.Provider>
+                </documentTitleContext.Provider>
+              </documentUpdaterContext.Provider>
+            </documentAuthorContext.Provider>
+          </documentCreatedDateContext.Provider>
+        </documentLastUpdatedContext.Provider>
+      </documentCategoryContext.Provider>
     </>
   );
 }

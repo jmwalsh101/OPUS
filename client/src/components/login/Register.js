@@ -1,9 +1,10 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import bcrypt from "bcryptjs";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
 
 import { registrationSchema } from "../../validations/Registration";
+import ErrorModal from "../modals/ErrorModal";
 
 function Register() {
   const username = useRef();
@@ -11,6 +12,11 @@ function Register() {
   const password = useRef();
   const confirmPassword = useRef();
   const navigate = useNavigate();
+  const [validationError, setValidationError] = useState();
+  const [errorModal, setErrorModal] = useState(false);
+  const handleClose = () => setErrorModal(false);
+
+  console.log("VE", validationError);
 
   function register(e) {
     e.preventDefault();
@@ -28,8 +34,6 @@ function Register() {
       confirmPassword: registerConfirmPassword,
     };
 
-    console.log("cp2", formData);
-
     const accountDetails = [
       {
         username: registerUsername,
@@ -38,21 +42,15 @@ function Register() {
       },
     ];
 
-    // test to get errors -- CODE WORKS
-    /*
-    let answer = [];
     registrationSchema
       .validate(formData)
-      .then(function (valid) {
-        if (valid) {
-          answer = "works";
-        }
-      })
+      .then()
       .catch(function (err) {
+        let answer = [];
         answer = { ...err }.errors;
-        console.log("answer", answer);
+        setValidationError(answer);
+        setErrorModal(true);
       });
-      */
 
     // end of test
     fetch("/account-login")
@@ -72,7 +70,6 @@ function Register() {
             .isValid(formData)
             .then(function (valid, err) {
               if (valid) {
-                console.log("got to validation");
                 fetch("/account-register", {
                   method: "POST",
                   headers: { "content-type": "application/json" },
@@ -137,14 +134,25 @@ function Register() {
                 </tr>
               </tbody>
             </table>
-            <button type="submit" onClick={register}>
-              Submit
-            </button>
-            <p>
-              Already have an account? <a href="/login">Log In</a>
-            </p>
+            <div className="form-submit">
+              <button type="submit" onClick={register}>
+                Submit
+              </button>
+            </div>
+            <div className="form-submit">
+              <p>
+                Already have an account? <a href="/login">Log In</a>
+              </p>
+            </div>
           </div>
         </div>
+        {errorModal ? (
+          <ErrorModal
+            show={errorModal}
+            onClose={handleClose}
+            message={validationError}
+          />
+        ) : null}
       </div>
     </>
   );

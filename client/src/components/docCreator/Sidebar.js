@@ -12,6 +12,7 @@ import {
   documentCreatedDateContext,
   documentUpdaterContext,
   documentLastUpdatedContext,
+  documentCategoryContext,
 } from "../../contexts/DocumentContext";
 
 function Sidebar() {
@@ -32,10 +33,12 @@ function Sidebar() {
     documentLastUpdatedContext
   );
 
+  const { optionState, setOptionState } = useContext(documentCategoryContext);
+
   // categories
 
   const category1 = _.filter(documentsFromBackend, {
-    category: "volvo",
+    category: "Volvo",
   });
   const category2 = _.filter(documentsFromBackend, {
     category: "saab",
@@ -66,6 +69,8 @@ function Sidebar() {
     let docUpdater = selectedItem.updater;
     let docLastUpdated = selectedItem.lastUpdated;
     const componentIds = selectedItem.content;
+    const docCategory = selectedItem.category;
+    console.log("doc category", selectedItem);
 
     if (docUpdater === undefined || docUpdater === null) {
       docUpdater = "";
@@ -96,6 +101,7 @@ function Sidebar() {
         setCreateDate(docCreated);
         setUpdater(docUpdater);
         setLastUpdated(docLastUpdated);
+        setOptionState(docCategory);
       })
       // fail error modal here
       .catch((error) => console.log("ERROR"));
@@ -104,179 +110,201 @@ function Sidebar() {
   return (
     <>
       <div className="sidebar-categories">
-        <h3>Quick Access</h3>
-        <div
-          className="sidebar-category"
-          id="cy-select"
-          onClick={(e) => {
-            if (showCategory1 === false) {
-              setShowCategory1(true);
-            } else {
-              setShowCategory1(false);
-            }
-            e.currentTarget.classList.toggle("sidebar-category");
-            e.currentTarget.classList.toggle("sidebar-category-active");
-          }}
-        >
-          Volvo
+        <div className="sidebar-header">
+          <h3>Documents</h3>
         </div>
-        <div className="sidebar-items">
-          {showCategory1
-            ? category1.map(function (l, index) {
-                return (
-                  <>
-                    <div key={index} className="sidebar-item">
-                      <p>{l.title}</p>
-                      <p>{l.category}</p>
-                      <button
-                        onClick={handleSelect}
-                        title={l.title}
-                        author={l.author}
-                        content={l.content}
-                        createDate={l.created}
-                        updater={l.updater}
-                        lastUpdated={l.updated}
-                      >
-                        <FontAwesomeIcon
-                          icon={faArrowRightToBracket}
-                          style={{ pointerEvents: "none" }}
-                        />
-                      </button>
-                    </div>
-                  </>
-                );
-              })
-            : null}
-        </div>
+        {category1.length ? (
+          <>
+            <div
+              className="sidebar-category"
+              id="cy-select"
+              onClick={(e) => {
+                if (showCategory1 === false) {
+                  setShowCategory1(true);
+                } else {
+                  setShowCategory1(false);
+                }
+                e.currentTarget.classList.toggle("sidebar-category");
+                e.currentTarget.classList.toggle("sidebar-category-active");
+              }}
+            >
+              Volvo
+            </div>
+            <div className="sidebar-items">
+              {showCategory1
+                ? category1.map(function (l, index) {
+                    return (
+                      <>
+                        <div key={index} className="sidebar-item">
+                          <p>{l.title}</p>
+                          <p>{l.category}</p>
+                          <button
+                            onClick={handleSelect}
+                            title={l.title}
+                            author={l.author}
+                            content={l.content}
+                            createDate={l.created}
+                            updater={l.updater}
+                            lastUpdated={l.updated}
+                            category={l.category}
+                          >
+                            <FontAwesomeIcon
+                              icon={faArrowRightToBracket}
+                              style={{ pointerEvents: "none" }}
+                            />
+                          </button>
+                        </div>
+                      </>
+                    );
+                  })
+                : null}
+            </div>
+          </>
+        ) : null}
 
-        <div
-          className="sidebar-category"
-          onClick={(e) => {
-            if (showCategory2 === false) {
-              setShowCategory2(true);
-            } else {
-              setShowCategory2(false);
-            }
-            e.currentTarget.classList.toggle("sidebar-category");
-            e.currentTarget.classList.toggle("sidebar-category-active");
-          }}
-        >
-          Saab
-        </div>
-        <div className="sidebar-items">
-          {showCategory2
-            ? category2.map(function (l, index) {
-                return (
-                  <>
-                    <div key={index} className="sidebar-item">
-                      <p>{l.title}</p>
-                      <p>{l.category}</p>
-                      <button
-                        onClick={handleSelect}
-                        title={l.title}
-                        author={l.author}
-                        content={l.content}
-                        createDate={l.created}
-                        updater={l.updater}
-                        lastUpdated={l.updated}
-                      >
-                        <FontAwesomeIcon
-                          icon={faArrowRightToBracket}
-                          style={{ pointerEvents: "none" }}
-                        />
-                      </button>
-                    </div>
-                  </>
-                );
-              })
-            : null}
-        </div>
+        {category2.length ? (
+          <>
+            <div
+              className="sidebar-category"
+              onClick={(e) => {
+                if (showCategory2 === false) {
+                  setShowCategory2(true);
+                } else {
+                  setShowCategory2(false);
+                }
+                e.currentTarget.classList.toggle("sidebar-category");
+                e.currentTarget.classList.toggle("sidebar-category-active");
+              }}
+            >
+              Saab
+            </div>
+            <div className="sidebar-items">
+              {showCategory2
+                ? category2.map(function (l, index) {
+                    return (
+                      <>
+                        <div key={index} className="sidebar-item">
+                          <p>{l.title}</p>
+                          <p>{l.category}</p>
+                          <button
+                            onClick={handleSelect}
+                            title={l.title}
+                            author={l.author}
+                            content={l.content}
+                            createDate={l.created}
+                            updater={l.updater}
+                            lastUpdated={l.updated}
+                            category={l.category}
+                          >
+                            <FontAwesomeIcon
+                              icon={faArrowRightToBracket}
+                              style={{ pointerEvents: "none" }}
+                            />
+                          </button>
+                        </div>
+                      </>
+                    );
+                  })
+                : null}
+            </div>
+          </>
+        ) : null}
 
-        <div
-          className="sidebar-category"
-          onClick={(e) => {
-            if (showCategory3 === false) {
-              setShowCategory3(true);
-            } else {
-              setShowCategory3(false);
-            }
-            e.currentTarget.classList.toggle("sidebar-category");
-            e.currentTarget.classList.toggle("sidebar-category-active");
-          }}
-        >
-          Mercedes
-        </div>
-        <div className="sidebar-items">
-          {showCategory3
-            ? category3.map(function (l, index) {
-                return (
-                  <>
-                    <div key={index} className="sidebar-item">
-                      <p>{l.title}</p>
-                      <p>{l.category}</p>
-                      <button
-                        onClick={handleSelect}
-                        title={l.title}
-                        author={l.author}
-                        content={l.content}
-                        createDate={l.created}
-                        updater={l.updater}
-                        lastUpdated={l.updated}
-                      >
-                        <FontAwesomeIcon
-                          icon={faArrowRightToBracket}
-                          style={{ pointerEvents: "none" }}
-                        />
-                      </button>
-                    </div>
-                  </>
-                );
-              })
-            : null}
-        </div>
+        {category3.length ? (
+          <>
+            <div
+              className="sidebar-category"
+              onClick={(e) => {
+                if (showCategory3 === false) {
+                  setShowCategory3(true);
+                } else {
+                  setShowCategory3(false);
+                }
+                e.currentTarget.classList.toggle("sidebar-category");
+                e.currentTarget.classList.toggle("sidebar-category-active");
+              }}
+            >
+              Mercedes
+            </div>
+            <div className="sidebar-items">
+              {showCategory3
+                ? category3.map(function (l, index) {
+                    return (
+                      <>
+                        <div key={index} className="sidebar-item">
+                          <p>{l.title}</p>
+                          <p>{l.category}</p>
+                          <button
+                            onClick={handleSelect}
+                            title={l.title}
+                            author={l.author}
+                            content={l.content}
+                            createDate={l.created}
+                            updater={l.updater}
+                            lastUpdated={l.updated}
+                            category={l.category}
+                          >
+                            <FontAwesomeIcon
+                              icon={faArrowRightToBracket}
+                              style={{ pointerEvents: "none" }}
+                            />
+                          </button>
+                        </div>
+                      </>
+                    );
+                  })
+                : null}
+            </div>
+          </>
+        ) : null}
 
-        <div
-          className="sidebar-category"
-          onClick={(e) => {
-            if (showCategory4 === false) {
-              setShowCategory4(true);
-            } else {
-              setShowCategory4(false);
-            }
-            e.currentTarget.classList.toggle("sidebar-category");
-            e.currentTarget.classList.toggle("sidebar-category-active");
-          }}
-        >
-          Audi
-        </div>
-        <div className="sidebar-items">
-          {showCategory4
-            ? category4.map(function (l, index) {
-                return (
-                  <>
-                    <div key={index} className="sidebar-item">
-                      <p>{l.title}</p>
-                      <p>{l.category}</p>
-                      <button
-                        onClick={handleSelect}
-                        title={l.title}
-                        author={l.author}
-                        content={l.content}
-                        createDate={l.created}
-                        updater={l.updater}
-                        lastUpdated={l.updated}
-                      >
-                        <FontAwesomeIcon
-                          icon={faArrowRightToBracket}
-                          style={{ pointerEvents: "none" }}
-                        />
-                      </button>
-                    </div>
-                  </>
-                );
-              })
-            : null}
-        </div>
+        {category4.length ? (
+          <>
+            <div
+              className="sidebar-category"
+              onClick={(e) => {
+                if (showCategory4 === false) {
+                  setShowCategory4(true);
+                } else {
+                  setShowCategory4(false);
+                }
+                e.currentTarget.classList.toggle("sidebar-category");
+                e.currentTarget.classList.toggle("sidebar-category-active");
+              }}
+            >
+              Audi
+            </div>
+            <div className="sidebar-items">
+              {showCategory4
+                ? category4.map(function (l, index) {
+                    return (
+                      <>
+                        <div key={index} className="sidebar-item">
+                          <p>{l.title}</p>
+                          <p>{l.category}</p>
+                          <button
+                            onClick={handleSelect}
+                            title={l.title}
+                            author={l.author}
+                            content={l.content}
+                            createDate={l.created}
+                            updater={l.updater}
+                            lastUpdated={l.updated}
+                            category={l.category}
+                          >
+                            <FontAwesomeIcon
+                              icon={faArrowRightToBracket}
+                              style={{ pointerEvents: "none" }}
+                            />
+                          </button>
+                        </div>
+                      </>
+                    );
+                  })
+                : null}
+            </div>
+          </>
+        ) : null}
       </div>
     </>
   );

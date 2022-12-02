@@ -2,6 +2,7 @@ function MetaInfo(props) {
   return (
     <>
       <div className="meta-info">
+        <h3>Component Details</h3>
         <div className="meta-created">
           <span>
             <p>Author</p>
@@ -14,7 +15,7 @@ function MetaInfo(props) {
         </div>
         <div className="meta-updated">
           <span>
-            <p>Last Updated By</p>
+            <p>Updated By</p>
             <input type="text" readOnly="readonly" value={props.updater} />
           </span>
           <span>

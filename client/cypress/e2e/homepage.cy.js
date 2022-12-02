@@ -3,7 +3,7 @@
 
 describe("Home page", () => {
   it("home page renders correctly", () => {
-    cy.visit("http://54.234.44.9:3000/");
+    cy.visit("http://localhost:3000/");
     cy.get(".home-header").contains("OPUS");
     cy.get(".home-header2").contains("Write, Convert, Publish");
     cy.get(".home-header3").contains("Modularise and Customise");

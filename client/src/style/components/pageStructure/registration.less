@@ -1,7 +1,7 @@
 .register-container {
   display: flex;
   justify-content: center;
-  height: 93vh;
+  min-height: 93vh;
   background-color: @blue;
 
   .login-text {
@@ -30,12 +30,18 @@
       background-color: @white;
       padding: 10%;
       width: 40%;
-      height: 35vh;
+      min-height: 35vh;
       border-radius: @standardRadius;
       border: solid 5px #e09fb3;
 
       table {
         width: 60%;
+      }
+      .form-submit {
+        display: flex;
+        margin-top: @spacingS;
+        align-content: center;
+        justify-content: center;
       }
     }
   }

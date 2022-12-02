@@ -4,8 +4,14 @@
 import * as yup from "yup";
 
 export const registrationSchema = yup.object().shape({
-  username: yup.string().required(),
-  email: yup.string().email().required(),
+  username: yup
+    .string()
+    .min(5, "Your username must be at least 5 characters long.")
+    .required("You must enter a username."),
+  email: yup
+    .string()
+    .email("You must enter a valid email.")
+    .required("You must enter an email"),
   password: yup
     .string()
     .min(0)
@@ -19,6 +25,9 @@ export const registrationSchema = yup.object().shape({
     .required(),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref("password")], "Passwords don't match")
+    .oneOf(
+      [yup.ref("password")],
+      "Your password doesn't match the confirmation."
+    )
     .required(),
 });

@@ -7,7 +7,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background-image: linear-gradient(
       to bottom,
       #f5f6fc00 0%,
@@ -25,11 +25,18 @@
     font-family: @mainFamily;
     //color: @purpleDark;
     //-webkit-text-stroke: 10px @purpleLight;
+    @media screen and (min-width: 769px) and (max-width: 1024px) {
+      font-size: 150px;
+    }
   }
   p {
     font-size: 50px;
     margin: 0;
     font-family: @mainFamily;
+
+    @media screen and (min-width: 769px) and (max-width: 1024px) {
+      font-size: 42px;
+    }
   }
 }
 
