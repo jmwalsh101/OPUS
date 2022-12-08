@@ -4,7 +4,7 @@ import "@testing-library/cypress/add-commands";
 
 describe("Register and Login", () => {
   it("should register", () => {
-    cy.visit("http://localhost:3000/register");
+    cy.visit("http://54.234.44.9:3000/register");
     cy.get("#username").should("exist").type("Cypress Test");
     cy.get("#email").should("exist").type("1@1.com");
     cy.get("#password").should("exist").type("1");

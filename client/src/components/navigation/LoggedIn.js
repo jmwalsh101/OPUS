@@ -17,7 +17,7 @@ function LoggedIn(props) {
       <div className="navbar-container">
         <a
           className={` ${activePage === "home" ? "logo" : "logo"}`}
-          href="http://localhost:3000/"
+          href="http://54.234.44.9:3000/"
           onClick={() => sessionStorage.setItem("activePage", "home")}
         >
           <img src={Logo} height="20px" width="20px" />
@@ -28,7 +28,7 @@ function LoggedIn(props) {
             className={` ${
               activePage === "documents" ? "active-link" : "nav-link"
             }`}
-            href="http://localhost:3000/documents"
+            href="http://54.234.44.9:3000/documents"
             onClick={() => sessionStorage.setItem("activePage", "documents")}
           >
             Documents
@@ -37,7 +37,7 @@ function LoggedIn(props) {
             className={` ${
               activePage === "texts" ? "active-link" : "nav-link"
             }`}
-            href="http://localhost:3000/texts"
+            href="http://54.234.44.9:3000/texts"
             onClick={() => sessionStorage.setItem("activePage", "texts")}
           >
             Texts
@@ -46,7 +46,7 @@ function LoggedIn(props) {
             className={` ${
               activePage === "editor" ? "active-link" : "nav-link"
             }`}
-            href="http://localhost:3000/text-editor"
+            href="http://54.234.44.9:3000/text-editor"
             onClick={() => sessionStorage.setItem("activePage", "editor")}
           >
             Editor
@@ -55,7 +55,7 @@ function LoggedIn(props) {
             className={` ${
               activePage === "manager" ? "active-link" : "nav-link"
             }`}
-            href="http://localhost:3000/doc-creator"
+            href="http://54.234.44.9:3000/doc-creator"
             onClick={() => sessionStorage.setItem("activePage", "manager")}
           >
             Manager
@@ -69,7 +69,7 @@ function LoggedIn(props) {
             className={` ${
               activePage === "account" ? "active-link" : "nav-link"
             }`}
-            href="http://localhost:3000/account"
+            href="http://54.234.44.9:3000/account"
             onClick={() => sessionStorage.setItem("activePage", "account")}
           >
             <FontAwesomeIcon icon={faUser} />

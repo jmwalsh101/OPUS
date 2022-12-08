@@ -82,6 +82,10 @@
   height: 300px;
   width: 300px;
 }
+.home-background .home-header2 .example-image {
+  height: auto;
+  width: 400px;
+}
 @media screen and (min-width: 1271px) and (max-width: 1470px) {
   .home-background .home-header2 h2 {
     font-size: 50px;
@@ -97,6 +101,10 @@
     max-height: 250px;
     min-height: 250px;
   }
+  .home-background .home-header2 .example-image {
+    height: auto;
+    width: 300px;
+  }
 }
 @media screen and (min-width: 1075px) and (max-width: 1270px) {
   .home-background .home-header2 h2 {
@@ -110,8 +118,11 @@
   }
   .home-background .home-header2 img {
     max-width: 220px;
-    max-height: 220px;
-    min-height: 220px;
+    height: auto;
+  }
+  .home-background .home-header2 .example-image {
+    height: auto;
+    width: 250px;
   }
 }
 @media screen and (min-width: 769px) and (max-width: 1074px) {
@@ -127,6 +138,10 @@
   .home-background .home-header2 img {
     max-width: 180px;
     max-height: 180px;
+  }
+  .home-background .home-header2 .example-image {
+    height: auto;
+    width: 200px;
   }
 }
 .home-background .home-header3 {
@@ -1156,6 +1171,28 @@
 .modal-screen .modal .modal-content .modal-footer button {
   margin-right: 2%;
 }
+.home-container {
+  display: flex;
+}
+.home-container .left,
+.home-container .right {
+  flex-basis: 20%;
+  background-color: #fee296;
+}
+.home-container .centre {
+  flex-basis: 60%;
+  padding: 5%;
+  border-left: 1px solid #1d2731;
+  border-right: 1px solid #1d2731;
+}
+.home-container h1 {
+  color: #3d0c3d;
+  border-bottom: 2px solid #3d0c3d;
+}
+.home-container h2 {
+  color: #5f1c5f;
+  padding-top: 2%;
+}
 button,
 input {
   border-radius: 5px;
@@ -1301,7 +1338,6 @@ button {
   padding: 4px;
 }
 .search-result-container .component-search-card {
-  background-color: red;
   min-height: 6vh;
 }
 .text-box-container {
@@ -1388,24 +1424,6 @@ button {
   border-radius: 5px;
 }
 @media screen and (min-width: 1271px) and (max-width: 1470px) {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  button,
-  select,
-  input,
-  table,
-  div,
-  .navbar-container,
-  .logo,
-  .nav-link,
-  .active-link {
-    color: orange;
-  }
   button,
   select {
     padding: 10px;
@@ -1424,24 +1442,6 @@ button {
   }
 }
 @media screen and (min-width: 1075px) and (max-width: 1270px) {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  button,
-  select,
-  input,
-  table,
-  div,
-  .navbar-container,
-  .logo,
-  .nav-link,
-  .active-link {
-    color: red;
-  }
   button {
     padding: 7px;
     font-size: 10px;
@@ -1463,24 +1463,6 @@ button {
   }
 }
 @media screen and (min-width: 769px) and (max-width: 1074px) {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  button,
-  select,
-  input,
-  table,
-  div,
-  .navbar-container,
-  .logo,
-  .nav-link,
-  .active-link {
-    color: blue;
-  }
   button {
     padding: 4px;
     font-size: 8px;

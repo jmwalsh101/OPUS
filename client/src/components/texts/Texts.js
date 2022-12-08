@@ -31,7 +31,7 @@ function Texts() {
     category: "Intro",
   });
   const category2 = _.filter(componentsFromBackend, {
-    category: "saab",
+    category: "Main",
   });
   const category3 = _.filter(componentsFromBackend, {
     category: "mercedes",

@@ -20,6 +20,7 @@ import Register from "../login/Register";
 import Account from "../account/Account";
 import Texts from "../texts/Texts";
 import Documents from "../documents/Documents";
+import Example from "../example/Example";
 
 function Navigation() {
   const [backendComponentId, setBackendComponentId] = useState();
@@ -72,6 +73,7 @@ function Navigation() {
               <Route path="/account" element={<Account />} />
               <Route path="/texts" element={<Texts />} />
               <Route path="/documents" element={<Documents />} />
+              <Route path="/example" element={<Example />} />
             </Routes>
           </loginContext.Provider>
         </activePageContext.Provider>

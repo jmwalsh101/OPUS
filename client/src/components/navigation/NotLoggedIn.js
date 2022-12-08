@@ -11,7 +11,7 @@ function NotLoggedIn() {
       <div className="navbar-container">
         <a
           className={` ${activePage === "home" ? "logo" : "logo"}`}
-          href="http://localhost:3000/"
+          href="http://54.234.44.9:3000/"
           onClick={() => sessionStorage.setItem("activePage", "home")}
         >
           OPUS
@@ -21,10 +21,19 @@ function NotLoggedIn() {
             className={` ${
               activePage === "pricing" ? "active-link" : "nav-link"
             }`}
-            href="http://localhost:3000/pricing"
+            href="http://54.234.44.9:3000/pricing"
             onClick={() => sessionStorage.setItem("activePage", "pricing")}
           >
             Pricing
+          </a>
+          <a
+            className={` ${
+              activePage === "example" ? "active-link" : "nav-link"
+            }`}
+            href="http://54.234.44.9:3000/example"
+            onClick={() => sessionStorage.setItem("activePage", "example")}
+          >
+            Example
           </a>
         </div>
         <div className="navbar-right">
@@ -32,7 +41,7 @@ function NotLoggedIn() {
             className={` ${
               activePage === "login" ? "active-link" : "nav-link"
             }`}
-            href="http://localhost:3000/login"
+            href="http://54.234.44.9:3000/login"
             onClick={() => sessionStorage.setItem("activePage", "login")}
           >
             Login
@@ -41,7 +50,7 @@ function NotLoggedIn() {
             className={` ${
               activePage === "register" ? "active-link" : "nav-link"
             }`}
-            href="http://localhost:3000/register"
+            href="http://54.234.44.9:3000/register"
             onClick={() => sessionStorage.setItem("activePage", "register")}
           >
             Sign Up

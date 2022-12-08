@@ -2,6 +2,9 @@ import CodeExample from "../../images/codeExample.webp";
 import WebExample from "../../images/publish2.webp";
 import DocExample from "../../images/document.webp";
 import MissingPiece from "../../images/missing-piece2.webp";
+import Example1 from "../../images/example1.png";
+import Example2 from "../../images/example2.png";
+import Example3 from "../../images/example3.png";
 
 function Home() {
   return (
@@ -58,7 +61,38 @@ function Home() {
         </div>
         <div className="home-header2">
           <h2>Powerfully Simple</h2>
-          <p>Screenshots showing it done</p>
+          <div className="home-images">
+            <span>
+              <p>Write in rich text</p>
+              <img
+                src={Example1}
+                width="200"
+                height="156"
+                alt="example doc"
+                className="example-image"
+              />
+            </span>
+            <span>
+              <p>Build documents out of texts</p>
+              <img
+                src={Example2}
+                width="200"
+                height="156"
+                alt="code example"
+                className="example-image"
+              />
+            </span>
+            <span>
+              <p>Put it on the web!</p>
+              <img
+                src={Example3}
+                width="300"
+                height="160"
+                alt="publish example"
+                className="example-image"
+              />
+            </span>
+          </div>
         </div>
       </div>
       <div className="home-header5"></div>

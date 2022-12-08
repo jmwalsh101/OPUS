@@ -261,7 +261,7 @@ function DocCreator() {
     category: "Intro",
   });
   const category2 = _.filter(backendData, {
-    category: "saab",
+    category: "Main",
   });
   const category3 = _.filter(backendData, {
     category: "mercedes",
@@ -510,7 +510,7 @@ function DocCreator() {
                       value={optionState}
                     >
                       <option value="Intro">Intro</option>
-                      <option value="saab">Main</option>
+                      <option value="Main">Main</option>
                       <option value="mercedes">End</option>
                       <option value="audi">Supplementary</option>
                     </select>

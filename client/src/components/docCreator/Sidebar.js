@@ -35,7 +35,7 @@ function Sidebar() {
     category: "Intro",
   });
   const category2 = _.filter(documentsFromBackend, {
-    category: "saab",
+    category: "Main",
   });
   const category3 = _.filter(documentsFromBackend, {
     category: "mercedes",

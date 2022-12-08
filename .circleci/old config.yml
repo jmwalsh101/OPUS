@@ -11,7 +11,7 @@ orbs:
 # run our server and run Cypress tests
 #      - image: cypress/base:14.16.0
 #        environment:
-#          MONGO_URI: mongodb://$MONGO_USERNAME:$MONGO_PASSWORD@localhost:27017/?authSource=admin
+#          MONGO_URI: mongodb://$MONGO_USERNAME:$MONGO_PASSWORD@http://54.234.44.9:27017/?authSource=admin
 
 # image used to run Mongo in a separate container
 #      - image: mongo:4.4.5
@@ -28,7 +28,7 @@ workflows:
   #          working_directory: client
   #          install-command: npm i && cd .. && cd server && npm i
   #          start: npm run remote-test
-  #          wait-on: http://localhost:3000
+  #          wait-on: http://54.234.44.9:3000
   deploy_application:
     # jobs are used to perform actions i.e. run instructions
     jobs:

@@ -1,7 +1,9 @@
 function Footer() {
   return (
     <div className="footer">
-      <p>Go where you wanna go</p>
+      <p>OPUS</p>
+      <em>noun</em>
+      <p>A literary work or composition</p>
     </div>
   );
 }

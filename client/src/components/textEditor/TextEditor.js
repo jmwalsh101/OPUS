@@ -474,7 +474,7 @@ function TextEditor() {
                   value={optionState}
                 >
                   <option value="Intro">Intro</option>
-                  <option value="saab">Main</option>
+                  <option value="Main">Main</option>
                   <option value="mercedes">End</option>
                   <option value="audi">Supplementary</option>
                 </select>
