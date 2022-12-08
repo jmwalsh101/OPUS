@@ -29,7 +29,6 @@ function Navigation() {
 
   useEffect(() => {
     setActivePage(sessionStorage.getItem("activePage"));
-    console.log("effect ran");
   }, [backendComponentId]);
 
   const navigate = useNavigate();

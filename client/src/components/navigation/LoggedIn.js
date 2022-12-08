@@ -5,6 +5,7 @@ import { useContext } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import Logo from "../../images/web-icon2.png";
 
 function LoggedIn(props) {
   const { loggedIn, setLoggedIn } = useContext(loginContext);
@@ -19,7 +20,8 @@ function LoggedIn(props) {
           href="http://localhost:3000/"
           onClick={() => sessionStorage.setItem("activePage", "home")}
         >
-          OPUS
+          <img src={Logo} height="20px" width="20px" />
+          &nbsp;OPUS
         </a>
         <div className="navbar-left">
           <a

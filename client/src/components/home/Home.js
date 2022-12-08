@@ -11,7 +11,7 @@ function Home() {
         <p>A docs-as-code manager without the code</p>
       </div>
       <div className="home-background">
-        <div className="home-header2">
+        <div className="home-header2 second-home">
           <h2>Write, Convert, Publish</h2>
           <h3 className="home-info-text">
             OPUS's text editor is incredible for web writing. Clean. Simple.
@@ -21,23 +21,42 @@ function Home() {
           <div className="home-images">
             <span>
               <p>Just write...</p>
-              <img src={DocExample} width="300" height="262" />
+              <img
+                src={DocExample}
+                width="300"
+                height="262"
+                alt="example doc"
+              />
             </span>
             <span>
               <p>...convert to code...</p>
-              <img src={CodeExample} width="300" height="178" />
+              <img
+                src={CodeExample}
+                width="300"
+                height="178"
+                alt="code example"
+              />
             </span>
             <span>
               <p>...and publish!</p>
-              <img src={WebExample} width="300" height="229" />
+              <img
+                src={WebExample}
+                width="300"
+                height="229"
+                alt="publish example"
+              />
             </span>
           </div>
         </div>
-        <div className="home-header3">
+        <div className="home-header3 third-home">
           <h2>Modularise and Customise</h2>
-          <img src={MissingPiece} height="200" />
+          <h3 className="home-info-text">
+            Leverage OPUS's DITA architecture. Build documents out of texts and
+            update all documents at once by editing a single text.
+          </h3>
+          <img src={MissingPiece} height="200" alt="jigsaw puzzle" />
         </div>
-        <div className="home-header4">
+        <div className="home-header2">
           <h2>Powerfully Simple</h2>
           <p>Screenshots showing it done</p>
         </div>

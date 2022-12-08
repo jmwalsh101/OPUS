@@ -38,7 +38,6 @@ function TextEditor() {
   );
 
   const { optionState, setOptionState } = useContext(componentCategoryContext);
-  console.log("os", optionState);
 
   const { backendComponentId, setBackendComponentId } =
     useContext(componentIdContext);
@@ -47,7 +46,6 @@ function TextEditor() {
   const [name, setName] = useState("");
   const editor = React.useRef(null);
   const [componentId, setComponentId] = useState(1);
-  console.log("CI", componentId);
   const [componentSelected, setComponentSelected] = useState(false);
 
   const [errorModal, setErrorModal] = useState(false);
@@ -76,7 +74,6 @@ function TextEditor() {
   function handleCategory(e) {
     e.preventDefault();
     setCategory(e.target.value);
-    console.log("os target", e.target.value);
     setOptionState(e.target.value);
   }
 
@@ -152,7 +149,7 @@ function TextEditor() {
           setLastUpdated("");
           setCategory("");
           setComponentSelected(false);
-          setOptionState("Volvo");
+          setOptionState("Intro");
         }
         //else for modal
       })
@@ -213,7 +210,6 @@ function TextEditor() {
             }
 
             setComponentSelected(true);
-            console.log("1A", backendComponentId);
             setComponentId(backendComponentId);
             setName(selectedName);
             setAuthor(selectedAuthor);
@@ -248,7 +244,6 @@ function TextEditor() {
         }
 
         setComponentSelected(true);
-        console.log("1B", backendComponentId);
         setComponentId(backendComponentId);
         setName(selectedName);
         setAuthor(selectedAuthor);
@@ -270,12 +265,11 @@ function TextEditor() {
       fetch("/textId-load")
         .then((response) => response.json())
         .then((data) => {
-          console.log("id call", data[0].idCount);
           setComponentId(data[0].idCount + 1);
         })
         .catch((error) => console.log("ERROR"));
     }
-  }, [name]);
+  }, [componentSelected]);
 
   function focusEditor() {
     editor.current.focus();
@@ -292,13 +286,14 @@ function TextEditor() {
     setLastUpdated("");
     setCategory("");
     setBackendComponentId();
-    setOptionState("Volvo");
+    setOptionState("Intro");
   }
 
   function handleSaveName(e) {
+    console.log("target", name);
     e.preventDefault();
-    setName(e.target.value);
     setComponentSelected(false);
+    setName(e.target.value);
   }
 
   function handleSubmit(e) {
@@ -350,7 +345,7 @@ function TextEditor() {
             setLastUpdated("");
             setCategory("");
             setComponentSelected(false);
-            setOptionState("Volvo");
+            setOptionState("Intro");
           } else {
             setShowLoading(false);
           }
@@ -496,11 +491,10 @@ function TextEditor() {
                   className="category-input"
                   value={optionState}
                 >
-                  <option value=""></option>
-                  <option value="Volvo">Volvo</option>
-                  <option value="saab">Saab</option>
-                  <option value="mercedes">Mercedes</option>
-                  <option value="audi">Audi</option>
+                  <option value="Intro">Intro</option>
+                  <option value="saab">Main</option>
+                  <option value="mercedes">End</option>
+                  <option value="audi">Supplementary</option>
                 </select>
               </span>
               <span className="component-action">

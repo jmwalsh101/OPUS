@@ -7,7 +7,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 93vh;
   background-image: linear-gradient(
       to bottom,
       #f5f6fc00 0%,
@@ -25,17 +25,40 @@
     font-family: @mainFamily;
     //color: @purpleDark;
     //-webkit-text-stroke: 10px @purpleLight;
-    @media screen and (min-width: 769px) and (max-width: 1024px) {
-      font-size: 150px;
-    }
   }
   p {
     font-size: 50px;
     margin: 0;
     font-family: @mainFamily;
+  }
 
-    @media screen and (min-width: 769px) and (max-width: 1024px) {
+  @media screen and (min-width: 1271px) and (max-width: 1470px) {
+    h1 {
+      font-size: 180px;
+    }
+
+    p {
+      font-size: 47px;
+    }
+  }
+
+  @media screen and (min-width: 1075px) and (max-width: 1270px) {
+    h1 {
+      font-size: 150px;
+    }
+
+    p {
       font-size: 42px;
+    }
+  }
+
+  @media screen and (min-width: 769px) and (max-width: 1074px) {
+    h1 {
+      font-size: 125px;
+    }
+
+    p {
+      font-size: 34px;
     }
   }
 }
@@ -51,12 +74,11 @@
   );
 
   .home-header2 {
-    padding-top: 8%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 400px;
+    height: 50vh;
     color: @white;
     text-align: center;
 
@@ -86,21 +108,85 @@
       font-family: @mainFamily;
       font-weight: 800;
     }
+
+    img {
+      height: 300px;
+      width: 300px;
+    }
+
+    @media screen and (min-width: 1271px) and (max-width: 1470px) {
+      h2 {
+        font-size: 50px;
+      }
+
+      h3 {
+        font-size: 17px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+
+      img {
+        max-width: 250px;
+        max-height: 250px;
+        min-height: 250px;
+      }
+    }
+
+    @media screen and (min-width: 1075px) and (max-width: 1270px) {
+      h2 {
+        font-size: 45px;
+      }
+
+      h3 {
+        font-size: 15px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+      img {
+        max-width: 220px;
+        max-height: 220px;
+        min-height: 220px;
+      }
+    }
+
+    @media screen and (min-width: 769px) and (max-width: 1074px) {
+      h2 {
+        font-size: 45px;
+      }
+
+      h3 {
+        font-size: 14px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+      img {
+        max-width: 180px;
+        max-height: 180px;
+      }
+    }
   }
 
   .home-header3 {
-    padding-top: 10%;
+    padding-top: 15%;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 400px;
+    height: 45vh;
     color: @white;
 
     h2 {
-      font-size: 65px;
+      font-size: 60px;
       font-family: @mainFamily;
+      padding: 0;
+      margin: 0;
     }
 
     .home-images {
@@ -108,13 +194,93 @@
       justify-content: space-around;
       width: 100%;
     }
+
+    .home-info-text {
+      width: 50%;
+    }
+
+    @media screen and (min-width: 1271px) and (max-width: 1470px) {
+      h2 {
+        font-size: 50px;
+      }
+
+      h3 {
+        font-size: 17px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+    }
+
+    @media screen and (min-width: 1075px) and (max-width: 1270px) {
+      h2 {
+        font-size: 45px;
+      }
+
+      h3 {
+        font-size: 15px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+    }
+    @media screen and (min-width: 769px) and (max-width: 1074px) {
+      h2 {
+        font-size: 45px;
+      }
+
+      h3 {
+        font-size: 14px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+    }
   }
+
   .home-header4 {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 400px;
+    height: 45vh;
+
+    @media screen and (min-width: 1271px) and (max-width: 1470px) {
+      h2 {
+        font-size: 50px;
+      }
+
+      h3 {
+        font-size: 17px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+    }
+
+    @media screen and (min-width: 1075px) and (max-width: 1270px) {
+      h2 {
+        font-size: 45px;
+      }
+
+      h3 {
+        font-size: 15px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+  .second-home {
+    padding-top: 3%;
+  }
+  .third-home {
+    padding-top: 4%;
   }
 }
 
@@ -123,7 +289,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 900px;
+  height: 90vh;
   background-color: #e09fb3;
   background-image: linear-gradient(
       to bottom,

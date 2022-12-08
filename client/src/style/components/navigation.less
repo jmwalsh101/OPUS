@@ -8,11 +8,13 @@
   background-color: @inkblack;
   color: @white;
   align-content: center;
+  border-bottom: 2px solid @orange2;
 
   .logo {
+    display: flex;
     padding: 4px;
     color: @purpleDark;
-    -webkit-text-stroke: 1px @purpleLight;
+    -webkit-text-stroke: 0.5px @orange2;
     font-weight: 900;
     font-size: 24px;
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
@@ -22,6 +24,7 @@
     width: 9%;
     margin-left: 3%;
     margin-right: 4%;
+    align-items: center;
 
     @media screen and (min-width: 1075px) and (max-width: 1270px) {
       letter-spacing: 3px;

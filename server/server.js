@@ -56,7 +56,6 @@ app.patch("/account-update", async (req, res) => {
       },
       { $set: { email: parcel[0].email, password: parcel[0].password } }
     );
-    console.log("updated account", updatedAccount);
     res.json(updatedAccount);
   } catch (err) {
     res.json({ message: err });
@@ -65,13 +64,11 @@ app.patch("/account-update", async (req, res) => {
 
 app.post("/account-delete", async (req, res) => {
   const { parcel } = req.body;
-  console.log("parcel", parcel);
 
   try {
     const deleteAccount = await Account.deleteOne({
       username: parcel,
     });
-    console.log(deleteAccount);
     res.json(deleteAccount);
   } catch (err) {
     res.json({ message: err });
@@ -102,7 +99,6 @@ app.post("/component-delete", async (req, res) => {
       },
       { $pull: { content: req.body.componentId } }
     );
-    console.log(documentComponents);
     res.json(deleteComponent);
   } catch (err) {
     res.json({ message: err });
@@ -113,7 +109,6 @@ app.post("/component-new", async (req, res) => {
   const { parcel } = req.body;
   try {
     const idCount = await TextId.find();
-    console.log("id count", idCount[0].idCount);
     await TextId.updateOne(
       { name: "ID Count" },
       {

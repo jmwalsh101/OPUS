@@ -2,7 +2,7 @@ function MetaInfo(props) {
   return (
     <>
       <div className="meta-info">
-        <h3>Component Details</h3>
+        <h3>Text Details</h3>
         <div className="meta-created">
           <span>
             <p>Author</p>

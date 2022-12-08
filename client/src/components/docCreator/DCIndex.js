@@ -31,7 +31,7 @@ function DCIndex() {
 
   const [backendErrorModal, setBackendErrorModal] = useState(false);
 
-  const [optionState, setOptionState] = useState("Volvo");
+  const [optionState, setOptionState] = useState("Intro");
 
   useEffect(() => {
     fetch("/documents-load")

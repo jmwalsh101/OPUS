@@ -6,8 +6,6 @@ function NotLoggedIn() {
   const { loggedIn, setLoggedIn } = useContext(loginContext);
   const { activePage, setActivePage } = useContext(activePageContext);
 
-  console.log(activePage);
-
   return (
     <>
       <div className="navbar-container">

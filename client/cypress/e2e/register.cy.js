@@ -29,7 +29,7 @@ describe("Register and Login", () => {
     cy.get(".navbar-container").contains("Editor").click();
 
     cy.get("#name").should("exist").type("Cypress Text");
-    cy.get("#category").should("exist").select("Volvo");
+    cy.get("#category").should("exist").select("Intro");
 
     cy.get("#submit").click();
     cy.findByText("You must enter a name and a text.").should("exist");
@@ -45,7 +45,7 @@ describe("Register and Login", () => {
     cy.get(".navbar-container").contains("Manager").click();
 
     cy.get("#title").should("exist").type("Cypress Document");
-    cy.get("#category").should("exist").select("Volvo");
+    cy.get("#category").should("exist").select("Intro");
 
     cy.get("#save").click();
     cy.findByText("You must enter a title and select components.").should(

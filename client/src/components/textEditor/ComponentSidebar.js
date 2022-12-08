@@ -1,9 +1,6 @@
 import { useState, useContext } from "react";
 import _ from "lodash";
 
-import LoadingModal from "../modals/LoadingModal";
-import SuccessModal from "../modals/SuccessModal";
-
 import {
   backendComponentsContext,
   componentIdContext,
@@ -13,18 +10,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 
 function ComponenetSidebar() {
-  const { componentsFromBackend, setComponentsFromBackend } = useContext(
-    backendComponentsContext
-  );
+  const { componentsFromBackend } = useContext(backendComponentsContext);
 
-  const { backendComponentId, setBackendComponentId } =
-    useContext(componentIdContext);
-
-  const [loadingModal, setShowLoading] = useState(false);
-  const [successModal, showSuccessModal] = useState(false);
+  const { setBackendComponentId } = useContext(componentIdContext);
 
   const category1 = _.filter(componentsFromBackend, {
-    category: "Volvo",
+    category: "Intro",
   });
   const category2 = _.filter(componentsFromBackend, {
     category: "saab",
@@ -50,7 +41,7 @@ function ComponenetSidebar() {
     <>
       <div className="sidebar-categories">
         <div className="sidebar-header">
-          <h3>Components</h3>
+          <h3>Texts</h3>
         </div>
         {category1.length ? (
           <>
@@ -67,7 +58,7 @@ function ComponenetSidebar() {
                 e.currentTarget.classList.toggle("sidebar-category-active");
               }}
             >
-              Volvo
+              Intro
             </div>
             <div className="sidebar-items">
               {showCategory1
@@ -106,7 +97,7 @@ function ComponenetSidebar() {
                 e.currentTarget.classList.toggle("sidebar-category-active");
               }}
             >
-              Saab
+              Main
             </div>
             <div className="sidebar-items">
               {showCategory2
@@ -145,7 +136,7 @@ function ComponenetSidebar() {
                 e.currentTarget.classList.toggle("sidebar-category-active");
               }}
             >
-              Mercedes
+              End
             </div>
             <div className="sidebar-items">
               {showCategory3
@@ -184,7 +175,7 @@ function ComponenetSidebar() {
                 e.currentTarget.classList.toggle("sidebar-category-active");
               }}
             >
-              Audi
+              Supplementary
             </div>
             <div className="sidebar-items">
               {showCategory4
@@ -208,14 +199,6 @@ function ComponenetSidebar() {
             </div>
           </>
         ) : null}
-      </div>
-      <div>
-        {loadingModal ? (
-          <>
-            <LoadingModal />
-          </>
-        ) : null}
-        {successModal ? <SuccessModal message="Component deleted!" /> : null}
       </div>
     </>
   );

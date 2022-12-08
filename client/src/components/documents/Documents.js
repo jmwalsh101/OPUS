@@ -129,7 +129,6 @@ function Documents() {
     e.preventDefault();
     let item = Object.values({ ...e.target });
     let selectedItem = item[1];
-    console.log("SI", selectedItem);
 
     const title = selectedItem.title;
     const docAuthor = selectedItem.author;
@@ -221,40 +220,44 @@ function Documents() {
 
     setLastUpdated(lastUpdatedResult);
     setRecentlyCreated(lastCreated);
-  }, [documentsFromBackend]);
+  }, [allDocuments, createdDocuments, documentsFromBackend]);
 
   var documentsView = selectedView ? (
     <table>
-      {recentlyCreated.map(function (k, index) {
-        if (index < 5) {
-          return (
-            <tr key={index}>
-              <td>
-                <h4>{k.title}</h4>
-              </td>
-              <td>
-                <p>{k.author}</p>
-              </td>
-              <td>
-                <p>{k.created}</p>
-              </td>
-              <td>
-                <button
-                  title={k.title}
-                  author={k.author}
-                  content={k.content}
-                  createDate={k.created}
-                  updater={k.updater}
-                  lastUpdated={k.updated}
-                  onClick={handleSelect}
-                >
-                  View
-                </button>
-              </td>
-            </tr>
-          );
-        }
-      })}
+      <tbody>
+        {recentlyCreated.map(function (k, index) {
+          if (index < 5) {
+            return (
+              <tr key={index}>
+                <td>
+                  <h4>{k.title}</h4>
+                </td>
+                <td>
+                  <p>{k.author}</p>
+                </td>
+                <td>
+                  <p>{k.created}</p>
+                </td>
+                <td>
+                  <button
+                    title={k.title}
+                    author={k.author}
+                    content={k.content}
+                    createDate={k.created}
+                    updater={k.updater}
+                    lastUpdated={k.updated}
+                    onClick={handleSelect}
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+            );
+          } else {
+            return null;
+          }
+        })}
+      </tbody>
     </table>
   ) : (
     <div>
@@ -286,6 +289,8 @@ function Documents() {
               </td>
             </tr>
           );
+        } else {
+          return null;
         }
       })}
     </div>
@@ -304,7 +309,7 @@ function Documents() {
   }
 
   const category1 = _.filter(documentsFromBackend, {
-    category: "Volvo",
+    category: "Intro",
   });
   const category2 = _.filter(documentsFromBackend, {
     category: "saab",
@@ -344,7 +349,7 @@ function Documents() {
                     e.currentTarget.classList.toggle("sidebar-category-active");
                   }}
                 >
-                  Volvo
+                  Intro
                 </div>
                 <div className="sidebar-items">
                   {showCategory1
@@ -391,7 +396,7 @@ function Documents() {
                     e.currentTarget.classList.toggle("sidebar-category-active");
                   }}
                 >
-                  Saab
+                  Main
                 </div>
                 <div className="sidebar-items">
                   {showCategory2
@@ -438,7 +443,7 @@ function Documents() {
                     e.currentTarget.classList.toggle("sidebar-category-active");
                   }}
                 >
-                  Mercedes
+                  End
                 </div>
                 <div className="sidebar-items">
                   {showCategory3
@@ -485,7 +490,7 @@ function Documents() {
                     e.currentTarget.classList.toggle("sidebar-category-active");
                   }}
                 >
-                  Audi
+                  Supplementary
                 </div>
                 <div className="sidebar-items">
                   {showCategory4

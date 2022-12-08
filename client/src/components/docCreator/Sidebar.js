@@ -16,29 +16,23 @@ import {
 } from "../../contexts/DocumentContext";
 
 function Sidebar() {
-  const { documentsFromBackend, setDocumentsFromBackend } = useContext(
-    backendDocumentsContext
-  );
+  const { documentsFromBackend } = useContext(backendDocumentsContext);
 
-  const { usedComponents, setUsedComponents } = useContext(
-    usedComponentsContext
-  );
+  const { setUsedComponents } = useContext(usedComponentsContext);
 
-  const { docTitle, setDocTitle } = useContext(documentTitleContext);
+  const { setDocTitle } = useContext(documentTitleContext);
 
-  const { author, setAuthor } = useContext(documentAuthorContext);
-  const { createDate, setCreateDate } = useContext(documentCreatedDateContext);
-  const { updater, setUpdater } = useContext(documentUpdaterContext);
-  const { lastUpdated, setLastUpdated } = useContext(
-    documentLastUpdatedContext
-  );
+  const { setAuthor } = useContext(documentAuthorContext);
+  const { setCreateDate } = useContext(documentCreatedDateContext);
+  const { setUpdater } = useContext(documentUpdaterContext);
+  const { setLastUpdated } = useContext(documentLastUpdatedContext);
 
-  const { optionState, setOptionState } = useContext(documentCategoryContext);
+  const { setOptionState } = useContext(documentCategoryContext);
 
   // categories
 
   const category1 = _.filter(documentsFromBackend, {
-    category: "Volvo",
+    category: "Intro",
   });
   const category2 = _.filter(documentsFromBackend, {
     category: "saab",
@@ -59,10 +53,8 @@ function Sidebar() {
     setLastUpdated();
     setUpdater();
     e.preventDefault();
-    console.log("target", Object.values({ ...e.target }));
     let item = Object.values({ ...e.target });
     let selectedItem = item[1];
-    console.log("target", selectedItem.lastUpdated);
     const title = selectedItem.title;
     const docAuthor = selectedItem.author;
     const docCreated = selectedItem.createDate;
@@ -70,7 +62,6 @@ function Sidebar() {
     let docLastUpdated = selectedItem.lastUpdated;
     const componentIds = selectedItem.content;
     const docCategory = selectedItem.category;
-    console.log("doc category", selectedItem);
 
     if (docUpdater === undefined || docUpdater === null) {
       docUpdater = "";
@@ -128,7 +119,7 @@ function Sidebar() {
                 e.currentTarget.classList.toggle("sidebar-category-active");
               }}
             >
-              Volvo
+              Intro
             </div>
             <div className="sidebar-items">
               {showCategory1
@@ -176,7 +167,7 @@ function Sidebar() {
                 e.currentTarget.classList.toggle("sidebar-category-active");
               }}
             >
-              Saab
+              Main
             </div>
             <div className="sidebar-items">
               {showCategory2
@@ -224,7 +215,7 @@ function Sidebar() {
                 e.currentTarget.classList.toggle("sidebar-category-active");
               }}
             >
-              Mercedes
+              End
             </div>
             <div className="sidebar-items">
               {showCategory3
@@ -272,7 +263,7 @@ function Sidebar() {
                 e.currentTarget.classList.toggle("sidebar-category-active");
               }}
             >
-              Audi
+              Supplementary
             </div>
             <div className="sidebar-items">
               {showCategory4

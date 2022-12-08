@@ -10,11 +10,9 @@ import {
 
 function Index() {
   const [componentsFromBackend, setComponentsFromBackend] = useState([]);
-  const { backendComponentId, setBackendComponentId } =
-    useContext(componentIdContext);
+  const { backendComponentId } = useContext(componentIdContext);
 
-  const [optionState, setOptionState] = useState("Volvo");
-  console.log("index os", optionState);
+  const [optionState, setOptionState] = useState("Intro");
 
   useEffect(() => {
     fetch("/component-load")

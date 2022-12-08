@@ -51,9 +51,7 @@ function DocCreator() {
 
   const { docTitle, setDocTitle } = useContext(documentTitleContext);
 
-  const { documentsFromBackend, setDocumentsFromBackend } = useContext(
-    backendDocumentsContext
-  );
+  const { documentsFromBackend } = useContext(backendDocumentsContext);
 
   const { author, setAuthor } = useContext(documentAuthorContext);
   const { createDate, setCreateDate } = useContext(documentCreatedDateContext);
@@ -84,7 +82,6 @@ function DocCreator() {
       updater: JSON.parse(sessionStorage.getItem("username")).registerUsername,
       updated: timestamp,
     };
-    console.log("doc", newDocument);
 
     fetch("/document-update", {
       method: "POST",
@@ -194,7 +191,6 @@ function DocCreator() {
 
   function handleAdd(e) {
     e.preventDefault();
-    console.log(e.target.value);
     const item = e.target.value.split(",");
     setUsedComponents((current) => [
       ...current,
@@ -262,7 +258,7 @@ function DocCreator() {
 
   //
   const category1 = _.filter(backendData, {
-    category: "Volvo",
+    category: "Intro",
   });
   const category2 = _.filter(backendData, {
     category: "saab",
@@ -298,7 +294,7 @@ function DocCreator() {
               e.currentTarget.classList.toggle("component-category-active");
             }}
           >
-            Volvo
+            Intro
           </div>
           <div className="component-items">
             {showCategory1
@@ -342,7 +338,7 @@ function DocCreator() {
               }
             }}
           >
-            Saab
+            Main
           </div>
           <div className="component-items">
             {showCategory2
@@ -385,7 +381,7 @@ function DocCreator() {
               }
             }}
           >
-            Mercedes
+            End
           </div>
           <div className="component-items">
             {showCategory3
@@ -426,7 +422,7 @@ function DocCreator() {
               e.currentTarget.classList.toggle("component-category-active");
             }}
           >
-            Audi
+            Supplementary
           </div>
           <div className="component-items">
             {showCategory4
@@ -460,27 +456,29 @@ function DocCreator() {
       items={usedComponents}
     >
       <table>
-        {usedComponents.map(function (l, index) {
-          return (
-            <tr className="doc-component">
-              <SortableItem
-                name={l.name}
-                key={index}
-                id={index}
-                number={index + 1}
-              />
-              <td>
-                <button
-                  onClick={handleDelete}
-                  value={index}
-                  className="warning"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          );
-        })}
+        <tbody>
+          {usedComponents.map(function (l, index) {
+            return (
+              <tr className="doc-component">
+                <SortableItem
+                  name={l.name}
+                  key={index}
+                  id={index}
+                  number={index + 1}
+                />
+                <td>
+                  <button
+                    onClick={handleDelete}
+                    value={index}
+                    className="warning"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
       </table>
     </SortableContext>
   );
@@ -511,11 +509,10 @@ function DocCreator() {
                       className="category-input select-input"
                       value={optionState}
                     >
-                      <option value=""></option>
-                      <option value="Volvo">Volvo</option>
-                      <option value="saab">Saab</option>
-                      <option value="mercedes">Mercedes</option>
-                      <option value="audi">Audi</option>
+                      <option value="Intro">Intro</option>
+                      <option value="saab">Main</option>
+                      <option value="mercedes">End</option>
+                      <option value="audi">Supplementary</option>
                     </select>
                   </span>
                   <div className="doc-action-minimal-container">
@@ -598,7 +595,7 @@ function DocCreator() {
                       activeTab === "Select Components" ? "active-tab" : "tab"
                     }`}
                   >
-                    Select Components
+                    Select Texts
                   </button>
                   &nbsp;&nbsp;
                   <button
@@ -607,7 +604,7 @@ function DocCreator() {
                       activeTab === "Order Components" ? "active-tab" : "tab"
                     }`}
                   >
-                    Order Components
+                    Order Texts
                   </button>
                 </div>
                 <div className="doc-components">{docComponents}</div>

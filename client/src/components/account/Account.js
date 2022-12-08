@@ -13,7 +13,7 @@ import { registrationSchema } from "../../validations/Registration";
 import { loginContext } from "../../contexts/LoginContext";
 
 function Account() {
-  const { loggedIn, setLoggedIn } = useContext(loginContext);
+  const { setLoggedIn } = useContext(loginContext);
 
   const accountName = JSON.parse(
     sessionStorage.getItem("username")
@@ -87,7 +87,6 @@ function Account() {
       },
     ];
 
-    console.log("ran to schema");
     registrationSchema
       .isValid(formData)
       .then(function (valid, err) {
@@ -141,7 +140,7 @@ function Account() {
           })
         );
       });
-  }, []);
+  }, [accountName]);
 
   useEffect(() => {
     fetch("/account-login")
@@ -160,46 +159,50 @@ function Account() {
     <div className="main-container">
       <div className="account-container">
         <div className="header">
-          <h2>{accountName}'s' Account</h2>
+          <h2>{accountName}'s Account</h2>
         </div>
         <div className="account-details">
           <h3>Details</h3>
           <div className="account-details-container">
             <div className="existing-account details">
               <table>
-                <tr>
-                  <td>Username:</td>
-                  <td>{accountName}</td>
-                </tr>
-                <tr>
-                  <td>Email:</td>
-                  <td>{accountDetails.email}</td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td>Username:</td>
+                    <td>{accountName}</td>
+                  </tr>
+                  <tr>
+                    <td>Email:</td>
+                    <td>{accountDetails.email}</td>
+                  </tr>
+                </tbody>
               </table>
               <button onClick={handleDelete}>Delete Account</button>
             </div>
             <div className="change-account details">
               <table>
-                <tr>
-                  <td>Username:</td>
-                  <td>{accountName}</td>
-                </tr>
-                <tr>
-                  <td>Email:</td>
-                  <td>
-                    <input type="text" ref={email} />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Password:</td>
-                  <input type="text" ref={password} />
-                </tr>
-                <tr>
-                  <td>Confirm Password:</td>
-                  <td>
-                    <input type="text" ref={confirmPassword} />
-                  </td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td>Username:</td>
+                    <td>{accountName}</td>
+                  </tr>
+                  <tr>
+                    <td>Email:</td>
+                    <td>
+                      <input type="text" ref={email} />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Password:</td>
+                    <input type="text" ref={password} />
+                  </tr>
+                  <tr>
+                    <td>Confirm Password:</td>
+                    <td>
+                      <input type="text" ref={confirmPassword} />
+                    </td>
+                  </tr>
+                </tbody>
               </table>
               <button onClick={updateAccount}>Change Details</button>
             </div>
@@ -210,24 +213,28 @@ function Account() {
           <h3>Statistics</h3>
           <div className="account-details-container">
             <table>
-              <tr>
-                <td>Texts Created:</td>
-                <td>{userCreatedTexts ? userCreatedTexts.length : "0"}</td>
-              </tr>
-              <tr>
-                <td>Texts Updated:</td>
-                <td>{userTextsUpdated ? userTextsUpdated.length : "0"}</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>Texts Created:</td>
+                  <td>{userCreatedTexts ? userCreatedTexts.length : "0"}</td>
+                </tr>
+                <tr>
+                  <td>Texts Updated:</td>
+                  <td>{userTextsUpdated ? userTextsUpdated.length : "0"}</td>
+                </tr>
+              </tbody>
             </table>
             <table>
-              <tr>
-                <td>Documents Created:</td>
-                <td>{userCreatedDocs ? userCreatedDocs.length : "0"}</td>
-              </tr>
-              <tr>
-                <td>Documents Updated:</td>
-                <td>{userDocsUpdated ? userDocsUpdated.length : "0"}</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>Documents Created:</td>
+                  <td>{userCreatedDocs ? userCreatedDocs.length : "0"}</td>
+                </tr>
+                <tr>
+                  <td>Documents Updated:</td>
+                  <td>{userDocsUpdated ? userDocsUpdated.length : "0"}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
@@ -237,14 +244,16 @@ function Account() {
             <span className="badge">
               {userCreatedTexts ? (
                 <>
-                  <img src={TextBadge} /> <p>You created a text!</p>
+                  <img src={TextBadge} alt="typewriter badge" />
+                  <p>You created a text!</p>
                 </>
               ) : null}
             </span>
             <span className="badge">
               {userCreatedDocs ? (
                 <>
-                  <img src={DocBadge} /> <p>You created a document!</p>
+                  <img src={DocBadge} alt="document badge" />
+                  <p>You created a document!</p>
                 </>
               ) : null}
             </span>

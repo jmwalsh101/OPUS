@@ -8,8 +8,7 @@ import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { componentIdContext } from "../../contexts/ComponentContext";
 
 function Texts() {
-  const { backendComponentId, setBackendComponentId } =
-    useContext(componentIdContext);
+  const { setBackendComponentId } = useContext(componentIdContext);
 
   const [componentsFromBackend, setComponentsFromBackend] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,7 +28,7 @@ function Texts() {
   // sidebar categories
 
   const category1 = _.filter(componentsFromBackend, {
-    category: "Volvo",
+    category: "Intro",
   });
   const category2 = _.filter(componentsFromBackend, {
     category: "saab",
@@ -72,7 +71,7 @@ function Texts() {
 
     setLastUpdated(lastUpdatedResult);
     setRecentlyCreated(lastCreated);
-  }, [componentsFromBackend]);
+  }, [componentsFromBackend, allComponents, createdComponents]);
 
   useEffect(() => {
     fetch("/component-load")
@@ -135,53 +134,61 @@ function Texts() {
 
   var textComponents = selectedView ? (
     <table>
-      {recentlyCreated.map(function (k, index) {
-        if (index < 5) {
-          return (
-            <tr key={index}>
-              <td>
-                <h4>{k.name}</h4>
-              </td>
-              <td>
-                <p>{k.author}</p>
-              </td>
-              <td>
-                <p>{k.created}</p>
-              </td>
-              <td>
-                <button value={k.id} onClick={handleSelect}>
-                  View
-                </button>
-              </td>
-            </tr>
-          );
-        }
-      })}
+      <tbody>
+        {recentlyCreated.map(function (k, index) {
+          if (index < 5) {
+            return (
+              <tr key={index}>
+                <td>
+                  <h4>{k.name}</h4>
+                </td>
+                <td>
+                  <p>{k.author}</p>
+                </td>
+                <td>
+                  <p>{k.created}</p>
+                </td>
+                <td>
+                  <button value={k.id} onClick={handleSelect}>
+                    View
+                  </button>
+                </td>
+              </tr>
+            );
+          } else {
+            return null;
+          }
+        })}
+      </tbody>
     </table>
   ) : (
     <table>
-      {lastUpdated.map(function (k, index) {
-        if (index < 5) {
-          return (
-            <tr key={index}>
-              <td>
-                <h4>{k.name}</h4>
-              </td>
-              <td>
-                <p>{k.updater}</p>
-              </td>
-              <td>
-                <p>{k.lastUpdated}</p>
-              </td>
-              <td>
-                <button value={k.id} onClick={handleSelect}>
-                  View
-                </button>
-              </td>
-            </tr>
-          );
-        }
-      })}
+      <tbody>
+        {lastUpdated.map(function (k, index) {
+          if (index < 5) {
+            return (
+              <tr key={index}>
+                <td>
+                  <h4>{k.name}</h4>
+                </td>
+                <td>
+                  <p>{k.updater}</p>
+                </td>
+                <td>
+                  <p>{k.lastUpdated}</p>
+                </td>
+                <td>
+                  <button value={k.id} onClick={handleSelect}>
+                    View
+                  </button>
+                </td>
+              </tr>
+            );
+          } else {
+            return null;
+          }
+        })}
+      </tbody>
     </table>
   );
 
@@ -191,7 +198,7 @@ function Texts() {
         <div className="sidebar">
           <div className="sidebar-categories">
             <div className="sidebar-header">
-              <h3>Components</h3>
+              <h3>Texts</h3>
             </div>
             {category1.length ? (
               <>
@@ -207,7 +214,7 @@ function Texts() {
                     e.currentTarget.classList.toggle("sidebar-category-active");
                   }}
                 >
-                  Volvo
+                  Intro
                 </div>
                 <div className="sidebar-items">
                   {showCategory1
@@ -246,7 +253,7 @@ function Texts() {
                     e.currentTarget.classList.toggle("sidebar-category-active");
                   }}
                 >
-                  Saab
+                  Main
                 </div>
                 <div className="sidebar-items">
                   {showCategory2
@@ -285,7 +292,7 @@ function Texts() {
                     e.currentTarget.classList.toggle("sidebar-category-active");
                   }}
                 >
-                  Mercedes
+                  End
                 </div>
                 <div className="sidebar-items">
                   {showCategory3
@@ -324,7 +331,7 @@ function Texts() {
                     e.currentTarget.classList.toggle("sidebar-category-active");
                   }}
                 >
-                  Audi
+                  Supplementary
                 </div>
                 <div className="sidebar-items">
                   {showCategory4

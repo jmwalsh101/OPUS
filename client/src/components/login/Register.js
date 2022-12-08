@@ -16,8 +16,6 @@ function Register() {
   const [errorModal, setErrorModal] = useState(false);
   const handleClose = () => setErrorModal(false);
 
-  console.log("VE", validationError);
-
   function register(e) {
     e.preventDefault();
     const registerUsername = username.current.value;
@@ -57,15 +55,12 @@ function Register() {
       .then((response) => response.json())
       .then((data) => {
         const accounts = data;
-        console.log("accounts", data);
         let searchResult = null;
         searchResult = _.find(accounts, {
           username: registerUsername,
         });
 
-        console.log(searchResult);
         if (searchResult === undefined) {
-          console.log("tested false");
           registrationSchema
             .isValid(formData)
             .then(function (valid, err) {
