@@ -384,6 +384,22 @@ function TextEditor() {
     { label: "H4", style: "header-four" },
     { label: "H5", style: "header-five" },
     { label: "H6", style: "header-six" },
+    {
+      label: <FontAwesomeIcon icon={faListUl} />,
+      style: "unordered-list-item",
+    },
+    { label: <FontAwesomeIcon icon={faListOl} />, style: "ordered-list-item" },
+    { label: "Blockquote", style: "blockquote" },
+    { label: <FontAwesomeIcon icon={faCode} />, style: "code-block" },
+    {
+      label: (
+        <>
+          <FontAwesomeIcon icon={faQuoteLeft} />{" "}
+          <FontAwesomeIcon icon={faQuoteRight} />
+        </>
+      ),
+      style: "CODE",
+    },
   ];
 
   const HeaderStyleControls = (props) => {
@@ -401,44 +417,10 @@ function TextEditor() {
     );
   };
 
-  const LIST_TYPES = [
-    { label: "Blockquote", style: "blockquote" },
-    { label: <FontAwesomeIcon icon={faCode} />, style: "code-block" },
-    {
-      label: (
-        <>
-          <FontAwesomeIcon icon={faQuoteLeft} />{" "}
-          <FontAwesomeIcon icon={faQuoteRight} />
-        </>
-      ),
-      style: "CODE",
-    },
-  ];
-
-  const ListStyleControls = (props) => {
-    return (
-      <div>
-        {LIST_TYPES.map((type) => (
-          <StyleButton
-            key={type.label}
-            label={type.label}
-            onToggle={props.onToggle}
-            style={type.style}
-          />
-        ))}
-      </div>
-    );
-  };
-
   const INLINE_STYLES = [
     { label: <FontAwesomeIcon icon={faB} />, style: "BOLD" },
     { label: <FontAwesomeIcon icon={faItalic} />, style: "ITALIC" },
     { label: <FontAwesomeIcon icon={faUnderline} />, style: "UNDERLINE" },
-    {
-      label: <FontAwesomeIcon icon={faListUl} />,
-      style: "unordered-list-item",
-    },
-    { label: <FontAwesomeIcon icon={faListOl} />, style: "ordered-list-item" },
   ];
   const InlineStyleControls = (props) => {
     return (
@@ -533,9 +515,7 @@ function TextEditor() {
                 <span className="control-set">
                   <InlineStyleControls onToggle={onInlineClick} />
                 </span>
-                <span className="control-set">
-                  <ListStyleControls onToggle={onInlineClick} />
-                </span>
+                <span className="control-set"></span>
               </div>
 
               <div className="text-box">
