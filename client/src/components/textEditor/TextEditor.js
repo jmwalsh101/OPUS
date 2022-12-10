@@ -69,7 +69,7 @@ function TextEditor() {
 
   const [updater, setUpdater] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
-  const [category, setCategory] = useState(null);
+  const [category, setCategory] = useState(optionState);
 
   function handleCategory(e) {
     e.preventDefault();
@@ -475,8 +475,8 @@ function TextEditor() {
                 >
                   <option value="Intro">Intro</option>
                   <option value="Main">Main</option>
-                  <option value="mercedes">End</option>
-                  <option value="audi">Supplementary</option>
+                  <option value="End">End</option>
+                  <option value="Supplementary">Supplementary</option>
                 </select>
               </span>
               <span className="component-action">

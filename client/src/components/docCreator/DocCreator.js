@@ -59,9 +59,9 @@ function DocCreator() {
   const { lastUpdated, setLastUpdated } = useContext(
     documentLastUpdatedContext
   );
-  const [category, setCategory] = useState(null);
 
   const { optionState, setOptionState } = useContext(documentCategoryContext);
+  const [category, setCategory] = useState(optionState);
 
   function handleCategory(e) {
     e.preventDefault();
@@ -264,10 +264,10 @@ function DocCreator() {
     category: "Main",
   });
   const category3 = _.filter(backendData, {
-    category: "mercedes",
+    category: "End",
   });
   const category4 = _.filter(backendData, {
-    category: "audi",
+    category: "Supplementary",
   });
 
   const [showCategory1, setShowCategory1] = useState(false);
@@ -511,8 +511,8 @@ function DocCreator() {
                     >
                       <option value="Intro">Intro</option>
                       <option value="Main">Main</option>
-                      <option value="mercedes">End</option>
-                      <option value="audi">Supplementary</option>
+                      <option value="End">End</option>
+                      <option value="Supplementary">Supplementary</option>
                     </select>
                   </span>
                   <div className="doc-action-minimal-container">

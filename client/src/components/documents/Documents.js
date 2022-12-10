@@ -315,10 +315,10 @@ function Documents() {
     category: "Main",
   });
   const category3 = _.filter(documentsFromBackend, {
-    category: "mercedes",
+    category: "End",
   });
   const category4 = _.filter(documentsFromBackend, {
-    category: "audi",
+    category: "Supplementary",
   });
 
   const [showCategory1, setShowCategory1] = useState(false);
